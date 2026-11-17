@@ -1,6 +1,8 @@
 // Génère les textures de la façade (crasse + grain d'enduit) en PNG, sans dépendance.
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { deflateSync } from "node:zlib";
+
+mkdirSync("public/textures", { recursive: true });
 
 function crc32(buf) {
   let c, crc = 0xffffffff;

@@ -33,8 +33,8 @@ export const site = {
   foundedYear: 2011,
 
   /** Délai de rappel affiché partout (promesse commerciale) */
-  callbackDelay: "24\u00a0h",
-  quoteDelay: "48\u00a0h",
+  callbackDelay: "24 h",
+  quoteDelay: "48 h",
   guaranteeYears: 10,
 
   rating: { value: 4.9, count: 327 },
