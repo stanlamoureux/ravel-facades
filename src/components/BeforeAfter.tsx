@@ -144,7 +144,7 @@ export function BeforeAfter() {
         <div
           ref={box}
           role="tabpanel"
-          className="relative aspect-square touch-pan-y select-none overflow-hidden bg-encre-2 md:aspect-[16/9] md:rounded-[32px]"
+          className="relative aspect-[10/9] touch-pan-y select-none overflow-hidden bg-encre-2 md:aspect-[16/9] md:rounded-[32px]"
           style={{ ["--x" as string]: `${pos}%` }}
           onPointerDown={(e) => {
             touched.current = true;

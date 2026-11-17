@@ -78,7 +78,7 @@ export const fiches: Record<ServiceId, Fiche> = {
     slug: "hydrofuge-facade",
     title: "Imperméabilisation hydrofuge",
     lede: "Un traitement incolore qui fait perler l'eau en surface et laisse le mur respirer. La façade se salit moins vite, et l'humidité ne s'installe plus.",
-    photo: { src: "/images/bourg-apres.webp", alt: "Maison de bourg à l'enduit beige clair, nettoyée puis protégée par un hydrofuge", position: "50% 60%" },
+    photo: { src: "/images/realisation-longere.webp", alt: "Longère à l'enduit ocre, protégée par un hydrofuge incolore", position: "50% 55%" },
     facts: [
       ["Durée du chantier", "1 jour"],
       ["Aspect", "Invisible"],
@@ -135,3 +135,104 @@ export const fiches: Record<ServiceId, Fiche> = {
 };
 
 export const ficheHref = (id: ServiceId) => `/prestations/${fiches[id].slug}`;
+
+/** Le reste de chaque fiche : un chantier à comparer, le déroulé, un avis et les questions qu'on nous pose. */
+export type Extra = {
+  compare: { before: string; after: string; caption: string; position?: string };
+  steps: [string, string][];
+  review: string; // nom de l'avis à citer, pris dans site.reviews
+  faq: [string, string][];
+};
+
+export const extras: Record<ServiceId, Extra> = {
+  ravalement: {
+    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Pavillon à Palaiseau, ravalement complet en trois semaines" },
+    steps: [
+      ["Diagnostic", "On sonde l'enduit, on relève chaque fissure et on mesure la façade."],
+      ["Préparation", "Échafaudage, bâches, piquage des zones qui sonnent creux."],
+      ["Reprise", "Fissures traitées, enduit refait, support remis à niveau."],
+      ["Finition", "Enduit ou peinture dans la teinte validée, puis réception avec vous."],
+    ],
+    review: "Catherine L.",
+    faq: [
+      ["Faut-il une déclaration en mairie ?", "Oui dès que l'aspect change, et parfois même à l'identique selon la commune. On prépare le dossier avec vous."],
+      ["Peut-on rester dans la maison ?", "Oui. Les fenêtres sont protégées, et on vous prévient la veille des journées les plus bruyantes."],
+      ["Combien de temps tient un ravalement ?", "Quinze à vingt ans avec un entretien léger, comme un nettoyage tous les cinq à huit ans."],
+    ],
+  },
+  nettoyage: {
+    compare: { before: "bourg-avant", after: "bourg-apres", caption: "Maison de bourg à Étampes, nettoyage et hydrofuge en quatre jours", position: "50% 60%" },
+    steps: [
+      ["Essai", "On teste le produit et la pression sur une zone discrète."],
+      ["Protection", "Plantations, vitres et menuiseries sont couvertes."],
+      ["Lavage", "Basse pression ou nébulisation, mur par mur."],
+      ["Traitement", "Un anti-mousse qui continue d'agir pendant des semaines."],
+    ],
+    review: "Hélène R.",
+    faq: [
+      ["Le nettoyage abîme-t-il l'enduit ?", "Non. On travaille à basse pression, avec un produit choisi pour votre support après un essai."],
+      ["Combien de temps reste-t-elle propre ?", "Cinq à huit ans en moyenne, davantage si on ajoute un hydrofuge juste après."],
+      ["Faut-il un échafaudage ?", "Rarement pour une maison : une nacelle ou des perches suffisent le plus souvent."],
+    ],
+  },
+  peinture: {
+    compare: { before: "maison-avant", after: "maison-apres", caption: "Maison de ville en Essonne, enduit repeint et volets refaits", position: "50% 72%" },
+    steps: [
+      ["Essai de teinte", "On peint des échantillons sur votre mur pour choisir en vrai."],
+      ["Préparation", "Lavage, rebouchage des fissures fines, impression."],
+      ["Deux couches", "Peinture minérale ou pliolite, appliquée par temps sec."],
+      ["Détails", "Volets, sous-faces et ferronneries si vous le souhaitez."],
+    ],
+    review: "Sophie et Karim B.",
+    faq: [
+      ["Peut-on changer complètement de couleur ?", "Oui, dans les teintes autorisées par votre commune. On vérifie le règlement avec vous."],
+      ["Quelle peinture choisir ?", "Minérale sur un enduit à la chaux, pliolite sur les supports plus fermés. On vous conseille après le diagnostic."],
+      ["Combien de temps tient la peinture ?", "Dix ans garantis contre le décollement et le cloquage, souvent bien plus."],
+    ],
+  },
+  hydrofuge: {
+    compare: { before: "bourg-avant", after: "bourg-apres", caption: "Nettoyage puis hydrofuge sur une maison de bourg à Étampes", position: "50% 60%" },
+    steps: [
+      ["Nettoyage", "Le support doit être propre et sec avant traitement."],
+      ["Protection", "Vitrages et menuiseries sont couverts."],
+      ["Application", "Deux passes, jusqu'à ce que le mur ne boive plus."],
+      ["Contrôle", "On vérifie que l'eau perle partout avant de partir."],
+    ],
+    review: "Marc D.",
+    faq: [
+      ["Le traitement se voit-il ?", "Non, il est incolore et ne change ni la teinte ni l'aspect de l'enduit."],
+      ["Le mur peut-il encore respirer ?", "Oui, le produit est microporeux : il bloque l'eau de pluie, pas la vapeur."],
+      ["Quand faut-il le refaire ?", "Tous les huit à dix ans environ. Le test de la goutte d'eau vous le dira."],
+    ],
+  },
+  fissures: {
+    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Fissures reprises et enduit refait sur un pavillon à Palaiseau" },
+    steps: [
+      ["Diagnostic", "Fissure d'enduit ou de structure : on fait la différence."],
+      ["Ouverture", "La fissure est ouverte et dépoussiérée."],
+      ["Pontage", "Trame de renfort ou agrafes, selon la largeur."],
+      ["Finition", "Rebouchage et reprise de l'enduit pour tout fondre."],
+    ],
+    review: "Jean-Pierre M.",
+    faq: [
+      ["Une fissure est-elle grave ?", "La plupart sont superficielles. Si elle dépasse 2 mm ou s'élargit, on vous oriente vers un bureau d'études."],
+      ["La réparation se verra-t-elle ?", "Non, on reprend la finition sur toute la zone pour qu'elle disparaisse."],
+      ["Faut-il refaire toute la façade ?", "Pas forcément. Quelques fissures se traitent seules, en un à trois jours."],
+    ],
+  },
+  ite: {
+    compare: { before: "immeuble-avant", after: "immeuble-apres", caption: "Petit immeuble à Antony, façade entièrement reprise", position: "50% 22%" },
+    steps: [
+      ["Étude", "Murs, menuiseries et aides possibles : on fait le point."],
+      ["Pose", "Isolant collé et chevillé, tableaux et appuis traités."],
+      ["Armature", "Sous-enduit armé pour une façade sans fissure."],
+      ["Finition", "Enduit dans la teinte choisie, attestation de fin de travaux."],
+    ],
+    review: "Copropriété Les Tilleuls",
+    faq: [
+      ["Combien gagne-t-on sur le chauffage ?", "Cela dépend de la maison. L'étude de départ vous donne une estimation avant de vous engager."],
+      ["Existe-t-il des aides ?", "Souvent, selon vos revenus et votre logement. On vous aide à monter les dossiers."],
+      ["Perd-on de la surface ?", "Non à l'intérieur. La façade s'épaissit de quelques centimètres vers l'extérieur."],
+    ],
+  },
+};

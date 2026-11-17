@@ -123,32 +123,32 @@ export function Simulator() {
   };
 
   return (
-    <section id="simulateur" className="bg-gris py-20 md:py-32" aria-labelledby="sim-title">
+    <section id="simulateur" className="bg-gris py-14 md:py-32" aria-labelledby="sim-title">
       <div className="wrap">
         <h2 id="sim-title" className="t-h2 max-w-[13ch]">
           Combien pour votre façade&nbsp;?
         </h2>
         <p className="t-lede mt-4 max-w-[42ch] md:mt-6">Cinq réponses, et le calcul est fait. Votre estimation chiffrée arrive par email dans la minute.</p>
 
-        <div className="mt-10 grid gap-8 md:mt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
-          <div className="space-y-8">
+        <div className="mt-7 grid gap-8 md:mt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+          <div className="space-y-6 md:space-y-8">
             <fieldset>
               <legend className="t-label">Travaux envisagés</legend>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              <div className="mt-3 flex flex-wrap gap-2 sm:grid sm:grid-cols-2">
                 {simulatorWorks.map((w) => {
                   const on = w.id === work;
                   return (
                     <label
                       key={w.id}
-                      className={`flex cursor-pointer items-center gap-3 rounded-[18px] px-4 py-3.5 transition-[background-color,box-shadow,color] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ciel ${
+                      className={`flex cursor-pointer items-center gap-3 rounded-full px-4 py-2.5 sm:rounded-[18px] sm:py-3.5 transition-[background-color,box-shadow,color] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ciel ${
                         on ? "bg-encre text-white" : "bg-white text-encre shadow-[inset_0_0_0_1px_var(--color-trait)] hover:shadow-[inset_0_0_0_1px_var(--color-brume)]"
                       }`}
                     >
                       <input type="radio" name="work" className="sr-only" checked={on} onChange={() => setWork(w.id)} />
-                      <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${on ? "bg-white text-encre" : "shadow-[inset_0_0_0_1.5px_var(--color-brume)]"}`}>{on && <Check className="h-3.5 w-3.5" />}</span>
+                      <span className={`hidden h-5 w-5 shrink-0 place-items-center rounded-full sm:grid ${on ? "bg-white text-encre" : "shadow-[inset_0_0_0_1.5px_var(--color-brume)]"}`}>{on && <Check className="h-3.5 w-3.5" />}</span>
                       <span className="leading-tight">
                         <span className="block font-[600]">{w.label}</span>
-                        <span className={`mt-0.5 block text-[0.8125rem] ${on ? "text-white/65" : "text-ardoise"}`}>{w.detail}</span>
+                        <span className={`mt-0.5 hidden text-[0.8125rem] sm:block ${on ? "text-white/65" : "text-ardoise"}`}>{w.detail}</span>
                       </span>
                     </label>
                   );

@@ -56,7 +56,7 @@ export function Services() {
   const go = (i: number) => row.current?.scrollTo({ left: i * step(), behavior: "smooth" });
 
   return (
-    <section id="prestations" className="pb-20 md:pb-32" aria-labelledby="prestations-title">
+    <section id="prestations" className="pb-14 md:pb-32" aria-labelledby="prestations-title">
       <div className="wrap">
         <h2 id="prestations-title" className="t-h2 max-w-[14ch]">
           Trois métiers, une seule équipe.
@@ -64,7 +64,7 @@ export function Services() {
         <p className="t-lede mt-4 max-w-[44ch] md:mt-6">Nos compagnons sont salariés, pas sous-traitants. Vous gardez le même interlocuteur de la première visite à la réception du chantier.</p>
       </div>
 
-      <ul ref={row} className="snap-row mt-9 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-3 md:gap-5 md:overflow-visible md:px-8">
+      <ul ref={row} className="snap-row mt-7 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-3 md:gap-5 md:overflow-visible md:px-8">
         {main.map((s, i) => {
           const ph = photos[s.id];
           return (

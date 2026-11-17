@@ -170,8 +170,8 @@ export function Nuancier() {
   }, [live, wall, accent, paint]);
 
   return (
-    <section ref={section} id="teintes" className="py-20 md:py-32" aria-labelledby="teintes-title">
-      <div className="wrap grid gap-x-16 gap-y-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-y-10">
+    <section ref={section} id="teintes" className="py-14 md:py-32" aria-labelledby="teintes-title">
+      <div className="wrap grid gap-x-16 gap-y-6 md:gap-y-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-y-10">
         <div className="lg:col-start-2 lg:row-start-1 lg:pt-4">
           <h2 id="teintes-title" className="t-h2 max-w-[12ch]">
             Et dans une autre teinte ?
@@ -179,10 +179,10 @@ export function Nuancier() {
           <p className="t-lede mt-4 max-w-[38ch] md:mt-6">Essayez les teintes de notre nuancier sur une vraie façade. Les ombres et la lumière restent celles de la photo.</p>
         </div>
 
-        <div className="relative -mx-5 aspect-[1200/1133] overflow-hidden bg-gris md:mx-0 md:rounded-[32px] lg:col-start-1 lg:row-span-2 lg:row-start-1">
+        <div className="sticky top-16 z-10 -mx-5 aspect-[4/3] overflow-hidden bg-gris shadow-[0_10px_24px_-14px_rgb(14_26_38/0.45)] md:static md:mx-0 md:aspect-[1200/1133] md:rounded-[32px] md:shadow-none lg:col-start-1 lg:row-span-2 lg:row-start-1">
           {/* eslint-disable-next-line @next/next/no-img-element -- même fichier que celui lu par le canvas : un seul téléchargement */}
-          <img src={PHOTO} alt={`Façade de maison de ville, enduit ${wall.name.toLowerCase()}, volets ${accent.name.toLowerCase()}`} width={W} height={H} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
-          <canvas ref={canvas} width={W} height={H} className={`absolute inset-0 h-full w-full ${live ? "opacity-100" : "opacity-0"}`} aria-hidden />
+          <img src={PHOTO} alt={`Façade de maison de ville, enduit ${wall.name.toLowerCase()}, volets ${accent.name.toLowerCase()}`} width={W} height={H} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center" />
+          <canvas ref={canvas} width={W} height={H} className={`absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center ${live ? "opacity-100" : "opacity-0"}`} aria-hidden />
           <p className="glass absolute bottom-4 left-4 rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] text-white md:bottom-6 md:left-6" aria-live="polite">
             {wall.name}, volets {accent.name.toLowerCase()}
           </p>
@@ -190,12 +190,12 @@ export function Nuancier() {
 
         <div className="lg:col-start-2 lg:row-start-2">
           <Swatches legend="Façade" detail={`${wall.name}, ${wall.ref}`} options={wallColors} value={wall.id} onChange={(c) => setWall(c)} cols={8} />
-          <div className="mt-8">
+          <div className="mt-6 md:mt-8">
             <Swatches legend="Volets et porte" detail={accent.name} options={accentColors} value={accent.id} onChange={(c) => setAccent(c)} cols={8} />
           </div>
           <button
             type="button"
-            className="btn btn-ink mt-10 w-full md:w-auto"
+            className="btn btn-ink mt-8 w-full md:mt-10 md:w-auto"
             onClick={() => goToQuote({ works: ["Peinture"], color: `${wall.name} (${wall.ref})`, accent: accent.name, source: "nuancier" })}
           >
             Demander un essai de cette teinte

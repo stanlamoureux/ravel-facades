@@ -26,18 +26,18 @@ const steps = [
 
 export function Journey() {
   return (
-    <section id="methode" className="py-20 md:py-32" aria-labelledby="methode-title">
+    <section id="methode" className="py-14 md:py-32" aria-labelledby="methode-title">
       <div className="wrap">
         <h2 id="methode-title" className="t-h2 max-w-[13ch]">
           Un chantier en quatre temps.
         </h2>
         <p className="t-lede mt-4 max-w-[42ch] md:mt-6">Vous savez à chaque étape ce qui se passe, combien de temps ça dure et ce que ça coûte.</p>
 
-        <ol className="mt-10 grid gap-y-7 md:mt-16 md:grid-cols-4 md:gap-x-5">
+        <ol className="mt-8 grid gap-y-5 md:mt-16 md:grid-cols-4 md:gap-x-5">
           {steps.map((s, i) => (
-            <li key={s.title} className="grid grid-cols-[104px_1fr] items-start gap-x-4 md:block">
+            <li key={s.title} className="grid grid-cols-[88px_1fr] items-start gap-x-4 md:block">
               <div className="relative aspect-square overflow-hidden rounded-[20px] bg-gris md:aspect-[4/3] md:rounded-[24px]">
-                <Image src={s.img.src} alt={s.img.alt} fill quality={80} sizes="(min-width: 768px) 280px, 104px" className="object-cover" />
+                <Image src={s.img.src} alt={s.img.alt} fill quality={80} sizes="(min-width: 768px) 280px, 88px" className="object-cover" />
               </div>
               <div className="md:mt-5">
                 <p className="text-[0.875rem] font-[600] tabular-nums text-brume">Étape {i + 1}</p>

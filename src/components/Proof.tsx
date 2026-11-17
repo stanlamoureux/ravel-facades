@@ -6,13 +6,13 @@ import { nombre } from "@/lib/format";
 export function Proof() {
   const [done, , recommend] = site.stats;
   return (
-    <section className="py-20 md:py-32" aria-label="L'entreprise en bref">
+    <section className="py-14 md:py-32" aria-label="L'entreprise en bref">
       <div className="wrap grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
         <div>
           <p className="max-w-[22ch] text-[clamp(1.75rem,7.2vw,3rem)] font-[620] leading-[1.1] tracking-[-0.03em] text-balance">
             Depuis {site.foundedYear}, nous avons rénové {nombre(done.value)} façades en Île-de-France. {recommend.value}&nbsp;% de nos clients nous recommandent.
           </p>
-          <dl className="mt-10 border-t border-trait md:mt-14">
+          <dl className="mt-7 border-t border-trait md:mt-14">
             {site.certifications.map((c) => (
               <div key={c.name} className="flex items-baseline justify-between gap-6 border-b border-trait py-4">
                 <dt className="text-[1.0625rem] font-[640] tracking-[-0.01em] md:text-[1.125rem]">{c.name}</dt>

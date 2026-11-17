@@ -12,7 +12,7 @@ const Stars = ({ className = "" }: { className?: string }) => (
 export function Reviews() {
   const note = String(site.rating.value).replace(".", ",");
   return (
-    <section id="avis" className="bg-gris py-20 md:py-32" aria-labelledby="avis-title">
+    <section id="avis" className="bg-gris py-14 md:py-32" aria-labelledby="avis-title">
       <div className="wrap md:flex md:items-end md:justify-between md:gap-10">
         <h2 id="avis-title" className="t-h2 max-w-[13ch]">
           Ce sont eux qui en parlent le mieux.
@@ -26,7 +26,7 @@ export function Reviews() {
         </p>
       </div>
 
-      <ul className="snap-row mt-9 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-3 md:gap-5 md:overflow-visible md:px-8">
+      <ul className="snap-row mt-7 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-3 md:gap-5 md:overflow-visible md:px-8">
         {site.reviews.map((r) => (
           <li key={r.name} className="flex w-[84vw] max-w-[360px] flex-col rounded-[24px] bg-white p-6 md:w-auto md:max-w-none md:rounded-[28px] md:p-7">
             <Stars />

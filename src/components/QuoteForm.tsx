@@ -59,7 +59,7 @@ function mapWork(label: string): string[] {
 
 export function QuoteSection() {
   return (
-    <section id="devis" className="relative pb-20 md:pb-32" aria-labelledby="devis-title">
+    <section id="devis" className="relative pb-14 md:pb-32" aria-labelledby="devis-title">
       {/* le ciel et le faîtage de la maison du haut de page */}
       <div className="relative h-[400px] overflow-hidden bg-[#2a6a9e] md:h-[540px]">
         <Image src="/images/ciel.webp" alt="" fill quality={80} sizes="100vw" className="object-cover object-bottom md:object-[50%_56%]" />

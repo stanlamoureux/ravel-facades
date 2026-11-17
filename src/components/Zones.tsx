@@ -12,7 +12,7 @@ export function Zones() {
   const checked = cp.length === 5;
 
   return (
-    <section id="zones" className="py-20 md:py-32" aria-labelledby="zones-title">
+    <section id="zones" className="py-14 md:py-32" aria-labelledby="zones-title">
       <div className="wrap grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         <div>
           <h2 id="zones-title" className="t-h2 max-w-[12ch]">

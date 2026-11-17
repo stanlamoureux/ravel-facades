@@ -12,7 +12,7 @@ const works = [
 
 export function Gallery() {
   return (
-    <section id="realisations" className="pb-4 pt-20 md:pb-8 md:pt-32" aria-labelledby="realisations-title">
+    <section id="realisations" className="pb-4 pt-14 md:pb-8 md:pt-32" aria-labelledby="realisations-title">
       <div className="wrap">
         <h2 id="realisations-title" className="t-h2 max-w-[14ch]">
           Pierre, enduit, brique&nbsp;: à chaque façade sa méthode.
@@ -20,7 +20,7 @@ export function Gallery() {
         <p className="t-lede mt-4 max-w-[42ch] md:mt-6">On ne traite pas une meulière comme un pavillon des années 80. Quelques chantiers livrés ces derniers mois.</p>
       </div>
 
-      <ul className="snap-row mt-9 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-12 md:gap-5 md:overflow-visible md:px-8">
+      <ul className="snap-row mt-7 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-12 md:gap-5 md:overflow-visible md:px-8">
         {works.map((w, i) => (
           <li
             key={w.src}
