@@ -1,18 +1,34 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/config/site";
 import { useQuote } from "./QuoteContext";
-import { Close, Menu, Phone } from "./icons";
+import { Chevron, Close, Menu, Phone } from "./icons";
 
-const links = [
-  { href: "#prestations", label: "Prestations" },
-  { href: "#avant-apres", label: "Avant / après" },
-  { href: "#teintes", label: "Teintes" },
-  { href: "#simulateur", label: "Estimation" },
-  { href: "#avis", label: "Avis" },
-  { href: "#faq", label: "Questions" },
+/** Le plan de la page, dans l'ordre où on la parcourt : chaque entrée dit ce qu'on y trouve. */
+const sections = [
+  { id: "prestations", label: "Prestations", hint: "Ravalement, nettoyage, peinture" },
+  { id: "avant-apres", label: "Avant / après", hint: "Trois chantiers à comparer" },
+  { id: "realisations", label: "Réalisations", hint: "Nos derniers chantiers" },
+  { id: "teintes", label: "Nuancier", hint: "Essayez une teinte sur une façade" },
+  { id: "devis", label: "Devis gratuit", hint: `Visite offerte, rappel sous ${site.callbackDelay}` },
+  { id: "methode", label: "Notre méthode", hint: "Un chantier en quatre temps" },
+  { id: "avis", label: "Avis clients", hint: `${String(site.rating.value).replace(".", ",")} sur 5, ${site.rating.count} avis` },
+  { id: "zones", label: "Zones d'intervention", hint: "Essonne et départements voisins" },
+  { id: "faq", label: "Questions fréquentes", hint: "Autorisations, délais, garanties" },
+  { id: "simulateur", label: "Estimation", hint: "Votre budget en 30 secondes" },
+];
+
+/** Les entrées qui tiennent dans la barre du haut sur grand écran. */
+const bar = [
+  ["prestations", "Prestations"],
+  ["avant-apres", "Avant / après"],
+  ["realisations", "Réalisations"],
+  ["teintes", "Nuancier"],
+  ["avis", "Avis"],
+  ["simulateur", "Estimation"],
 ];
 
 /** Le carré coupé en deux : moitié avant, moitié après. */
@@ -28,22 +44,40 @@ export function Logo({ className = "" }: { className?: string }) {
   );
 }
 
-export function Nav() {
+/** `solid` : en-tête plein dès le départ, pour les pages sans photo plein écran (fiches prestation). */
+export function Nav({ solid = false }: { solid?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
-  const [past, setPast] = useState(false); // sous le hero (sur mobile, le hero est une photo plein écran)
+  const [past, setPast] = useState(solid); // sous le hero (sur mobile, le hero est une photo plein écran)
+  const [current, setCurrent] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const { goToQuote } = useQuote();
+  const home = usePathname() === "/";
+  const to = (id: string) => (home ? `#${id}` : `/#${id}`);
+  const tel = `tel:${site.phoneHref}`;
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
       const hero = document.getElementById("top");
       setScrolled(window.scrollY > 12);
-      setPast(window.scrollY > (hero ? hero.offsetHeight - 72 : 400));
+      setPast(!hero || window.scrollY > hero.offsetHeight - 72);
+      // la section en cours : la dernière dont le haut a franchi le premier tiers de l'écran
+      let now: string | null = null;
+      for (const s of sections) {
+        const el = document.getElementById(s.id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.4) now = s.id;
+      }
+      setCurrent(now);
     };
-    onScroll();
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    measure();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
@@ -64,34 +98,47 @@ export function Nav() {
       <header
         data-past={past}
         data-scrolled={scrolled}
-        className="fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/85 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/85 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl"
+        className="group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl"
       >
-        <div className="wrap flex h-16 items-center justify-between md:h-[72px]">
-          <a href="#top" aria-label={`${site.name}, retour en haut de page`}>
+        <div className="wrap flex h-16 items-center justify-between gap-4 md:h-[72px]">
+          <a href={home ? "#top" : "/"} aria-label={home ? `${site.name}, retour en haut de page` : `${site.name}, retour à l'accueil`}>
             <Logo />
           </a>
 
-          <nav className="hidden items-center gap-7 text-[0.9375rem] font-[520] lg:flex" aria-label="Sections de la page">
-            {links.slice(0, 5).map((l) => (
-              <a key={l.href} href={l.href} className="text-encre/70 transition-colors hover:text-encre">
-                {l.label}
+          <nav className="hidden items-center gap-6 text-[0.9375rem] font-[540] lg:flex" aria-label="Sections de la page">
+            {bar.map(([id, label]) => (
+              <a key={id} href={to(id)} aria-current={current === id ? "location" : undefined} className="group relative py-2 text-encre/65 transition-colors hover:text-encre aria-[current=location]:text-encre">
+                {label}
+                <span className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 rounded-full bg-tuile transition-transform duration-300 group-aria-[current=location]:scale-x-100" aria-hidden />
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-1.5 md:gap-3">
-            <a href={`tel:${site.phoneHref}`} className="hidden items-center gap-2 text-[0.9375rem] font-[600] tabular-nums md:inline-flex">
+          <div className="flex items-center gap-2 md:gap-3">
+            <a href={tel} className="hidden items-center gap-2 text-[0.9375rem] font-[620] tabular-nums xl:inline-flex">
               <Phone className="h-[1.1rem] w-[1.1rem]" />
               {site.phone}
             </a>
-            <button type="button" className="btn btn-ink btn-sm hidden md:inline-flex" onClick={() => goToQuote({ source: "menu" })}>
+            <a
+              href={tel}
+              aria-label={`Appeler le ${site.phone}`}
+              className="grid h-11 w-11 place-items-center rounded-full bg-white text-encre shadow-[0_4px_16px_rgb(8_20_34/0.22)] transition-[background-color,box-shadow] duration-300 group-data-[past=true]/h:bg-gris group-data-[past=true]/h:shadow-none md:bg-gris md:shadow-none xl:hidden"
+            >
+              <Phone className="h-5 w-5" />
+            </a>
+            <button type="button" className="btn btn-cta btn-sm hidden md:inline-flex" onClick={() => goToQuote({ source: "menu" })}>
               Devis gratuit
             </button>
-            <a href={`tel:${site.phoneHref}`} className="grid h-11 w-11 place-items-center rounded-full md:hidden" aria-label={`Appeler le ${site.phone}`}>
-              <Phone className="h-[1.35rem] w-[1.35rem]" />
-            </a>
-            <button type="button" className="-mr-2 grid h-11 w-11 place-items-center rounded-full lg:hidden" aria-label="Ouvrir le menu" aria-expanded={open} onClick={() => setOpen(true)}>
-              <Menu className="h-6 w-6" />
+            <button
+              type="button"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-white pl-3.5 pr-[1.125rem] text-[0.9375rem] font-[620] text-encre shadow-[0_4px_16px_rgb(8_20_34/0.22)] transition-[background-color,color,box-shadow] duration-300 group-data-[past=true]/h:bg-encre group-data-[past=true]/h:text-white group-data-[past=true]/h:shadow-none md:bg-encre md:text-white md:shadow-none lg:hidden"
+              aria-label="Ouvrir le menu"
+              aria-haspopup="dialog"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+            >
+              <Menu className="h-5 w-5" />
+              Menu
             </button>
           </div>
         </div>
@@ -111,38 +158,48 @@ export function Nav() {
           >
             <div className="wrap flex h-16 shrink-0 items-center justify-between md:h-[72px]">
               <Logo />
-              <button type="button" className="-mr-2 grid h-11 w-11 place-items-center rounded-full" aria-label="Fermer le menu" onClick={() => setOpen(false)} autoFocus>
-                <Close className="h-6 w-6" />
+              <button type="button" className="inline-flex h-11 items-center gap-2 rounded-full bg-gris pl-3.5 pr-[1.125rem] text-[0.9375rem] font-[620]" onClick={() => setOpen(false)} autoFocus>
+                <Close className="h-5 w-5" />
+                Fermer
               </button>
             </div>
-            <motion.nav
-              className="wrap flex flex-1 flex-col justify-center gap-1 overflow-y-auto pb-6"
-              aria-label="Sections de la page"
-              initial={{ y: 14 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {links.map((l) => (
-                <a key={l.href} href={l.href} className="py-2 text-[2.1rem] font-[640] leading-tight tracking-[-0.03em]" onClick={() => setOpen(false)}>
-                  {l.label}
-                </a>
-              ))}
+            <motion.nav className="flex-1 overflow-y-auto overscroll-contain" aria-label="Sections de la page" initial={{ y: 14 }} animate={{ y: 0 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+              <ul className="wrap pb-3">
+                {sections.map((s) => {
+                  const here = home && current === s.id;
+                  return (
+                    <li key={s.id} className="border-b border-trait last:border-0">
+                      <a href={to(s.id)} aria-current={here ? "location" : undefined} className="flex items-center gap-4 py-3" onClick={() => setOpen(false)}>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[1.1875rem] font-[640] leading-[1.2] tracking-[-0.02em]">{s.label}</span>
+                          <span className="mt-0.5 block text-[0.875rem] text-ardoise">{s.hint}</span>
+                        </span>
+                        {here ? (
+                          <span className="shrink-0 rounded-full bg-volet/10 px-2.5 py-1 text-[0.75rem] font-[620] text-volet">Vous êtes ici</span>
+                        ) : (
+                          <Chevron className="h-5 w-5 shrink-0 text-brume" />
+                        )}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
             </motion.nav>
-            <div className="wrap grid shrink-0 gap-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+            <div className="wrap grid shrink-0 grid-cols-2 gap-2.5 border-t border-trait pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
+              <a href={tel} className="btn btn-ink !px-3">
+                <Phone className="h-5 w-5" />
+                Appeler
+              </a>
               <button
                 type="button"
-                className="btn btn-ink w-full"
+                className="btn btn-cta !px-3"
                 onClick={() => {
                   setOpen(false);
                   goToQuote({ source: "menu" });
                 }}
               >
-                Demander un devis gratuit
+                Devis gratuit
               </button>
-              <a href={`tel:${site.phoneHref}`} className="btn btn-soft w-full tabular-nums">
-                <Phone className="h-5 w-5" />
-                {site.phone}
-              </a>
             </div>
           </motion.div>
         )}
@@ -151,15 +208,18 @@ export function Nav() {
   );
 }
 
-/** Barre d'action collée en bas sur mobile : apparaît sous le hero, s'efface devant le formulaire. */
-export function MobileBar() {
+/**
+ * Barre d'action collée en bas sur mobile : appeler ou demander un devis, toujours à portée de pouce.
+ * Elle apparaît sous le haut de page et s'efface devant les formulaires, dont le bouton prend le relais.
+ */
+export function MobileBar({ primary }: { primary?: { label: string; href: string } }) {
   const [show, setShow] = useState(false);
   const { goToQuote } = useQuote();
 
   useEffect(() => {
-    // la barre s'efface devant les formulaires (devis, estimation) : leur bouton prend le relais
     const visible = new Set<Element>();
-    const update = () => setShow(window.scrollY > window.innerHeight * 0.75 && visible.size === 0);
+    const hero = document.getElementById("top");
+    const update = () => setShow(window.scrollY > (hero ? window.innerHeight * 0.75 : 220) && visible.size === 0);
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target));
@@ -178,20 +238,26 @@ export function MobileBar() {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-encre/[0.06] bg-white/90 px-4 pt-3 backdrop-blur-xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-encre/[0.06] bg-white/92 px-4 pt-3 backdrop-blur-xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
       style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
       aria-hidden={!show}
     >
-      <div className="grid grid-cols-[auto_1fr] gap-2.5">
-        <a href={`tel:${site.phoneHref}`} className="btn btn-soft !px-5" tabIndex={show ? 0 : -1}>
+      <div className="grid grid-cols-2 gap-2.5">
+        <a href={`tel:${site.phoneHref}`} className="btn btn-ink !px-3" tabIndex={show ? 0 : -1}>
           <Phone className="h-5 w-5" />
           Appeler
         </a>
-        <button type="button" className="btn btn-ink" tabIndex={show ? 0 : -1} onClick={() => goToQuote({ source: "barre-mobile" })}>
-          Devis gratuit
-        </button>
+        {primary ? (
+          <a href={primary.href} className="btn btn-cta !px-3" tabIndex={show ? 0 : -1}>
+            {primary.label}
+          </a>
+        ) : (
+          <button type="button" className="btn btn-cta !px-3" tabIndex={show ? 0 : -1} onClick={() => goToQuote({ source: "barre-mobile" })}>
+            Devis gratuit
+          </button>
+        )}
       </div>
     </div>
   );

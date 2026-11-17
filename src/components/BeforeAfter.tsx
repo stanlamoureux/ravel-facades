@@ -21,7 +21,7 @@ const cases = [
       ["Surface", "148 m² de façade"],
       ["Durée", "3 semaines"],
     ],
-    work: "Ravalement",
+    estimateAs: "ravalement",
   },
   {
     id: "immeuble",
@@ -35,7 +35,7 @@ const cases = [
       ["Surface", "620 m² de façade"],
       ["Durée", "7 semaines"],
     ],
-    work: "Ravalement",
+    estimateAs: "ravalement",
   },
   {
     id: "bourg",
@@ -49,17 +49,24 @@ const cases = [
       ["Surface", "190 m² de façade"],
       ["Durée", "4 jours"],
     ],
-    work: "Nettoyage",
+    estimateAs: "nettoyage-hydrofuge",
   },
 ] as const;
+
+/**
+ * La photo est recadrée dans un cadre plus haut qu'elle : elle s'affiche donc plus large que l'écran.
+ * On le dit au navigateur, sinon il charge une version trop petite et l'image paraît floue.
+ */
+const SIZES = "(min-width: 1200px) 1136px, (min-width: 768px) 100vw, 180vw";
 
 export function BeforeAfter() {
   const box = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [pos, setPos] = useState(50);
+  const [hint, setHint] = useState(true); // "Glissez pour comparer", jusqu'au premier geste
   const dragging = useRef(false);
   const touched = useRef(false);
-  const { goToQuote } = useQuote();
+  const { goToEstimate } = useQuote();
   const c = cases[active];
 
   // à l'arrivée dans l'écran, la poignée oscille une fois pour montrer qu'elle se déplace
@@ -96,24 +103,40 @@ export function BeforeAfter() {
           <h2 id="ba-title" className="t-h2 max-w-[13ch]">
             Même façade, quelques semaines plus tard.
           </h2>
-          <p className="t-lede mt-4 max-w-[40ch] !text-white/65 md:mt-6">Faites glisser pour comparer&nbsp;: même cadrage, avant et après notre passage.</p>
+          <p className="t-lede mt-4 max-w-[40ch] !text-white/65 md:mt-6">Trois chantiers, photographiés du même endroit avant et après notre passage.</p>
         </div>
-        <div className="snap-row -mx-5 mt-7 gap-2 px-5 md:mx-0 md:mt-0 md:px-0 md:pb-1" role="tablist" aria-label="Choisir un chantier">
-          {cases.map((x, i) => (
-            <button
-              key={x.id}
-              type="button"
-              role="tab"
-              aria-selected={i === active}
-              onClick={() => {
-                setActive(i);
-                setPos(50);
-              }}
-              className={`h-11 rounded-full px-5 text-[0.9375rem] font-[600] transition-colors duration-200 ${i === active ? "bg-white text-encre" : "bg-white/10 text-white hover:bg-white/16"}`}
-            >
-              {x.tab}
-            </button>
-          ))}
+        <div className="mt-8 md:mt-0 md:w-[420px] md:shrink-0">
+          <p id="ba-pick" className="text-[0.9375rem] font-[600] text-white/90">
+            Choisissez un chantier <span className="font-[480] text-white/50">({active + 1} sur {cases.length})</span>
+          </p>
+          <div className="mt-3 grid grid-cols-3 gap-2.5 md:gap-3" role="tablist" aria-labelledby="ba-pick">
+            {cases.map((x, i) => {
+              const on = i === active;
+              return (
+                <button
+                  key={x.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => {
+                    setActive(i);
+                    setPos(50);
+                  }}
+                  className="group text-left"
+                >
+                  {/* la vignette montre déjà le principe : moitié avant, moitié après */}
+                  <span className={`relative block aspect-[4/3] overflow-hidden rounded-[14px] bg-encre-2 transition-[box-shadow,opacity] duration-200 md:rounded-[16px] ${on ? "shadow-[0_0_0_2.5px_#fff]" : "opacity-60 group-hover:opacity-90"}`}>
+                    <Image src={x.after.src} alt="" fill quality={75} sizes="(min-width: 768px) 140px, 31vw" className="object-cover" style={{ objectPosition: x.position }} draggable={false} />
+                    <span className="absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+                      <Image src={x.before.src} alt="" fill quality={75} sizes="(min-width: 768px) 140px, 31vw" className="object-cover" style={{ objectPosition: x.position }} draggable={false} />
+                    </span>
+                    <span className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-white/90" />
+                  </span>
+                  <span className={`mt-2 block text-[0.8125rem] font-[600] leading-[1.2] transition-colors md:text-[0.9375rem] ${on ? "text-white" : "text-white/60 group-hover:text-white/85"}`}>{x.tab}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -121,10 +144,11 @@ export function BeforeAfter() {
         <div
           ref={box}
           role="tabpanel"
-          className="relative aspect-[4/3.3] touch-pan-y select-none overflow-hidden bg-encre-2 md:aspect-[16/9] md:rounded-[32px]"
+          className="relative aspect-square touch-pan-y select-none overflow-hidden bg-encre-2 md:aspect-[16/9] md:rounded-[32px]"
           style={{ ["--x" as string]: `${pos}%` }}
           onPointerDown={(e) => {
             touched.current = true;
+            setHint(false);
             dragging.current = true;
             e.currentTarget.setPointerCapture(e.pointerId);
             fromPointer(e.clientX);
@@ -133,9 +157,9 @@ export function BeforeAfter() {
           onPointerUp={() => (dragging.current = false)}
           onPointerCancel={() => (dragging.current = false)}
         >
-          <Image key={c.after.src} src={c.after.src} alt={c.after.alt} fill quality={80} sizes="(min-width: 1200px) 1136px, 100vw" className="pointer-events-none object-cover" style={{ objectPosition: c.position }} draggable={false} />
+          <Image key={c.after.src} src={c.after.src} alt={c.after.alt} fill quality={85} sizes={SIZES} className="pointer-events-none object-cover" style={{ objectPosition: c.position }} draggable={false} />
           <div className="absolute inset-0" style={{ clipPath: "inset(0 calc(100% - var(--x)) 0 0)" }}>
-            <Image key={c.before.src} src={c.before.src} alt={c.before.alt} fill quality={80} sizes="(min-width: 1200px) 1136px, 100vw" className="pointer-events-none object-cover" style={{ objectPosition: c.position }} draggable={false} />
+            <Image key={c.before.src} src={c.before.src} alt={c.before.alt} fill quality={85} sizes={SIZES} className="pointer-events-none object-cover" style={{ objectPosition: c.position }} draggable={false} />
           </div>
 
           <span className="glass pointer-events-none absolute left-4 top-4 rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] transition-opacity duration-200 md:left-6 md:top-6" style={{ opacity: pos < 14 ? 0 : 1 }}>
@@ -143,6 +167,10 @@ export function BeforeAfter() {
           </span>
           <span className="glass pointer-events-none absolute right-4 top-4 rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] transition-opacity duration-200 md:right-6 md:top-6" style={{ opacity: pos > 86 ? 0 : 1 }}>
             Après
+          </span>
+
+          <span className={`glass pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] transition-opacity duration-300 md:bottom-6 ${hint ? "opacity-100" : "opacity-0"}`} aria-hidden>
+            Glissez pour comparer
           </span>
 
           <div className="pointer-events-none absolute inset-y-0 w-[3px] -translate-x-1/2 bg-white" style={{ left: "var(--x)" }} aria-hidden>
@@ -159,6 +187,7 @@ export function BeforeAfter() {
             value={Math.round(pos)}
             onChange={(e) => {
               touched.current = true;
+              setHint(false);
               setPos(Number(e.target.value));
             }}
             aria-label="Position du comparateur avant / après"
@@ -177,8 +206,8 @@ export function BeforeAfter() {
               </div>
             ))}
           </dl>
-          <button type="button" className="btn btn-white w-full md:w-auto" onClick={() => goToQuote({ works: [c.work], source: "avant-apres" })}>
-            Et chez moi, ça donnerait quoi&nbsp;?
+          <button type="button" className="btn btn-white w-full md:w-auto" onClick={() => goToEstimate(c.estimateAs)}>
+            Faire une estimation
           </button>
         </div>
         {site.demo && <p className="mt-6 text-[0.8125rem] text-white/40">Chantiers présentés à titre d&apos;exemple.</p>}

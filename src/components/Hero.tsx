@@ -69,8 +69,8 @@ export function Hero() {
             alt="Maison de ville avant ravalement : enduit noirci par les coulures, mousses et volets écaillés"
             fill
             priority
-            quality={80}
-            sizes="(min-width: 768px) 46vw, 100vw"
+            quality={85}
+            sizes="(min-width: 768px) 46vw, 130vw"
             className="object-cover object-bottom"
             onLoad={onLoad}
           />
@@ -80,8 +80,8 @@ export function Hero() {
               alt="La même maison après ravalement : enduit clair, volets verts repeints"
               fill
               priority
-              quality={80}
-              sizes="(min-width: 768px) 46vw, 100vw"
+              quality={85}
+              sizes="(min-width: 768px) 46vw, 130vw"
               className="object-cover object-bottom"
               onLoad={onLoad}
             />
@@ -130,11 +130,15 @@ export function Hero() {
           </div>
 
           <div className="pointer-events-auto md:mt-10">
-            <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
-              <button type="button" className="btn btn-white w-full md:hidden" onClick={() => goToQuote({ source: "hero" })}>
-                Demander mon devis gratuit
+            <div className="grid grid-cols-2 gap-2.5 md:flex md:flex-wrap md:gap-3">
+              <a href={`tel:${site.phoneHref}`} className="btn btn-white !px-3 md:hidden">
+                <Phone className="h-5 w-5" />
+                Appeler
+              </a>
+              <button type="button" className="btn btn-cta !px-3 md:hidden" onClick={() => goToQuote({ source: "hero" })}>
+                Devis gratuit
               </button>
-              <button type="button" className="btn btn-ink hidden md:inline-flex md:h-14 md:px-7 md:text-[1.0625rem]" onClick={() => goToQuote({ source: "hero" })}>
+              <button type="button" className="btn btn-cta hidden md:inline-flex md:h-14 md:px-7 md:text-[1.0625rem]" onClick={() => goToQuote({ source: "hero" })}>
                 Demander mon devis gratuit
               </button>
               <a href={`tel:${site.phoneHref}`} className="btn btn-soft hidden tabular-nums md:inline-flex md:h-14 md:px-6 md:text-[1.0625rem]">

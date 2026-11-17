@@ -59,12 +59,12 @@ export default function Home() {
         <BeforeAfter />
         <Gallery />
         <Nuancier />
-        <Simulator />
+        <QuoteSection />
         <Journey />
         <Reviews />
         <Zones />
         <FAQ />
-        <QuoteSection />
+        <Simulator />
       </main>
       <Footer />
       <MobileBar />

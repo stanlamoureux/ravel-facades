@@ -1,5 +1,7 @@
-import { site } from "@/config/site";
+import Link from "next/link";
+import { ficheHref } from "@/config/fiches";
 import { services } from "@/config/offer";
+import { site } from "@/config/site";
 import { Logo } from "./Nav";
 
 export function Footer() {
@@ -32,9 +34,9 @@ export function Footer() {
             <ul className="mt-3 space-y-2">
               {services.map((s) => (
                 <li key={s.id}>
-                  <a href="#prestations" className="text-white/75 hover:text-white">
+                  <Link href={ficheHref(s.id)} className="text-white/75 hover:text-white">
                     {s.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

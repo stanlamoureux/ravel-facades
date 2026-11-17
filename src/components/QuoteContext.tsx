@@ -45,8 +45,14 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
   return <QuoteCtx.Provider value={value}>{children}</QuoteCtx.Provider>;
 }
 
+/** Hors de la page d'accueil (fiches prestation), les mêmes boutons y ramènent, à la bonne section. */
+const elsewhere: Ctx = {
+  prefill: {},
+  goToQuote: () => window.location.assign("/#devis"),
+  simWork: null,
+  goToEstimate: () => window.location.assign("/#simulateur"),
+};
+
 export function useQuote() {
-  const ctx = useContext(QuoteCtx);
-  if (!ctx) throw new Error("useQuote doit être utilisé dans QuoteProvider");
-  return ctx;
+  return useContext(QuoteCtx) ?? elsewhere;
 }

@@ -3,7 +3,8 @@
 
 /*
   Palette tirée des photos : le bleu nuit du zénith pour le texte, le bleu du ciel
-  pour ce qui se touche, le vert des volets pour ce qui est validé. Tout le reste
+  pour les liens, le vert des volets pour ce qui est validé, et le rouge des tuiles
+  pour les deux actions qui comptent : demander un devis, être rappelé. Tout le reste
   est neutre, pour laisser la couleur aux façades.
 */
 @theme {
@@ -17,6 +18,8 @@
   --color-gris-2: #e9e9ee;
   --color-trait: #e1e2e7;
   --color-volet: #1e5540;
+  --color-tuile: #c8451c;
+  --color-tuile-2: #ad3a15;
   --color-alerte: #b3261e;
 
   --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -161,6 +164,14 @@
   }
   .btn-ink:hover {
     background: var(--color-encre-2);
+  }
+  .btn-cta {
+    background: var(--color-tuile);
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgb(200 69 28 / 0.75);
+  }
+  .btn-cta:hover {
+    background: var(--color-tuile-2);
   }
   .btn-white {
     background: #fff;
