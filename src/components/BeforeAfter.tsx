@@ -97,7 +97,7 @@ export function BeforeAfter() {
   }, []);
 
   return (
-    <section id="avant-apres" className="bg-encre py-20 text-white md:py-32" aria-labelledby="ba-title">
+    <section id="avant-apres" className="bg-encre py-14 text-white md:py-32" aria-labelledby="ba-title">
       <div className="wrap md:flex md:items-end md:justify-between md:gap-10">
         <div>
           <h2 id="ba-title" className="t-h2 max-w-[13ch]">
