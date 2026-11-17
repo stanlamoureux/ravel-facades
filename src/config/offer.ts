@@ -50,7 +50,7 @@ export const services: { id: ServiceId; name: string; short: string; description
     id: "ite",
     name: "Isolation par l'extérieur",
     short: "ITE",
-    description: "Isolant et enduit de finition en une seule opération\u00a0: une façade neuve, et des murs qui ne laissent plus filer la chaleur. Des aides peuvent exister selon votre situation.",
+    description: "Isolant et enduit de finition en une seule opération : une façade neuve, et des murs qui ne laissent plus filer la chaleur. Des aides peuvent exister selon votre situation.",
     duration: "3 à 6 semaines",
     estimateAs: "ite",
   },

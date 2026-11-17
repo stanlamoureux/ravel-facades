@@ -16,6 +16,9 @@ import { FAQ } from "@/components/FAQ";
 import { QuoteSection } from "@/components/QuoteForm";
 import { Footer } from "@/components/Footer";
 
+/** "<" écrit sous sa forme échappée JSON, pour qu'aucune balise ne puisse se fermer dans le script. */
+const LT = String.fromCharCode(92) + "u003c";
+
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -44,7 +47,7 @@ export default function Home() {
 
   return (
     <QuoteProvider>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, LT) }} />
       <a href="#devis" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg">
         Aller au formulaire de devis
       </a>

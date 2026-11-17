@@ -7,7 +7,7 @@ import { Arrow, Chevron } from "./icons";
 
 const photos: Record<string, { src: string; alt: string; position?: string }> = {
   ravalement: { src: "/images/service-ravalement.webp", alt: "Un façadier sur son échafaudage étale un enduit neuf à la taloche", position: "50% 30%" },
-  nettoyage: { src: "/images/service-nettoyage.webp", alt: "Nettoyage d'un enduit à la lance\u00a0: la partie lavée est nettement plus claire" },
+  nettoyage: { src: "/images/service-nettoyage.webp", alt: "Nettoyage d'un enduit à la lance : la partie lavée est nettement plus claire" },
   peinture: { src: "/images/service-peinture.webp", alt: "Un peintre passe au rouleau une première bande claire sur une façade ocre", position: "50% 35%" },
 };
 
