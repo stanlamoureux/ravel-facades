@@ -4,77 +4,67 @@ import { Logo } from "./Nav";
 
 export function Footer() {
   return (
-    <footer className="bg-pierre px-5 pb-28 pt-16 text-[0.92rem] md:pb-12">
-      <div className="mx-auto max-w-[1200px]">
-        <div className="grid gap-10 border-b border-ardoise/10 pb-12 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="bg-encre pb-28 pt-16 text-white md:pb-12 md:pt-20">
+      <div className="wrap">
+        <div className="grid gap-x-10 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <Logo />
-            <p className="mt-4 max-w-[34ch] text-zinc">
-              {site.tagline} en Île-de-France depuis {site.foundedYear}. Nettoyage, ravalement, peinture et isolation de façades.
-            </p>
-            <address className="mt-5 not-italic leading-relaxed text-zinc">
-              {site.legalName}
-              <br />
-              {site.address.street}, {site.address.postalCode} {site.address.city}
-              <br />
-              <a className="link" href={`tel:${site.phoneHref}`}>
-                {site.phone}
-              </a>
-              <br />
-              <a className="link" href={`mailto:${site.email}`}>
-                {site.email}
-              </a>
-            </address>
+            <p className="mt-4 max-w-[28ch] text-white/60">Ravalement, peinture et nettoyage de façade en Île-de-France, depuis {site.foundedYear}.</p>
           </div>
-          <nav aria-label="Prestations">
-            <p className="font-[620]">Prestations</p>
-            <ul className="mt-4 space-y-2.5 text-zinc">
+          <div>
+            <h2 className="text-[0.875rem] font-[600] text-white/50">Nous joindre</h2>
+            <ul className="mt-3 space-y-2">
+              <li>
+                <a href={`tel:${site.phoneHref}`} className="text-[1.25rem] font-[640] tabular-nums tracking-[-0.02em]">
+                  {site.phone}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${site.email}`} className="text-white/75 hover:text-white">
+                  {site.email}
+                </a>
+              </li>
+              <li className="text-white/60">{site.hours}</li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-[0.875rem] font-[600] text-white/50">Prestations</h2>
+            <ul className="mt-3 space-y-2">
               {services.map((s) => (
                 <li key={s.id}>
-                  <a href="#prestations" className="hover:text-ardoise">
+                  <a href="#prestations" className="text-white/75 hover:text-white">
                     {s.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </nav>
-          <nav aria-label="Liens utiles">
-            <p className="font-[620]">Le site</p>
-            <ul className="mt-4 space-y-2.5 text-zinc">
-              <li>
-                <a href="#simulateur" className="hover:text-ardoise">
-                  Estimer mon prix
-                </a>
-              </li>
-              <li>
-                <a href="#teintes" className="hover:text-ardoise">
-                  Choisir une teinte
-                </a>
-              </li>
-              <li>
-                <a href="#devis" className="hover:text-ardoise">
-                  Demander un devis
-                </a>
-              </li>
-              <li>
-                <a href="/mentions-legales" className="hover:text-ardoise">
-                  Mentions légales
-                </a>
-              </li>
-              <li>
-                <a href="/confidentialite" className="hover:text-ardoise">
-                  Confidentialité
-                </a>
-              </li>
-            </ul>
-          </nav>
+          </div>
+          <div>
+            <h2 className="text-[0.875rem] font-[600] text-white/50">Adresse</h2>
+            <address className="mt-3 not-italic leading-[1.6] text-white/75">
+              {site.legalName}
+              <br />
+              {site.address.street}
+              <br />
+              {site.address.postalCode} {site.address.city}
+            </address>
+          </div>
         </div>
-        <div className="flex flex-col justify-between gap-3 pt-6 text-zinc md:flex-row">
+
+        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.875rem] text-white/50 md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {site.legalName}. SIRET {site.siret}.
           </p>
-          {site.demo && <p className="demo-tag self-start">Site de démonstration : coordonnées, chiffres et avis d&apos;exemple</p>}
+          <p className="flex gap-6">
+            <a href="/mentions-legales" className="hover:text-white">
+              Mentions légales
+            </a>
+            <a href="/confidentialite" className="hover:text-white">
+              Confidentialité
+            </a>
+          </p>
         </div>
+        {site.demo && <p className="mt-4 text-[0.8125rem] text-white/35">Site de démonstration : entreprise, chiffres, avis et photos sont fictifs.</p>}
       </div>
     </footer>
   );

@@ -1,114 +1,254 @@
 "use client";
 
-import { useState } from "react";
-import { accentColors, wallColors } from "@/config/offer";
-import { StaticFacade } from "./facade/Facade";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { accentColors, wallColors, type AccentColor, type WallColor } from "@/config/offer";
 import { useQuote } from "./QuoteContext";
 import { Check } from "./icons";
-import type { Variant } from "./facade/specs";
+
+/**
+ * Nuancier sur photo réelle.
+ *
+ * La photo est recolorée pixel par pixel dans un canvas : pour chaque pixel du mur on garde
+ * son éclairage (ombres, lumière dorée, grain de l'enduit) et on remplace seulement la teinte.
+ * Les zones viennent d'un masque (rouge = mur, vert = volets, bleu = porte) et les constantes
+ * ci-dessous des couleurs de référence mesurées sur la photo. Les deux sont produits par
+ * scripts/images.mjs : à régénérer ensemble si la photo change.
+ */
+const W = 1200;
+const H = 1133;
+const REF = { wall: [244, 220, 188], shutter: 85, door: 20 };
+const TINT = [1, 0.965, 0.92];
+const PHOTO = "/images/nuancier.webp";
+const MASK = "/images/nuancier-masque.webp";
+
+type Zone = { idx: Uint32Array; a: Float32Array; k?: Float32Array };
+type Engine = { base: Uint8ClampedArray; wall: Zone; shutters: Zone; door: Zone; next: HTMLCanvasElement };
+
+const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+
+function loadImage(src: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new window.Image();
+    img.decoding = "async";
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+function pixels(img: HTMLImageElement) {
+  const c = document.createElement("canvas");
+  c.width = W;
+  c.height = H;
+  const ctx = c.getContext("2d", { willReadFrequently: true })!;
+  ctx.drawImage(img, 0, 0, W, H);
+  return ctx.getImageData(0, 0, W, H).data;
+}
+
+async function buildEngine(): Promise<Engine> {
+  const [photo, mask] = await Promise.all([loadImage(PHOTO), loadImage(MASK)]);
+  const base = pixels(photo);
+  const m = pixels(mask);
+  const zone = (channel: number, gain?: (luma: number) => number): Zone => {
+    let n = 0;
+    for (let i = channel; i < m.length; i += 4) if (m[i] > 3) n++;
+    const idx = new Uint32Array(n), a = new Float32Array(n), k = gain ? new Float32Array(n) : undefined;
+    for (let i = 0, j = 0; i < W * H; i++) {
+      const v = m[i * 4 + channel];
+      if (v <= 3) continue;
+      idx[j] = i * 4;
+      a[j] = v / 255;
+      if (k && gain) k[j] = gain(0.2126 * base[i * 4] + 0.7152 * base[i * 4 + 1] + 0.0722 * base[i * 4 + 2]);
+      j++;
+    }
+    return { idx, a, k };
+  };
+  const next = document.createElement("canvas");
+  next.width = W;
+  next.height = H;
+  return {
+    base,
+    wall: zone(0),
+    shutters: zone(1, (L) => Math.pow(Math.min(1.25, L / REF.shutter), 0.75)),
+    door: zone(2, (L) => Math.min(1, 0.55 * Math.sqrt(Math.min(3.3, L / REF.door)))),
+    next,
+  };
+}
+
+/** Calcule la photo dans les teintes demandées (null = teinte d'origine). */
+function render(e: Engine, wallHex: string | null, accentHex: string | null) {
+  const out = new ImageData(W, H);
+  const d = out.data;
+  d.set(e.base);
+  if (wallHex) {
+    const c = rgb(wallHex).map((v, i) => (v * TINT[i]) / REF.wall[i]);
+    const { idx, a } = e.wall;
+    for (let j = 0; j < idx.length; j++) {
+      const p = idx[j], t = a[j];
+      d[p] += (Math.min(255, d[p] * c[0]) - d[p]) * t;
+      d[p + 1] += (Math.min(255, d[p + 1] * c[1]) - d[p + 1]) * t;
+      d[p + 2] += (Math.min(255, d[p + 2] * c[2]) - d[p + 2]) * t;
+    }
+  }
+  if (accentHex) {
+    const c = rgb(accentHex);
+    for (const z of [e.shutters, e.door]) {
+      const { idx, a, k } = z;
+      for (let j = 0; j < idx.length; j++) {
+        const p = idx[j], t = a[j], g = k![j];
+        d[p] += (Math.min(255, c[0] * g) - d[p]) * t;
+        d[p + 1] += (Math.min(255, c[1] * g) - d[p + 1]) * t;
+        d[p + 2] += (Math.min(255, c[2] * g) - d[p + 2]) * t;
+      }
+    }
+  }
+  return out;
+}
 
 export function Nuancier() {
-  const [wall, setWall] = useState<(typeof wallColors)[number]>(wallColors[1]);
-  const [accent, setAccent] = useState<(typeof accentColors)[number]>(accentColors[2]);
-  const [variant, setVariant] = useState<Variant>("pavillon");
+  const [wall, setWall] = useState<WallColor>(wallColors[0]);
+  const [accent, setAccent] = useState<AccentColor>(accentColors[0]);
+  const [live, setLive] = useState(false);
+  const section = useRef<HTMLElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const engine = useRef<Engine | null>(null);
+  const raf = useRef(0);
   const { goToQuote } = useQuote();
 
+  const paint = useCallback((w: WallColor, a: AccentColor, instant = false) => {
+    const e = engine.current, cv = canvas.current;
+    if (!e || !cv) return;
+    const ctx = cv.getContext("2d")!;
+    const img = render(e, w.id === wallColors[0].id ? null : w.hex, a.id === accentColors[0].id ? null : a.hex);
+    cancelAnimationFrame(raf.current);
+    if (instant || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return ctx.putImageData(img, 0, 0);
+    // fondu : la nouvelle image vient recouvrir l'ancienne en quelques images
+    e.next.getContext("2d")!.putImageData(img, 0, 0);
+    let frame = 0;
+    const step = () => {
+      frame++;
+      ctx.globalAlpha = frame >= 9 ? 1 : 0.32;
+      ctx.drawImage(e.next, 0, 0);
+      ctx.globalAlpha = 1;
+      if (frame < 9) raf.current = requestAnimationFrame(step);
+    };
+    raf.current = requestAnimationFrame(step);
+  }, []);
+
+  // le moteur ne se charge qu'à l'approche de la section
+  useEffect(() => {
+    const el = section.current;
+    if (!el) return;
+    let cancelled = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        buildEngine()
+          .then((e) => {
+            if (cancelled) return;
+            engine.current = e;
+            setLive(true);
+          })
+          .catch(() => {});
+      },
+      { rootMargin: "800px 0px" },
+    );
+    io.observe(el);
+    return () => {
+      cancelled = true;
+      io.disconnect();
+      cancelAnimationFrame(raf.current);
+    };
+  }, []);
+
+  const first = useRef(true);
+  useEffect(() => {
+    if (!live) return;
+    paint(wall, accent, first.current);
+    first.current = false;
+  }, [live, wall, accent, paint]);
+
   return (
-    <section id="teintes" className="px-5 py-24 md:py-36" aria-labelledby="teintes-title">
-      <div className="mx-auto grid max-w-[1200px] items-center gap-12 lg:grid-cols-[1.25fr_1fr]">
-        <div className="order-2 lg:order-1">
-          <div className="tile relative bg-[linear-gradient(180deg,#f7f8fa_0%,#eceff2_100%)] p-4 md:p-8">
-            <StaticFacade variant={variant} state="after" wallColor={wall.hex} accentColor={accent.hex} className="block w-full" title={`Aperçu en ${wall.name}, volets ${accent.name}`} />
-            <div className="absolute left-4 top-4 flex gap-1 rounded-full bg-white/85 p-1 backdrop-blur md:left-6 md:top-6">
-              {(["pavillon", "maison"] as const).map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  onClick={() => setVariant(v)}
-                  aria-pressed={variant === v}
-                  className={`h-8 rounded-full px-3 text-sm font-[540] transition-colors ${variant === v ? "bg-ardoise text-white" : "text-zinc hover:text-ardoise"}`}
-                >
-                  {v === "pavillon" ? "Pavillon" : "Maison de ville"}
-                </button>
-              ))}
-            </div>
-          </div>
+    <section ref={section} id="teintes" className="py-20 md:py-32" aria-labelledby="teintes-title">
+      <div className="wrap grid gap-x-16 gap-y-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-y-10">
+        <div className="lg:col-start-2 lg:row-start-1 lg:pt-4">
+          <h2 id="teintes-title" className="t-h2 max-w-[12ch]">
+            Et dans une autre teinte ?
+          </h2>
+          <p className="t-lede mt-4 max-w-[38ch] md:mt-6">Essayez les teintes de notre nuancier sur une vraie façade. Les ombres et la lumière restent celles de la photo.</p>
         </div>
 
-        <div className="order-1 lg:order-2">
-          <h2 id="teintes-title" className="headline text-[clamp(2rem,4.4vw,3.6rem)]">
-            Essayez votre teinte avant de choisir.
-          </h2>
-          <p className="lede mt-4">Choisissez la couleur du mur et des menuiseries. On l&apos;apporte en échantillon lors de la visite.</p>
+        <div className="relative -mx-5 aspect-[1200/1133] overflow-hidden bg-gris md:mx-0 md:rounded-[32px] lg:col-start-1 lg:row-span-2 lg:row-start-1">
+          {/* eslint-disable-next-line @next/next/no-img-element -- même fichier que celui lu par le canvas : un seul téléchargement */}
+          <img src={PHOTO} alt={`Façade de maison de ville, enduit ${wall.name.toLowerCase()}, volets ${accent.name.toLowerCase()}`} width={W} height={H} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+          <canvas ref={canvas} width={W} height={H} className={`absolute inset-0 h-full w-full ${live ? "opacity-100" : "opacity-0"}`} aria-hidden />
+          <p className="glass absolute bottom-4 left-4 rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] text-white md:bottom-6 md:left-6" aria-live="polite">
+            {wall.name}, volets {accent.name.toLowerCase()}
+          </p>
+        </div>
 
-          <fieldset className="mt-8">
-            <legend className="text-[0.95rem] font-[600]">Mur</legend>
-            <div className="mt-3 grid grid-cols-4 gap-2.5">
-              {wallColors.map((c) => {
-                const on = c.id === wall.id;
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => setWall(c)}
-                    aria-pressed={on}
-                    aria-label={`${c.name}, ${c.ref}`}
-                    className={`group overflow-hidden rounded-[14px] bg-white text-left shadow-[0_0_0_1px_rgba(26,30,36,0.08)] transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 ${
-                      on ? "!shadow-[0_0_0_2.5px_#2A3FF5]" : ""
-                    }`}
-                  >
-                    <span className="relative block h-14" style={{ background: c.hex }}>
-                      {on && (
-                        <span className="absolute right-1.5 top-1.5 grid h-5 w-5 place-items-center rounded-full bg-outremer text-white">
-                          <Check className="h-3.5 w-3.5" />
-                        </span>
-                      )}
-                    </span>
-                    <span className="block px-2 pb-2 pt-1.5">
-                      <span className="block truncate text-[0.78rem] font-[600] leading-tight">{c.name}</span>
-                      <span className="block text-[0.7rem] text-zinc">{c.ref}</span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </fieldset>
-
-          <fieldset className="mt-7">
-            <legend className="text-[0.95rem] font-[600]">
-              Volets et menuiseries <span className="font-normal text-zinc">({accent.name})</span>
-            </legend>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {accentColors.map((c) => {
-                const on = c.id === accent.id;
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => setAccent(c)}
-                    aria-pressed={on}
-                    aria-label={c.name}
-                    title={c.name}
-                    className={`h-10 w-10 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)] transition-transform hover:scale-105 ${on ? "ring-[2.5px] ring-outremer ring-offset-[3px]" : ""}`}
-                    style={{ background: c.hex }}
-                  />
-                );
-              })}
-            </div>
-          </fieldset>
-
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => goToQuote({ color: `${wall.name} (${wall.ref})`, accent: accent.name, works: ["Peinture"], source: "nuancier" })}
-            >
-              Demander un devis en {wall.name}
-            </button>
+        <div className="lg:col-start-2 lg:row-start-2">
+          <Swatches legend="Façade" detail={`${wall.name}, ${wall.ref}`} options={wallColors} value={wall.id} onChange={(c) => setWall(c)} cols={8} />
+          <div className="mt-8">
+            <Swatches legend="Volets et porte" detail={accent.name} options={accentColors} value={accent.id} onChange={(c) => setAccent(c)} cols={8} />
           </div>
-          <p className="mt-4 text-sm text-zinc">Rendu indicatif. Certaines communes encadrent les teintes autorisées, on vérifie pour vous avant les travaux.</p>
+          <button
+            type="button"
+            className="btn btn-ink mt-10 w-full md:w-auto"
+            onClick={() => goToQuote({ works: ["Peinture"], color: `${wall.name} (${wall.ref})`, accent: accent.name, source: "nuancier" })}
+          >
+            Demander un essai de cette teinte
+          </button>
+          <p className="mt-4 max-w-[46ch] text-[0.875rem] leading-[1.5] text-ardoise">Le rendu à l&apos;écran reste indicatif. Avant tout chantier, nous posons un essai de la teinte sur votre mur.</p>
         </div>
       </div>
     </section>
   );
+}
+
+function Swatches<T extends { id: string; name: string; hex: string }>({
+  legend,
+  detail,
+  options,
+  value,
+  onChange,
+  cols,
+}: {
+  legend: string;
+  detail: string;
+  options: readonly T[];
+  value: string;
+  onChange: (c: T) => void;
+  cols: number;
+}) {
+  return (
+    <div role="radiogroup" aria-label={legend}>
+      <div className="flex items-baseline justify-between gap-4">
+        <span className="t-label">{legend}</span>
+        <span className="text-[0.9375rem] text-ardoise">{detail}</span>
+      </div>
+      <div className="mt-3 grid gap-y-2" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+        {options.map((c) => {
+          const on = c.id === value;
+          return (
+            <label key={c.id} className="group relative grid aspect-square max-h-14 cursor-pointer place-items-center" title={c.name}>
+              <input type="radio" name={legend} className="peer sr-only" checked={on} onChange={() => onChange(c)} aria-label={c.name} />
+              <span
+                className="grid h-9 w-9 place-items-center rounded-full shadow-[inset_0_0_0_1px_rgb(14_26_38/0.14)] transition-[transform,box-shadow] duration-200 group-hover:scale-105 peer-checked:shadow-[inset_0_0_0_1px_rgb(14_26_38/0.14),0_0_0_3px_#fff,0_0_0_5px_var(--color-encre)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-[7px] peer-focus-visible:outline-ciel md:h-10 md:w-10"
+                style={{ background: c.hex }}
+              >
+                {on && <Check className={`h-4 w-4 ${luminance(c.hex) > 0.55 ? "text-encre" : "text-white"}`} />}
+              </span>
+            </label>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function luminance(hex: string) {
+  const [r, g, b] = rgb(hex);
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 }

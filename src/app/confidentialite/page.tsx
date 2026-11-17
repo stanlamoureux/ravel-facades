@@ -24,7 +24,7 @@ export default function Page() {
         . En cas de désaccord, vous pouvez saisir la CNIL.
       </p>
       <h2>Prestataires techniques</h2>
-      <p>Hébergement du site : Vercel. Stockage des demandes : Supabase (serveurs dans l&apos;Union européenne). Envoi des emails : Resend.</p>
+      <p>Hébergement du site : Vercel. Stockage des demandes : Supabase (serveurs dans l&apos;Union européenne). Envoi des emails : Resend.</p>
     </LegalLayout>
   );
 }

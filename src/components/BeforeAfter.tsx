@@ -1,105 +1,187 @@
 "use client";
 
-import { useState } from "react";
-import { StaticFacade } from "./facade/Facade";
-import type { Variant } from "./facade/specs";
+import Image from "next/image";
+import { animate } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { site } from "@/config/site";
+import { useQuote } from "./QuoteContext";
+import { Grip } from "./icons";
 
-const cases: { id: Variant; label: string; wall: string; accent: string; text: string }[] = [
+/** Chantiers du comparateur - DONNÉES TEST, à remplacer par de vrais chantiers du client. */
+const cases = [
   {
     id: "pavillon",
-    label: "Pavillon",
-    wall: "#E8DDC7",
-    accent: "#3E5A4A",
-    text: "Nettoyage, traitement des fissures et deux couches de peinture minérale. Compter 1 à 2 semaines pour un pavillon.",
-  },
-  {
-    id: "maison",
-    label: "Maison de ville",
-    wall: "#DDAA94",
-    accent: "#3D434A",
-    text: "Démoussage, reprise d'enduit et peinture, garde-corps et volets repeints. Compter 2 semaines environ.",
+    tab: "Pavillon",
+    before: { src: "/images/pavillon-avant.webp", alt: "Pavillon avant travaux : coulures noires, mousses et fissures" },
+    after: { src: "/images/pavillon-apres.webp", alt: "Le même pavillon après ravalement : enduit clair et uniforme" },
+    position: "50% 50%",
+    facts: [
+      ["Lieu", "Palaiseau, Essonne"],
+      ["Travaux", "Ravalement complet"],
+      ["Surface", "148 m² de façade"],
+      ["Durée", "3 semaines"],
+    ],
+    work: "Ravalement",
   },
   {
     id: "immeuble",
-    label: "Immeuble",
-    wall: "#F2EFE8",
-    accent: "#3D434A",
-    text: "Ravalement complet en copropriété, avec suivi du syndic et planning partagé. Compter 4 à 8 semaines selon la hauteur.",
+    tab: "Immeuble",
+    before: { src: "/images/immeuble-avant.webp", alt: "Petit immeuble avant travaux : enduit gris marqué de longues coulures sous chaque appui" },
+    after: { src: "/images/immeuble-apres.webp", alt: "Le même immeuble après ravalement : façade blanc cassé, encadrements nets" },
+    position: "50% 22%",
+    facts: [
+      ["Lieu", "Antony, Hauts-de-Seine"],
+      ["Travaux", "Ravalement et peinture"],
+      ["Surface", "620 m² de façade"],
+      ["Durée", "7 semaines"],
+    ],
+    work: "Ravalement",
   },
-];
+  {
+    id: "bourg",
+    tab: "Maison de bourg",
+    before: { src: "/images/bourg-avant.webp", alt: "Maison de bourg avant nettoyage : enduit couvert de mousse verte" },
+    after: { src: "/images/bourg-apres.webp", alt: "La même maison après nettoyage : enduit beige clair, pierres d'angle apparentes" },
+    position: "50% 60%",
+    facts: [
+      ["Lieu", "Étampes, Essonne"],
+      ["Travaux", "Nettoyage et hydrofuge"],
+      ["Surface", "190 m² de façade"],
+      ["Durée", "4 jours"],
+    ],
+    work: "Nettoyage",
+  },
+] as const;
 
 export function BeforeAfter() {
-  const [active, setActive] = useState<Variant>("pavillon");
+  const box = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
   const [pos, setPos] = useState(50);
-  const c = cases.find((x) => x.id === active)!;
+  const dragging = useRef(false);
+  const touched = useRef(false);
+  const { goToQuote } = useQuote();
+  const c = cases[active];
+
+  // à l'arrivée dans l'écran, la poignée oscille une fois pour montrer qu'elle se déplace
+  useEffect(() => {
+    const el = box.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let controls: ReturnType<typeof animate> | undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        if (touched.current) return;
+        controls = animate(50, [50, 68, 50], { duration: 1.5, ease: "easeInOut", delay: 0.25, onUpdate: (v) => !touched.current && setPos(v) });
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      controls?.stop();
+    };
+  }, []);
+
+  const fromPointer = useCallback((clientX: number) => {
+    const r = box.current?.getBoundingClientRect();
+    if (!r) return;
+    setPos(Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100)));
+  }, []);
 
   return (
-    <section id="avant-apres" className="bg-pierre px-5 py-24 md:py-36" aria-labelledby="ba-title">
-      <div className="mx-auto max-w-[1100px] text-center">
-        <h2 id="ba-title" className="headline text-[clamp(2rem,4.4vw,3.6rem)]">
-          Glissez pour voir la différence.
-        </h2>
-        <p className="lede mx-auto mt-4 max-w-[42ch]">Même maison, même jour. Juste dix ans de pluie et de pollution en moins.</p>
-
-        <div role="tablist" aria-label="Type de bâtiment" className="mx-auto mt-10 inline-flex rounded-full bg-white p-1 shadow-[inset_0_0_0_1px_rgba(26,30,36,0.06)]">
-          {cases.map((x) => (
+    <section id="avant-apres" className="bg-encre py-20 text-white md:py-32" aria-labelledby="ba-title">
+      <div className="wrap md:flex md:items-end md:justify-between md:gap-10">
+        <div>
+          <h2 id="ba-title" className="t-h2 max-w-[13ch]">
+            Même façade, quelques semaines plus tard.
+          </h2>
+          <p className="t-lede mt-4 max-w-[40ch] !text-white/65 md:mt-6">Faites glisser pour comparer&nbsp;: même cadrage, avant et après notre passage.</p>
+        </div>
+        <div className="snap-row -mx-5 mt-7 gap-2 px-5 md:mx-0 md:mt-0 md:px-0 md:pb-1" role="tablist" aria-label="Choisir un chantier">
+          {cases.map((x, i) => (
             <button
               key={x.id}
+              type="button"
               role="tab"
-              aria-selected={active === x.id}
+              aria-selected={i === active}
               onClick={() => {
-                setActive(x.id);
+                setActive(i);
                 setPos(50);
               }}
-              className={`h-10 rounded-full px-4 text-[0.95rem] font-[540] transition-colors md:px-6 ${
-                active === x.id ? "bg-ardoise text-white" : "text-zinc hover:text-ardoise"
-              }`}
+              className={`h-11 rounded-full px-5 text-[0.9375rem] font-[600] transition-colors duration-200 ${i === active ? "bg-white text-encre" : "bg-white/10 text-white hover:bg-white/16"}`}
             >
-              {x.label}
+              {x.tab}
             </button>
           ))}
         </div>
+      </div>
 
-        <div className="relative mx-auto mt-8 aspect-[4/3] md:aspect-[720/520] w-full max-w-[980px] select-none overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#ffffff_0%,#f3f5f7_70%,#e9ecef_100%)]">
-          <StaticFacade
-            variant={active}
-            state="after"
-            wallColor={c.wall}
-            accentColor={c.accent}
-            className="absolute inset-0 h-full w-full"
-            title={`${c.label} après rénovation`}
-          />
-          <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-            <StaticFacade variant={active} state="before" wallColor={c.wall} accentColor={c.accent} className="absolute inset-0 h-full w-full" title={`${c.label} avant rénovation`} />
+      <div className="mx-auto mt-7 max-w-[1200px] md:mt-12 md:px-8">
+        <div
+          ref={box}
+          role="tabpanel"
+          className="relative aspect-[4/3.3] touch-pan-y select-none overflow-hidden bg-encre-2 md:aspect-[16/9] md:rounded-[32px]"
+          style={{ ["--x" as string]: `${pos}%` }}
+          onPointerDown={(e) => {
+            touched.current = true;
+            dragging.current = true;
+            e.currentTarget.setPointerCapture(e.pointerId);
+            fromPointer(e.clientX);
+          }}
+          onPointerMove={(e) => dragging.current && fromPointer(e.clientX)}
+          onPointerUp={() => (dragging.current = false)}
+          onPointerCancel={() => (dragging.current = false)}
+        >
+          <Image key={c.after.src} src={c.after.src} alt={c.after.alt} fill quality={80} sizes="(min-width: 1200px) 1136px, 100vw" className="pointer-events-none object-cover" style={{ objectPosition: c.position }} draggable={false} />
+          <div className="absolute inset-0" style={{ clipPath: "inset(0 calc(100% - var(--x)) 0 0)" }}>
+            <Image key={c.before.src} src={c.before.src} alt={c.before.alt} fill quality={80} sizes="(min-width: 1200px) 1136px, 100vw" className="pointer-events-none object-cover" style={{ objectPosition: c.position }} draggable={false} />
           </div>
 
-          <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-ardoise/80 px-3 py-1 text-sm font-[560] text-white backdrop-blur md:left-6 md:top-6">Avant</span>
-          <span className="pointer-events-none absolute right-4 top-4 rounded-full bg-white px-3 py-1 text-sm font-[560] text-ardoise shadow-[0_2px_10px_rgba(26,30,36,0.12)] md:right-6 md:top-6">Après</span>
+          <span className="glass pointer-events-none absolute left-4 top-4 rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] transition-opacity duration-200 md:left-6 md:top-6" style={{ opacity: pos < 14 ? 0 : 1 }}>
+            Avant
+          </span>
+          <span className="glass pointer-events-none absolute right-4 top-4 rounded-full px-3.5 py-1.5 text-[0.8125rem] font-[600] transition-opacity duration-200 md:right-6 md:top-6" style={{ opacity: pos > 86 ? 0 : 1 }}>
+            Après
+          </span>
 
-          {/* poignée */}
-          <div className="pointer-events-none absolute inset-y-0" style={{ left: `${pos}%` }} aria-hidden>
-            <div className="absolute inset-y-0 -left-px w-[2px] bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06)]" />
-            <div className="absolute top-1/2 -ml-6 -mt-6 grid h-12 w-12 place-items-center rounded-full bg-white shadow-[0_6px_24px_rgba(26,30,36,0.25)]">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 text-ardoise" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 6l-5 6 5 6M15 6l5 6-5 6" />
-              </svg>
-            </div>
+          <div className="pointer-events-none absolute inset-y-0 w-[3px] -translate-x-1/2 bg-white" style={{ left: "var(--x)" }} aria-hidden>
+            <span className="absolute left-1/2 top-1/2 grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-encre shadow-[0_4px_20px_rgb(0_0_0/0.35)]">
+              <Grip className="h-5 w-5" />
+            </span>
           </div>
 
           <input
             type="range"
             min={0}
             max={100}
-            step={0.5}
-            value={pos}
-            onChange={(e) => setPos(Number(e.target.value))}
-            aria-label="Comparer avant et après"
-            aria-valuetext={`${Math.round(pos)} % avant`}
-            className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
+            step={1}
+            value={Math.round(pos)}
+            onChange={(e) => {
+              touched.current = true;
+              setPos(Number(e.target.value));
+            }}
+            aria-label="Position du comparateur avant / après"
+            className="absolute inset-x-0 bottom-0 h-12 w-full cursor-ew-resize opacity-0 focus-visible:opacity-100"
           />
         </div>
+      </div>
 
-        <p className="mx-auto mt-6 max-w-[56ch] text-zinc">{c.text}</p>
+      <div className="wrap mt-8 md:mt-12">
+        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-4 md:gap-x-10">
+            {c.facts.map(([k, v]) => (
+              <div key={k}>
+                <dt className="text-[0.8125rem] text-white/55">{k}</dt>
+                <dd className="mt-0.5 text-[1.0625rem] font-[600] tracking-[-0.01em]">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <button type="button" className="btn btn-white w-full md:w-auto" onClick={() => goToQuote({ works: [c.work], source: "avant-apres" })}>
+            Et chez moi, ça donnerait quoi&nbsp;?
+          </button>
+        </div>
+        {site.demo && <p className="mt-6 text-[0.8125rem] text-white/40">Chantiers présentés à titre d&apos;exemple.</p>}
       </div>
     </section>
   );

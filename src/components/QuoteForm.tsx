@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { site } from "@/config/site";
@@ -41,7 +42,6 @@ const initial: State = {
 
 const stepFields: (keyof State)[][] = [["works"], ["postalCode"], ["name", "phone", "email", "consent"]];
 const stepTitles = ["Vos travaux", "Votre projet", "Vos coordonnées"];
-const fmt = (n: number) => n.toLocaleString("fr-FR");
 
 /** Traduit un libellé du simulateur / des prestations vers les choix du formulaire. */
 function mapWork(label: string): string[] {
@@ -59,43 +59,49 @@ function mapWork(label: string): string[] {
 
 export function QuoteSection() {
   return (
-    <section id="devis" className="px-5 py-24 md:py-36" aria-labelledby="devis-title">
-      <div className="mx-auto grid max-w-[1200px] gap-x-16 gap-y-10 lg:grid-cols-[1fr_1.15fr] lg:grid-rows-[auto_1fr]">
-        <div className="lg:col-start-1 lg:row-start-1">
-          <h2 id="devis-title" className="display text-[clamp(2.4rem,5.4vw,4.6rem)]">
+    <section id="devis" className="relative pb-20 md:pb-32" aria-labelledby="devis-title">
+      {/* le ciel et le faîtage de la maison du haut de page */}
+      <div className="relative h-[400px] overflow-hidden bg-[#2a6a9e] md:h-[540px]">
+        <Image src="/images/ciel.webp" alt="" fill quality={80} sizes="100vw" className="object-cover object-bottom md:object-[50%_56%]" />
+        <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-[#0b2740]/45 to-transparent" aria-hidden />
+        <div className="wrap relative pt-14 text-white md:pt-24">
+          <h2 id="devis-title" className="t-h2 max-w-[11ch]">
             Parlons de votre façade.
           </h2>
-          <p className="lede mt-5 max-w-[40ch]">Trois questions, une minute. On vous rappelle pour fixer la visite, et vous recevez un devis détaillé.</p>
+          <p className="t-lede mt-4 max-w-[30ch] !text-white/90 md:mt-6 md:max-w-[34ch]">Trois questions, une minute. On vous rappelle sous {site.callbackDelay} pour fixer la visite.</p>
         </div>
-        <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+      </div>
+
+      <div className="wrap relative -mt-[72px] grid gap-x-14 gap-y-12 md:-mt-[150px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+        <div data-form-zone className="lg:col-start-2 lg:row-start-1 lg:-mt-[150px]">
           <QuoteForm />
         </div>
-        <div className="lg:col-start-1 lg:row-start-2">
-          <ul className="space-y-5">
+        <div className="lg:col-start-1 lg:row-start-1 lg:pt-[190px]">
+          <ul className="space-y-6">
             {[
               { icon: Clock, t: `Rappel sous ${site.callbackDelay}`, d: "Du lundi au samedi, par un technicien, pas par un centre d'appels." },
-              { icon: Check, t: "Visite et devis gratuits", d: `Devis poste par poste sous ${site.quoteDelay} après la visite.` },
-              { icon: Shield, t: "Sans engagement", d: "Vous décidez à votre rythme. Pas de relance insistante." },
+              { icon: Check, t: "Visite et devis gratuits", d: `Un devis poste par poste, sous ${site.quoteDelay} après la visite.` },
+              { icon: Shield, t: "Sans engagement", d: "Vous décidez à votre rythme. Aucune relance insistante." },
             ].map(({ icon: Icon, t, d }) => (
               <li key={t} className="flex gap-4">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-pierre text-outremer">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gris">
                   <Icon className="h-5 w-5" />
                 </span>
                 <span>
-                  <span className="block font-[620]">{t}</span>
-                  <span className="block text-zinc">{d}</span>
+                  <span className="block text-[1.0625rem] font-[620] tracking-[-0.01em]">{t}</span>
+                  <span className="mt-0.5 block leading-[1.5] text-ardoise">{d}</span>
                 </span>
               </li>
             ))}
           </ul>
-          <a href={`tel:${site.phoneHref}`} className="mt-10 flex items-center gap-4 rounded-[24px] bg-ardoise p-6 text-white transition-colors hover:bg-ardoise-2">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-outremer">
-              <Phone className="h-6 w-6" />
+          <a href={`tel:${site.phoneHref}`} className="mt-10 flex items-center gap-4 rounded-[24px] bg-gris p-5 transition-colors hover:bg-gris-2 md:p-6">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-encre text-white">
+              <Phone className="h-[1.35rem] w-[1.35rem]" />
             </span>
             <span>
-              <span className="block text-white/65">Plutôt par téléphone ?</span>
-              <span className="headline block text-[1.7rem] tabular-nums">{site.phone}</span>
-              <span className="block text-sm text-white/55">{site.hours}</span>
+              <span className="block text-[0.9375rem] text-ardoise">Plutôt par téléphone ?</span>
+              <span className="block text-[1.625rem] font-[650] leading-tight tracking-[-0.03em] tabular-nums">{site.phone}</span>
+              <span className="block text-[0.875rem] text-ardoise">{site.hours}</span>
             </span>
           </a>
         </div>
@@ -112,7 +118,18 @@ function QuoteForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [serverError, setServerError] = useState("");
   const startedAt = useRef<number>(0);
-  const estimate = prefill.estimate;
+  const form = useRef<HTMLFormElement>(null);
+
+  // à chaque changement d'étape, le haut du formulaire revient sous la barre de navigation
+  const firstStep = useRef(true);
+  useEffect(() => {
+    if (firstStep.current) {
+      firstStep.current = false;
+      return;
+    }
+    const el = form.current;
+    if (el && el.getBoundingClientRect().top < 76) window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 92, behavior: "smooth" });
+  }, [step]);
 
   useEffect(() => {
     startedAt.current = Date.now();
@@ -150,8 +167,6 @@ function QuoteForm() {
     timeline: s.timeline,
     color: s.color,
     accent: s.accent,
-    estimateLow: estimate?.low,
-    estimateHigh: estimate?.high,
     name: s.name,
     phone: s.phone,
     email: s.email,
@@ -174,7 +189,9 @@ function QuoteForm() {
       if (fields.includes(k) && !errs[k]) errs[k] = issue.message;
     }
     setErrors(errs);
-    return Object.keys(errs).length === 0;
+    const ok = Object.keys(errs).length === 0;
+    if (!ok) requestAnimationFrame(() => (form.current?.querySelector('[aria-invalid="true"]') as HTMLElement | null)?.focus());
+    return ok;
   };
 
   const next = () => {
@@ -200,16 +217,16 @@ function QuoteForm() {
 
   if (status === "done") {
     return (
-      <div className="tile flex flex-col items-start justify-center p-8 md:p-12" role="status">
-        <span className="grid h-14 w-14 place-items-center rounded-full bg-outremer text-white">
+      <div className="flex min-h-[420px] flex-col items-start justify-center rounded-[28px] bg-white p-7 shadow-[0_30px_80px_-30px_rgb(14_26_38/0.4)] md:rounded-[32px] md:p-12" role="status">
+        <span className="grid h-14 w-14 place-items-center rounded-full bg-volet text-white">
           <Check className="h-7 w-7" />
         </span>
-        <h3 className="headline mt-6 text-[2.2rem]">Demande envoyée.</h3>
-        <p className="lede mt-3 max-w-[38ch]">
+        <h3 className="mt-6 text-[2rem] font-[650] leading-[1.05] tracking-[-0.03em]">Demande envoyée.</h3>
+        <p className="t-lede mt-3 max-w-[38ch]">
           Merci {s.name.split(" ")[0]}. Un technicien vous rappelle sous {site.callbackDelay} au {s.phone} pour fixer la visite.
         </p>
-        <p className="mt-8 text-zinc">
-          Une question d&apos;ici là ?{" "}
+        <p className="mt-8 text-ardoise">
+          Une question d&apos;ici là ?{" "}
           <a className="link" href={`tel:${site.phoneHref}`}>
             Appelez le {site.phone}
           </a>
@@ -219,17 +236,17 @@ function QuoteForm() {
   }
 
   return (
-    <form onSubmit={submit} noValidate className="tile relative p-6 md:p-10" aria-labelledby="form-step-title">
-      <div className="flex items-center justify-between text-[0.9rem]">
-        <p className="font-[600] text-outremer">Étape {step + 1} sur 3</p>
-        <p className="text-zinc">Environ 1 minute</p>
+    <form ref={form} onSubmit={submit} noValidate className="relative rounded-[28px] bg-white p-5 shadow-[0_30px_80px_-30px_rgb(14_26_38/0.4)] ring-1 ring-encre/[0.04] md:rounded-[32px] md:p-10" aria-labelledby="form-step-title">
+      <div className="flex items-center justify-between text-[0.875rem]">
+        <p className="font-[600]">Étape {step + 1} sur 3</p>
+        <p className="text-ardoise">Environ 1 minute</p>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-1.5" aria-hidden>
         {[0, 1, 2].map((i) => (
-          <span key={i} className={`h-1 rounded-full transition-colors duration-300 ${i <= step ? "bg-outremer" : "bg-pierre-2"}`} />
+          <span key={i} className={`h-1 rounded-full transition-colors duration-300 ${i <= step ? "bg-encre" : "bg-gris-2"}`} />
         ))}
       </div>
-      <h3 id="form-step-title" className="headline mt-6 text-[1.9rem]">
+      <h3 id="form-step-title" className="mt-6 text-[1.75rem] font-[650] leading-[1.1] tracking-[-0.03em]">
         {stepTitles[step]}
       </h3>
 
@@ -253,7 +270,7 @@ function QuoteForm() {
           {step === 0 && (
             <div className="space-y-7">
               <fieldset>
-                <legend className="text-[0.95rem] font-[600]">Quels travaux ? Plusieurs choix possibles.</legend>
+                <legend className="t-label">Quels travaux ? Plusieurs choix possibles.</legend>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {WORK_OPTIONS.map((w, i) => {
                     const on = s.works.includes(w);
@@ -273,10 +290,10 @@ function QuoteForm() {
                     );
                   })}
                 </div>
-                {errors.works && <p className="mt-2 text-sm text-[#d93a3a]">{errors.works}</p>}
+                {errors.works && <p className="mt-2 text-sm text-alerte">{errors.works}</p>}
               </fieldset>
               <fieldset>
-                <legend className="text-[0.95rem] font-[600]">Type de bien</legend>
+                <legend className="t-label">Type de bien</legend>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {PROPERTY_OPTIONS.map((p) => (
                     <button key={p} type="button" className="chip" data-on={s.property === p} aria-pressed={s.property === p} onClick={() => set("property", s.property === p ? "" : p)}>
@@ -285,23 +302,11 @@ function QuoteForm() {
                   ))}
                 </div>
               </fieldset>
-              {(s.color || estimate) && (
-                <div className="rounded-2xl bg-white p-4 text-[0.95rem]">
-                  {estimate && (
-                    <p>
-                      Votre estimation :{" "}
-                      <strong className="font-[620]">
-                        {fmt(estimate.low)} à {fmt(estimate.high)} €
-                      </strong>
-                    </p>
-                  )}
-                  {s.color && (
-                    <p className={estimate ? "mt-1" : ""}>
-                      Teinte choisie : <strong className="font-[620]">{s.color}</strong>
-                      {s.accent && <>, menuiseries {s.accent.toLowerCase()}</>}
-                    </p>
-                  )}
-                </div>
+              {s.color && (
+                <p className="rounded-2xl bg-gris p-4 text-[0.9375rem]">
+                  Teinte choisie&nbsp;: <strong className="font-[640]">{s.color}</strong>
+                  {s.accent && <>, menuiseries {s.accent.toLowerCase()}</>}
+                </p>
               )}
             </div>
           )}
@@ -327,7 +332,7 @@ function QuoteForm() {
                 </Field>
               </div>
               <fieldset>
-                <legend className="text-[0.95rem] font-[600]">Quand souhaitez-vous démarrer ?</legend>
+                <legend className="t-label">Quand souhaitez-vous démarrer ?</legend>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {TIMELINE_OPTIONS.map((t) => (
                     <button key={t} type="button" className="chip" data-on={s.timeline === t} aria-pressed={s.timeline === t} onClick={() => set("timeline", s.timeline === t ? "" : t)}>
@@ -355,8 +360,8 @@ function QuoteForm() {
               <Field label="Un détail à nous signaler ? (facultatif)">
                 <textarea className="field" rows={3} value={s.message} onChange={(e) => set("message", e.target.value)} placeholder="Accès difficile, fissures, copropriété..." />
               </Field>
-              <label className="flex cursor-pointer items-start gap-3 pt-1 text-[0.9rem] text-zinc">
-                <input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-[#2A3FF5]" checked={s.consent} onChange={(e) => set("consent", e.target.checked)} aria-invalid={!!errors.consent} />
+              <label className="flex cursor-pointer items-start gap-3 pt-1 text-[0.875rem] leading-[1.5] text-ardoise">
+                <input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-[#0e1a26]" checked={s.consent} onChange={(e) => set("consent", e.target.checked)} aria-invalid={!!errors.consent} />
                 <span>
                   J&apos;accepte d&apos;être recontacté au sujet de ma demande. Mes données ne sont ni revendues ni utilisées pour de la publicité.{" "}
                   <a href="/confidentialite" className="link">
@@ -364,31 +369,29 @@ function QuoteForm() {
                   </a>
                 </span>
               </label>
-              {errors.consent && <p className="text-sm text-[#d93a3a]">{errors.consent}</p>}
+              {errors.consent && <p className="text-sm text-alerte">{errors.consent}</p>}
             </div>
           )}
         </motion.div>
       </AnimatePresence>
 
       {status === "error" && (
-        <p className="mt-6 rounded-2xl bg-[#fdeaea] p-4 text-[0.95rem] text-[#8a1f1f]" role="alert">
+        <p className="mt-6 rounded-2xl bg-[#fdeceb] p-4 text-[0.9375rem] text-[#8a1f1f]" role="alert">
           {serverError}. Réessayez, ou appelez directement le{" "}
-          <a className="font-[620] underline" href={`tel:${site.phoneHref}`}>
+          <a className="font-[640] underline" href={`tel:${site.phoneHref}`}>
             {site.phone}
           </a>
           .
         </p>
       )}
 
-      <div className="mt-8 flex items-center justify-between gap-3">
-        {step > 0 ? (
-          <button type="button" className="btn btn-light" onClick={() => setStep((x) => x - 1)}>
+      <div className="mt-8 flex items-center gap-3">
+        {step > 0 && (
+          <button type="button" className="btn btn-soft" onClick={() => setStep((x) => x - 1)}>
             Retour
           </button>
-        ) : (
-          <span />
         )}
-        <button type="submit" className="btn btn-primary !h-13 min-w-[11rem] !px-7 text-[1.02rem]" disabled={status === "sending"}>
+        <button type="submit" className="btn btn-ink flex-1" disabled={status === "sending"}>
           {step < 2 ? "Continuer" : status === "sending" ? "Envoi en cours..." : "Envoyer ma demande"}
         </button>
       </div>
@@ -399,10 +402,10 @@ function QuoteForm() {
 function Field({ label, hint, error, children }: { label: string; hint?: string; error?: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="text-[0.95rem] font-[600]">{label}</span>
-      {hint && <span className="ml-2 text-[0.82rem] text-zinc">{hint}</span>}
+      <span className="t-label">{label}</span>
+      {hint && <span className="ml-2 text-[0.8125rem] font-normal text-ardoise">{hint}</span>}
       <span className="mt-2 block">{children}</span>
-      {error && <span className="mt-1.5 block text-sm text-[#d93a3a]">{error}</span>}
+      {error && <span className="mt-1.5 block text-sm text-alerte">{error}</span>}
     </label>
   );
 }

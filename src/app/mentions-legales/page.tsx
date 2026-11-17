@@ -12,16 +12,16 @@ export default function Page() {
       <p>
         {site.legalName}, société par actions simplifiée.
         <br />
-        Siège : {site.address.street}, {site.address.postalCode} {site.address.city}
+        Siège : {site.address.street}, {site.address.postalCode} {site.address.city}
         <br />
         SIRET : {site.siret}
         <br />
-        Téléphone : {site.phone}, email : {site.email}
+        Téléphone : {site.phone}, email : {site.email}
         <br />
-        Directeur de la publication : [nom du dirigeant]
+        Directeur de la publication : [nom du dirigeant]
       </p>
       <h2>Assurance professionnelle</h2>
-      <p>Assurance décennale : [assureur], contrat n° [numéro], couverture géographique : France métropolitaine.</p>
+      <p>Assurance décennale : [assureur], contrat n° [numéro], couverture géographique : France métropolitaine.</p>
       <h2>Hébergement</h2>
       <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
       <h2>Propriété intellectuelle</h2>

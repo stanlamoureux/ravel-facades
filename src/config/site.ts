@@ -39,6 +39,9 @@ export const site = {
 
   rating: { value: 4.9, count: 327 },
 
+  /** Légende de la photo d'équipe */
+  teamCaption: "Marc, Thomas et Julie, trois des douze compagnons de l'équipe.",
+
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },
     { value: 15, suffix: " ans", label: "d'expérience en ravalement" },

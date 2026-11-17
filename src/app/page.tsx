@@ -6,6 +6,7 @@ import { Hero } from "@/components/Hero";
 import { Proof } from "@/components/Proof";
 import { Services } from "@/components/Services";
 import { BeforeAfter } from "@/components/BeforeAfter";
+import { Gallery } from "@/components/Gallery";
 import { Nuancier } from "@/components/Nuancier";
 import { Simulator } from "@/components/Simulator";
 import { Journey } from "@/components/Journey";
@@ -44,7 +45,7 @@ export default function Home() {
   return (
     <QuoteProvider>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <a href="#devis" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2">
+      <a href="#devis" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg">
         Aller au formulaire de devis
       </a>
       <Nav />
@@ -53,6 +54,7 @@ export default function Home() {
         <Proof />
         <Services />
         <BeforeAfter />
+        <Gallery />
         <Nuancier />
         <Simulator />
         <Journey />

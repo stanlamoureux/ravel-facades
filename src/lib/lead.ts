@@ -28,5 +28,24 @@ export const leadSchema = z.object({
   startedAt: z.number().optional(),
 });
 
+/** Demande d'estimation depuis le simulateur : l'email est obligatoire, c'est là que part le chiffre. */
+export const estimateSchema = z.object({
+  work: z.string().max(40),
+  property: z.string().max(40),
+  condition: z.string().max(40),
+  height: z.string().max(40),
+  surface: z.number().int().min(20).max(5000),
+  postalCode: z.string().trim().regex(/^\d{5}$/, "Code postal à 5 chiffres"),
+  name: z.string().trim().min(2, "Indiquez votre nom").max(120),
+  email: z.string().trim().email("Adresse email invalide").max(200),
+  phone: z.string().trim().regex(phoneRe, "Numéro de téléphone français à 10 chiffres"),
+  consent: z.literal(true, { message: "Votre accord est nécessaire pour recevoir l'estimation" }),
+  page: z.string().max(500).optional().default(""),
+  utm: z.record(z.string(), z.string().max(200)).optional().default({}),
+  website: z.string().max(0).optional().default(""), // pot de miel anti-robots
+  startedAt: z.number().optional(),
+});
+
+export type EstimateRequest = z.output<typeof estimateSchema>;
 export type LeadInput = z.input<typeof leadSchema>;
 export type Lead = z.output<typeof leadSchema>;
