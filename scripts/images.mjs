@@ -15,14 +15,13 @@
  * public/images avec les mêmes noms, ce script ne touchera plus à rien.
  */
 import sharp from "sharp";
-import { access, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const OUT = "public/images";
 const CACHES = [".next/cache/ravel-images-v4", "node_modules/.cache/ravel-images-v4"];
 const LOCAL = process.env.RAVEL_SRC_DIR;
 const FORCE = process.argv.includes("--force");
-const DEBUG = process.env.RAVEL_DEBUG_DIR;
 
 const KIE = "https://tempfile.aiquickdraw.com/js/p6/";
 const SOURCES = Object.fromEntries(
@@ -101,9 +100,16 @@ async function loadRGB(name, w, h) {
     }
     if (!buf) throw new Error(`Source locale introuvable : ${name}`);
   } else {
-    const res = await fetch(SOURCES[name]);
-    if (!res.ok) throw new Error(`Téléchargement impossible (${res.status}) : ${SOURCES[name]}`);
-    buf = Buffer.from(await res.arrayBuffer());
+    for (let attempt = 1; !buf; attempt++) {
+      try {
+        const res = await fetch(SOURCES[name]);
+        if (!res.ok) throw new Error(`réponse ${res.status}`);
+        buf = Buffer.from(await res.arrayBuffer());
+      } catch (e) {
+        if (attempt === 3) throw new Error(`Téléchargement impossible de ${SOURCES[name]} (${e.message})`);
+        await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+    }
   }
   let img = sharp(buf).removeAlpha().toColourspace("srgb");
   if (w && h) img = img.resize(w, h, { fit: "fill", kernel: "lanczos3" });
@@ -444,7 +450,6 @@ async function main() {
   console.log(`images : générées en ${((Date.now() - t) / 1000).toFixed(1)} s`);
 }
 
-export { nuancier, NU, loadRGB, fromRGB, fromGray, crop, hsv, maskFrom, erode, dilate, open, close, blurMask, webp, pair, OUT, DEBUG };
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch((e) => {
