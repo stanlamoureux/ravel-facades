@@ -179,7 +179,7 @@ export function Nuancier() {
           <p className="t-lede mt-4 max-w-[38ch] md:mt-6">Essayez les teintes de notre nuancier sur une vraie façade. Les ombres et la lumière restent celles de la photo.</p>
         </div>
 
-        <div className="sticky top-16 z-10 -mx-5 aspect-[4/3] overflow-hidden bg-gris shadow-[0_10px_24px_-14px_rgb(14_26_38/0.45)] md:static md:mx-0 md:aspect-[1200/1133] md:rounded-[32px] md:shadow-none lg:col-start-1 lg:row-span-2 lg:row-start-1">
+        <div className="sticky top-16 z-10 -mx-5 aspect-[4/3] overflow-hidden bg-gris shadow-[0_10px_24px_-14px_rgb(14_26_38/0.45)] md:relative md:z-auto md:mx-0 md:aspect-[1200/1133] md:rounded-[32px] md:shadow-none lg:col-start-1 lg:row-span-2 lg:row-start-1">
           {/* eslint-disable-next-line @next/next/no-img-element -- même fichier que celui lu par le canvas : un seul téléchargement */}
           <img src={PHOTO} alt={`Façade de maison de ville, enduit ${wall.name.toLowerCase()}, volets ${accent.name.toLowerCase()}`} width={W} height={H} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center" />
           <canvas ref={canvas} width={W} height={H} className={`absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center ${live ? "opacity-100" : "opacity-0"}`} aria-hidden />
