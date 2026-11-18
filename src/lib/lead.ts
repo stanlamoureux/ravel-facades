@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const WORK_OPTIONS = ["Nettoyage", "Démoussage", "Peinture", "Ravalement", "Hydrofuge", "Fissures", "ITE", "Je ne sais pas encore"] as const;
+export const WORK_OPTIONS = ["Nettoyage", "Démoussage", "Peinture", "Ravalement", "Hydrofuge", "Fissures", "ITE", "Couverture", "Je ne sais pas encore"] as const;
 export const PROPERTY_OPTIONS = ["Maison", "Maison mitoyenne", "Immeuble", "Local professionnel"] as const;
 export const TIMELINE_OPTIONS = ["Dès que possible", "Dans 1 à 3 mois", "Dans plus de 3 mois", "Je me renseigne"] as const;
 

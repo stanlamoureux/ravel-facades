@@ -55,9 +55,9 @@ export const fiches: Record<ServiceId, Fiche> = {
     signs: ["Des coulures noires sous les appuis de fenêtre", "Une façade nord qui verdit", "Un enduit sain, mais terne", "Avant une mise en peinture ou un hydrofuge"],
   },
   peinture: {
-    slug: "peinture-facade",
-    title: "Peinture de façade",
-    lede: "Une préparation soignée, une couche d'impression, deux couches de finition. Et vous choisissez la teinte sur votre mur, pas sur un nuancier en papier.",
+    slug: "peinture-interieure-exterieure",
+    title: "Peinture intérieure et extérieure",
+    lede: "Façade, séjour, chambres ou cage d'escalier : une préparation soignée, une impression, deux couches de finition. Et vous choisissez la teinte sur votre mur, pas sur un nuancier en papier.",
     photo: { src: "/images/service-peinture.webp", alt: "Un peintre passe au rouleau une première bande claire sur une façade ocre", position: "50% 35%" },
     facts: [
       ["Durée du chantier", "1 à 2 semaines"],
@@ -70,9 +70,10 @@ export const fiches: Record<ServiceId, Fiche> = {
       "Couche d'impression fixatrice",
       "Deux couches de peinture minérale ou pliolite",
       "Essai de teinte grandeur nature avant de valider",
+      "Pièces de vie, plafonds et boiseries à l'intérieur",
       "Volets, sous-faces et ferronneries sur demande",
     ],
-    signs: ["La teinte a passé, ou farine au toucher", "Vous voulez changer de couleur", "L'enduit est sain, mais taché", "Après un nettoyage, pour protéger durablement"],
+    signs: ["La teinte a passé, ou farine au toucher", "Vous emménagez ou vous rafraîchissez une pièce", "L'enduit est sain, mais taché", "Après un nettoyage, pour protéger durablement"],
   },
   hydrofuge: {
     slug: "hydrofuge-facade",
@@ -132,13 +133,35 @@ export const fiches: Record<ServiceId, Fiche> = {
     ],
     signs: ["Des murs froids et des factures de chauffage qui grimpent", "Un ravalement à faire de toute façon", "Pas de place pour isoler par l'intérieur", "Une vente ou une location à préparer"],
   },
+  couverture: {
+    slug: "couverture-zinguerie",
+    title: "Couverture et zinguerie",
+    lede: "Tuiles cassées, mousses, gouttières qui débordent : un toit qui fuit finit toujours par abîmer la façade. On répare, on traite ou on refait, avec la même équipe que pour vos murs.",
+    photo: { src: "/images/couverture-chantier.webp", alt: "Un couvreur pose des tuiles neuves en terre cuite sur un toit en pente", position: "50% 40%" },
+    facts: [
+      ["Durée du chantier", "2 jours à 3 semaines"],
+      ["Diagnostic", "Gratuit"],
+      ["Garantie", "Décennale"],
+    ],
+    includes: [
+      "Inspection de la toiture, photos à l'appui",
+      "Remplacement des tuiles cassées ou poreuses",
+      "Démoussage et traitement hydrofuge des tuiles",
+      "Réfection complète : liteaux, écran sous toiture, tuiles neuves",
+      "Gouttières, descentes et faîtage refaits à neuf",
+      "Nettoyage du chantier et évacuation des déchets",
+    ],
+    signs: ["Une tache d'humidité au plafond", "Des tuiles glissées ou cassées après un coup de vent", "Une toiture verte de mousse", "Des gouttières qui débordent ou qui fuient"],
+  },
 };
 
 export const ficheHref = (id: ServiceId) => `/prestations/${fiches[id].slug}`;
 
 /** Le reste de chaque fiche : un chantier à comparer, le déroulé, un avis et les questions qu'on nous pose. */
 export type Extra = {
-  compare: { before: string; after: string; caption: string; position?: string };
+  compare?: { before: string; after: string; caption: string; position?: string };
+  /** À défaut d'avant / après : deux photos de chantier. */
+  photos?: { src: string; alt: string }[];
   steps: [string, string][];
   review: string; // nom de l'avis à citer, pris dans site.reviews
   faq: [string, string][];
@@ -233,6 +256,24 @@ export const extras: Record<ServiceId, Extra> = {
       ["Combien gagne-t-on sur le chauffage ?", "Cela dépend de la maison. L'étude de départ vous donne une estimation avant de vous engager."],
       ["Existe-t-il des aides ?", "Souvent, selon vos revenus et votre logement. On vous aide à monter les dossiers."],
       ["Perd-on de la surface ?", "Non à l'intérieur. La façade s'épaissit de quelques centimètres vers l'extérieur."],
+    ],
+  },
+  couverture: {
+    photos: [
+      { src: "/images/couverture-toiture.webp", alt: "Maison à la toiture en tuiles refaite à neuf, gouttières en zinc" },
+      { src: "/images/couverture-zinguerie.webp", alt: "Gouttière et descente en zinc neuves sous des tuiles en terre cuite" },
+    ],
+    steps: [
+      ["Inspection", "On monte sur le toit, on photographie et on vous montre ce qu'on voit."],
+      ["Protection", "Échafaudage ou nacelle, bâches et filets autour de la maison."],
+      ["Travaux", "Tuiles, écran, faîtage ou gouttières, selon le diagnostic."],
+      ["Contrôle", "Test à l'eau des gouttières et tour du toit avec vous."],
+    ],
+    review: "Marc D.",
+    faq: [
+      ["Faut-il refaire tout le toit ?", "Rarement. Dans la plupart des cas, remplacer quelques tuiles et refaire la zinguerie suffit."],
+      ["Intervenez-vous en urgence après une tempête ?", "Oui, on bâche sous 48 h pour mettre la maison hors d'eau, puis on répare."],
+      ["Toiture et façade en même temps ?", "C'est l'idéal : un seul échafaudage, un seul chantier, et la façade neuve est protégée tout de suite."],
     ],
   },
 };

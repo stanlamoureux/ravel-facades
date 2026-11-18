@@ -49,6 +49,10 @@ const SOURCES = Object.fromEntries(
     "g-pavillon": "2702d0a9852d",
     "g-longere": "5d1d32ced6bd",
     "equipe": "b1209985cc16",
+    "couv-chantier": "f28bc78c19c4",
+    "couv-toiture": "f01cdac2a783",
+    "couv-zinguerie": "eee84d6c7916",
+    "peint-interieur": "2d4101f30f40",
   }).map(([name, id]) => [name, `${KIE}${id}.jpg`]),
 );
 
@@ -430,7 +434,43 @@ async function generate() {
   await plain("equipe", [1600, 1070], "equipe.webp");
 }
 
+/**
+ * Visuels ajoutés après coup (chapitres Peinture et Couverture). Ils ont leur propre liste
+ * pour ne pas relancer tout le traitement des photos déjà prêtes.
+ */
+const EXTRAS = {
+  "peinture-interieure.webp": ["peint-interieur", [880, 1184], { crop: [0, 40, 880, 1144] }],
+  "couverture-chantier.webp": ["couv-chantier", [880, 1184], { crop: [0, 40, 880, 1144] }],
+  "couverture-toiture.webp": ["couv-toiture", [1184, 880], {}],
+  "couverture-zinguerie.webp": ["couv-zinguerie", [1024, 1024], { width: 720 }],
+};
+
+async function extras() {
+  for (const [file, [name, size, opts]] of Object.entries(EXTRAS)) {
+    const out = path.join(OUT, file);
+    if (!FORCE && (await exists(out))) continue;
+    let cached = null;
+    for (const c of CACHES) if (!cached && (await exists(path.join(c, file)))) cached = path.join(c, file);
+    if (cached && !FORCE) await copyFile(cached, out);
+    else {
+      const im = await loadRGB(name, ...size);
+      await webp(opts.crop ? crop(im, ...opts.crop) : im, file, { width: opts.width, quality: 84 });
+      for (const c of CACHES) {
+        try {
+          await mkdir(c, { recursive: true });
+          await copyFile(out, path.join(c, file));
+        } catch {}
+      }
+    }
+  }
+}
+
 async function main() {
+  await base();
+  await extras();
+}
+
+async function base() {
   if (!FORCE && (await allIn(OUT))) return console.log("images : déjà prêtes");
   if (!FORCE)
     for (const c of CACHES)

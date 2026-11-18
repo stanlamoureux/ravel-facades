@@ -3,9 +3,9 @@
  * Aucun prix ici : ils vivent dans pricing.ts, lu uniquement par le serveur.
  */
 
-export type ServiceId = "nettoyage" | "hydrofuge" | "peinture" | "ravalement" | "fissures" | "ite";
+export type ServiceId = "nettoyage" | "hydrofuge" | "peinture" | "ravalement" | "fissures" | "ite" | "couverture";
 
-export const services: { id: ServiceId; name: string; short: string; description: string; duration: string; estimateAs: WorkId }[] = [
+export const services: { id: ServiceId; name: string; short: string; description: string; duration: string; estimateAs?: WorkId }[] = [
   {
     id: "ravalement",
     name: "Ravalement complet",
@@ -24,9 +24,9 @@ export const services: { id: ServiceId; name: string; short: string; description
   },
   {
     id: "peinture",
-    name: "Peinture de façade",
+    name: "Peinture intérieure et extérieure",
     short: "Peinture",
-    description: "Préparation, impression et deux couches de peinture minérale ou pliolite. Plus de 80 teintes, testées sur votre mur avant de choisir.",
+    description: "Façades, pièces de vie, cages d'escalier : préparation soignée et deux couches de finition. Plus de 80 teintes, testées sur votre mur avant de choisir.",
     duration: "1 à 2 semaines",
     estimateAs: "peinture",
   },
@@ -53,6 +53,13 @@ export const services: { id: ServiceId; name: string; short: string; description
     description: "Isolant et enduit de finition en une seule opération : une façade neuve, et des murs qui ne laissent plus filer la chaleur. Des aides peuvent exister selon votre situation.",
     duration: "3 à 6 semaines",
     estimateAs: "ite",
+  },
+  {
+    id: "couverture",
+    name: "Couverture et zinguerie",
+    short: "Couverture",
+    description: "Réfection de toiture, remplacement de tuiles, démoussage et traitement, gouttières et zinguerie neuves. Le toit protège la façade : on s'occupe des deux.",
+    duration: "2 jours à 3 semaines",
   },
 ];
 

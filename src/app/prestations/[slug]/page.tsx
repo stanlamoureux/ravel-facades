@@ -45,7 +45,8 @@ export default async function Page({ params }: Props) {
   const review = site.reviews.find((r) => r.name === x.review);
   const others = services.filter((s) => s.id !== service.id);
   const tel = `tel:${site.phoneHref}`;
-  const shot = (n: string, when: string) => ({ src: `/images/${n}.webp`, alt: `${x.compare.caption}, ${when}` });
+  const cmp = x.compare;
+  const shot = (n: string, when: string) => ({ src: `/images/${n}.webp`, alt: `${cmp?.caption}, ${when}` });
 
   return (
     <>
@@ -101,22 +102,40 @@ export default async function Page({ params }: Props) {
         </section>
 
         {/* Le résultat, sur un vrai chantier */}
+        {cmp && (
         <section className="bg-encre py-12 text-white md:py-24" aria-labelledby="resultat-title">
           <div className="wrap grid gap-x-16 gap-y-6 md:gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center">
             <div>
               <h2 id="resultat-title" className="t-h2 max-w-[12ch]">
                 Le résultat, sur un chantier.
               </h2>
-              <p className="t-lede mt-3 max-w-[36ch] !text-white/65 md:mt-5">{x.compare.caption}.</p>
+              <p className="t-lede mt-3 max-w-[36ch] !text-white/65 md:mt-5">{cmp.caption}.</p>
             </div>
             <Compare
-              before={shot(x.compare.before, "avant travaux")}
-              after={shot(x.compare.after, "après travaux")}
-              position={x.compare.position}
+              before={shot(cmp.before, "avant travaux")}
+              after={shot(cmp.after, "après travaux")}
+              position={cmp.position}
               className="-mx-5 aspect-[10/8] md:mx-0 md:aspect-[16/11] md:rounded-[28px]"
             />
           </div>
         </section>
+        )}
+        {!cmp && x.photos && (
+          <section className="bg-encre py-12 text-white md:py-24" aria-labelledby="resultat-title">
+            <div className="wrap">
+              <h2 id="resultat-title" className="t-h2 max-w-[14ch]">
+                Le résultat, sur nos chantiers.
+              </h2>
+              <div className="mt-6 grid gap-3 md:mt-10 md:grid-cols-[1.6fr_1fr] md:gap-5">
+                {x.photos.map((ph, i) => (
+                  <div key={ph.src} className={`relative overflow-hidden rounded-[24px] bg-encre-2 md:rounded-[28px] ${i === 0 ? "aspect-[4/3]" : "aspect-[4/3] md:aspect-auto"}`}>
+                    <Image src={ph.src} alt={ph.alt} fill quality={85} sizes={i === 0 ? "(min-width: 768px) 700px, 100vw" : "(min-width: 768px) 440px, 100vw"} className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Ce qui est compris + quand y penser */}
         <section className="wrap grid gap-x-16 gap-y-10 py-12 md:py-24 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">

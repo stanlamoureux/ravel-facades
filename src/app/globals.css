@@ -34,7 +34,16 @@
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
-    scroll-padding-top: 76px;
+    scroll-padding-top: 64px;
+  }
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 72px;
+    }
+  }
+  /* une section à l'intérieur d'un chapitre arrive sous la pastille du chapitre, pas dessous */
+  [data-chapter] [id] {
+    scroll-margin-top: 60px;
   }
   body {
     background: #fff;

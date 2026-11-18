@@ -3,32 +3,15 @@
 import { AnimatePresence, motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { chapterAnchor, chapters } from "@/config/chapters";
 import { site } from "@/config/site";
 import { useQuote } from "./QuoteContext";
 import { Chevron, Close, Menu, Phone } from "./icons";
 
-/** Le plan de la page, dans l'ordre où on la parcourt : chaque entrée dit ce qu'on y trouve. */
+/** Le plan de la page : les chapitres, plus un raccourci vers l'estimation. */
 const sections = [
-  { id: "prestations", label: "Prestations", hint: "Ravalement, nettoyage, peinture" },
-  { id: "avant-apres", label: "Avant / après", hint: "Trois chantiers à comparer" },
-  { id: "realisations", label: "Réalisations", hint: "Nos derniers chantiers" },
-  { id: "teintes", label: "Nuancier", hint: "Essayez une teinte sur une façade" },
-  { id: "devis", label: "Devis gratuit", hint: `Visite offerte, rappel sous ${site.callbackDelay}` },
-  { id: "methode", label: "Notre méthode", hint: "Un chantier en quatre temps" },
-  { id: "avis", label: "Avis clients", hint: `${String(site.rating.value).replace(".", ",")} sur 5, ${site.rating.count} avis` },
-  { id: "zones", label: "Zones d'intervention", hint: "Essonne et départements voisins" },
-  { id: "faq", label: "Questions fréquentes", hint: "Autorisations, délais, garanties" },
-  { id: "simulateur", label: "Estimation", hint: "Votre budget en 30 secondes" },
-];
-
-/** Les entrées qui tiennent dans la barre du haut sur grand écran. */
-const bar = [
-  ["prestations", "Prestations"],
-  ["avant-apres", "Avant / après"],
-  ["realisations", "Réalisations"],
-  ["teintes", "Nuancier"],
-  ["avis", "Avis"],
-  ["simulateur", "Estimation"],
+  ...chapters.map((c) => ({ id: chapterAnchor(c.id), label: c.title, hint: c.hint })),
+  { id: "simulateur", label: "Estimation en ligne", hint: "Votre budget en 30 secondes" },
 ];
 
 /** Le carré coupé en deux : moitié avant, moitié après. */
@@ -98,21 +81,13 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       <header
         data-past={past}
         data-scrolled={scrolled}
-        className="group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl"
+        className={`group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl ${home ? "lg:left-[248px]" : ""}`}
       >
         <div className="wrap flex h-16 items-center justify-between gap-4 md:h-[72px]">
-          <a href={home ? "#top" : "/"} aria-label={home ? `${site.name}, retour en haut de page` : `${site.name}, retour à l'accueil`}>
+          <a href={home ? "#top" : "/"} className={home ? "lg:invisible" : ""} aria-label={home ? `${site.name}, retour en haut de page` : `${site.name}, retour à l'accueil`}>
             <Logo />
           </a>
 
-          <nav className="hidden items-center gap-6 text-[0.9375rem] font-[540] lg:flex" aria-label="Sections de la page">
-            {bar.map(([id, label]) => (
-              <a key={id} href={to(id)} aria-current={current === id ? "location" : undefined} className="group relative py-2 text-encre/65 transition-colors hover:text-encre aria-[current=location]:text-encre">
-                {label}
-                <span className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 rounded-full bg-tuile transition-transform duration-300 group-aria-[current=location]:scale-x-100" aria-hidden />
-              </a>
-            ))}
-          </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
             <a href={tel} className="hidden items-center gap-2 text-[0.9375rem] font-[620] tabular-nums xl:inline-flex">
