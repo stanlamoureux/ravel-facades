@@ -81,7 +81,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       <header
         data-past={past}
         data-scrolled={scrolled}
-        className={`group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl ${home ? "lg:left-[260px]" : ""}`}
+        className={`group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl ${home ? "lg:left-[248px]" : ""}`}
       >
         <div className="wrap flex h-16 items-center justify-between gap-4 md:h-[72px]">
           <a href={home ? "#top" : "/"} className={home ? "lg:hidden" : ""} aria-label={home ? `${site.name}, retour en haut de page` : `${site.name}, retour à l'accueil`}>

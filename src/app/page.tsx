@@ -58,7 +58,7 @@ export default function Home() {
       </a>
       <Nav />
       <Rail />
-      <div className="lg:pl-[260px]">
+      <div className="lg:pl-[248px]">
         <main>
           <Hero />
           <Proof />
@@ -88,7 +88,7 @@ export default function Home() {
               title="Peinture intérieure et extérieure"
               lede="Façade, volets, séjour ou cage d'escalier : une préparation soignée et deux couches de finition. La teinte se choisit sur votre mur, pas sur un nuancier en papier."
               photos={[
-                { src: "/images/peinture-interieure.webp", alt: "Un peintre passe au rouleau un blanc cassé sur le mur d'un séjour" },
+                { src: "/images/peinture-interieure.webp", alt: "Un peintre passe au rouleau un blanc chaud sur le mur d'un séjour lumineux" },
                 { src: "/images/service-peinture.webp", alt: "Un peintre repeint une façade ocre au rouleau", position: "50% 35%" },
               ]}
               items={[
@@ -145,7 +145,7 @@ export default function Home() {
             />
             <div className="wrap pb-14 md:pb-24">
               <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-gris md:aspect-[16/7] md:rounded-[32px]">
-                <Image src="/images/couverture-toiture.webp" alt="Pavillon de l'Essonne à la toiture en tuiles neuves" fill quality={85} sizes="(min-width: 1024px) 1000px, 100vw" className="object-cover" />
+                <Image src="/images/couverture-toiture.webp" alt="Maison à la toiture en tuiles refaite à neuf, gouttières en zinc" fill quality={85} sizes="(min-width: 1024px) 1000px, 100vw" className="object-cover" />
               </div>
               <p className="mt-3 text-[0.875rem] text-ardoise">Toiture et zinguerie refaites sur une maison de l&apos;Essonne.</p>
             </div>

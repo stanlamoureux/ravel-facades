@@ -18,7 +18,7 @@ export function Rail() {
   const active = progress < 0 ? -1 : Math.min(chapters.length - 1, Math.floor(progress));
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] flex-col border-r border-encre/[0.07] bg-[#f4f4f6] lg:flex" aria-label="Sommaire">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-[248px] flex-col border-r border-encre/[0.07] bg-[#f4f4f6] lg:flex" aria-label="Sommaire">
       <a href="#top" className="flex h-[72px] shrink-0 items-center px-6" aria-label={`${site.name}, retour en haut de page`}>
         <Logo />
       </a>
