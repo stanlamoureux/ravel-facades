@@ -447,23 +447,26 @@ async function generate() {
  * pour ne pas relancer tout le traitement des photos déjà prêtes.
  */
 const EXTRAS = {
-  "interieur-peintre.webp": ["peint2-interieur", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
-  "toiture-couvreur.webp": ["couv2-chantier", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
-  "toiture-maison.webp": ["couv2-toiture", [1600, 1200], {}],
-  "toiture-gouttiere.webp": ["couv2-zinguerie", [1200, 1200], { width: 800 }],
+  "peinture-interieure.webp": ["peint2-interieur", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
+  "couverture-chantier.webp": ["couv2-chantier", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
+  "couverture-toiture.webp": ["couv2-toiture", [1600, 1200], {}],
+  "couverture-zinguerie.webp": ["couv2-zinguerie", [1200, 1200], { width: 800 }],
 };
+
+// leur propre cache : changer de version ici refait ces visuels sans toucher aux autres
+const EXTRA_CACHES = CACHES.map((c) => c.replace("ravel-images-v4", "ravel-extras-v2"));
 
 async function extras() {
   for (const [file, [name, size, opts]] of Object.entries(EXTRAS)) {
     const out = path.join(OUT, file);
     if (!FORCE && (await exists(out))) continue;
     let cached = null;
-    for (const c of CACHES) if (!cached && (await exists(path.join(c, file)))) cached = path.join(c, file);
+    for (const c of EXTRA_CACHES) if (!cached && (await exists(path.join(c, file)))) cached = path.join(c, file);
     if (cached && !FORCE) await copyFile(cached, out);
     else {
       const im = await loadRGB(name, ...size);
       await webp(opts.crop ? crop(im, ...opts.crop) : im, file, { width: opts.width, quality: 84 });
-      for (const c of CACHES) {
+      for (const c of EXTRA_CACHES) {
         try {
           await mkdir(c, { recursive: true });
           await copyFile(out, path.join(c, file));

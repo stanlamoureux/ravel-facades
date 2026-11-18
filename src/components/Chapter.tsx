@@ -53,7 +53,7 @@ export function Chapter({ id, children }: { id: ChapterId; children: React.React
         </div>
       </div>
       {/* le contenu remonte sous la pastille : elle flotte au-dessus sans décaler la mise en page */}
-      <div className="-mt-14 md:-mt-[60px]">{children}</div>
+      <div className={contact ? "" : "-mt-14 md:-mt-[60px]"}>{children}</div>
     </section>
   );
 }

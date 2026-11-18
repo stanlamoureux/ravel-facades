@@ -91,6 +91,13 @@
     .wrap {
       padding-inline: 2rem;
     }
+    /* la même marge, mais seulement à partir de la tablette (en-tête des fiches) */
+    .md\:wrap {
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: 2rem;
+    }
   }
 
   /* --- Titres et textes --- */

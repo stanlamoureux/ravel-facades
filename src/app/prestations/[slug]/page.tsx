@@ -58,7 +58,7 @@ export default async function Page({ params }: Props) {
       <Nav solid />
       <main className="pt-16 md:pt-[72px]">
         {/* En-tête : la photo en grand, le titre posé dessus sur mobile */}
-        <section className="md:mx-auto md:grid md:w-full md:max-w-[1200px] md:px-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-center md:gap-12 md:pb-16 md:pt-10 lg:gap-16">
+        <section className="md:wrap md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-center md:gap-12 md:pb-16 md:pt-10 lg:gap-16">
           <div className="relative h-[min(58svh,460px)] overflow-hidden bg-gris md:order-2 md:aspect-[4/4.6] md:h-auto md:rounded-[36px]">
             <Image src={f.photo.src} alt={f.photo.alt} fill priority quality={85} sizes="(min-width: 768px) 560px, 100vw" className="object-cover" style={{ objectPosition: f.photo.position }} />
             <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-[#07131d]/85 via-[#07131d]/35 to-transparent md:hidden" aria-hidden />
