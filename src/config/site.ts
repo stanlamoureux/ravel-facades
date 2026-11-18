@@ -40,7 +40,7 @@ export const site = {
   rating: { value: 4.9, count: 327 },
 
   /** Légende de la photo d'équipe */
-  teamCaption: "Marc, Thomas et Julie, trois des douze compagnons de l'équipe.",
+  teamCaption: "Marc, Thomas, Julie, Karim et Hugo, cinq des douze compagnons de l'équipe.",
 
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },
