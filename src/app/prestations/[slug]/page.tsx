@@ -7,6 +7,7 @@ import { Compare } from "@/components/Compare";
 import { Footer } from "@/components/Footer";
 import { MobileBar, Nav } from "@/components/Nav";
 import { Arrow, Check, Chevron, Clock, Phone, Plus, Shield, Star } from "@/components/icons";
+import { chapterAnchor, type ChapterId } from "@/config/chapters";
 import { extras, ficheHref, fiches } from "@/config/fiches";
 import { services } from "@/config/offer";
 import { site } from "@/config/site";
@@ -21,6 +22,9 @@ export function generateStaticParams() {
 }
 
 const find = (slug: string) => services.find((s) => fiches[s.id].slug === slug);
+
+/** Le chapitre de la page d'accueil auquel appartient chaque prestation. */
+const chapterOf: Record<string, ChapterId> = { fissures: "ravalement", ite: "ravalement", hydrofuge: "nettoyage" };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -45,6 +49,7 @@ export default async function Page({ params }: Props) {
   const review = site.reviews.find((r) => r.name === x.review);
   const others = services.filter((s) => s.id !== service.id);
   const tel = `tel:${site.phoneHref}`;
+  const back = `/#${chapterAnchor(chapterOf[service.id] ?? (service.id as ChapterId))}`;
   const cmp = x.compare;
   const shot = (n: string, when: string) => ({ src: `/images/${n}.webp`, alt: `${cmp?.caption}, ${when}` });
 
@@ -57,7 +62,7 @@ export default async function Page({ params }: Props) {
           <div className="relative h-[min(58svh,460px)] overflow-hidden bg-gris md:order-2 md:aspect-[4/4.6] md:h-auto md:rounded-[36px]">
             <Image src={f.photo.src} alt={f.photo.alt} fill priority quality={85} sizes="(min-width: 768px) 560px, 100vw" className="object-cover" style={{ objectPosition: f.photo.position }} />
             <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-[#07131d]/85 via-[#07131d]/35 to-transparent md:hidden" aria-hidden />
-            <Link href="/#prestations" className="glass absolute left-4 top-4 inline-flex h-9 items-center gap-1 rounded-full pl-2.5 pr-3.5 text-[0.875rem] font-[560] text-white md:hidden">
+            <Link href={back} className="glass absolute left-4 top-4 inline-flex h-9 items-center gap-1 rounded-full pl-2.5 pr-3.5 text-[0.875rem] font-[560] text-white md:hidden">
               <Chevron className="h-4 w-4 rotate-180" />
               Prestations
             </Link>
@@ -74,7 +79,7 @@ export default async function Page({ params }: Props) {
           </div>
 
           <div className="wrap pt-6 md:order-1 md:w-auto md:max-w-none md:px-0 md:pt-0">
-            <Link href="/#prestations" className="-ml-1 hidden h-11 items-center gap-1 text-[0.9375rem] font-[540] text-ardoise transition-colors hover:text-encre md:inline-flex">
+            <Link href={back} className="-ml-1 hidden h-11 items-center gap-1 text-[0.9375rem] font-[540] text-ardoise transition-colors hover:text-encre md:inline-flex">
               <Chevron className="h-[1.1rem] w-[1.1rem] rotate-180" />
               Toutes les prestations
             </Link>
@@ -281,7 +286,7 @@ export default async function Page({ params }: Props) {
               Les autres prestations
             </h2>
           </div>
-          <ul className="snap-row mt-5 gap-3 px-5 md:mx-auto md:mt-8 md:grid md:max-w-[1200px] md:grid-cols-5 md:gap-4 md:overflow-visible md:px-8">
+          <ul className="snap-row mt-5 gap-3 px-5 md:mx-auto md:mt-8 md:grid md:max-w-[1200px] md:grid-cols-3 md:gap-4 lg:grid-cols-6 md:overflow-visible md:px-8">
             {others.map((s) => {
               const o = fiches[s.id];
               return (
