@@ -144,8 +144,14 @@ export default function Home() {
               source="chapitre-couverture"
             />
             <div className="wrap pb-14 md:pb-24">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-gris md:aspect-[16/7] md:rounded-[32px]">
-                <Image src="/images/couverture-toiture.webp" alt="Maison à la toiture en tuiles refaite à neuf, gouttières en zinc" fill quality={85} sizes="(min-width: 1024px) 1000px, 100vw" className="object-cover" />
+              {/* la photo entière, sans recadrage, et le détail de zinguerie à côté sur grand écran */}
+              <div className="grid gap-3 md:grid-cols-[4fr_3fr] md:gap-4">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-gris md:rounded-[32px]">
+                  <Image src="/images/couverture-toiture.webp" alt="Maison à la toiture en tuiles refaite à neuf, gouttières en zinc" fill quality={85} sizes="(min-width: 1024px) 640px, 100vw" className="object-cover" />
+                </div>
+                <div className="relative hidden overflow-hidden rounded-[32px] bg-gris md:block">
+                  <Image src="/images/couverture-faitage.webp" alt="Un couvreur scelle les tuiles faîtières en haut du toit" fill quality={85} sizes="480px" className="object-cover" />
+                </div>
               </div>
               <p className="mt-3 text-[0.875rem] text-ardoise">Toiture et zinguerie refaites sur une maison de l&apos;Essonne.</p>
             </div>

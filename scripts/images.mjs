@@ -62,6 +62,17 @@ Object.assign(SOURCES, {
   "couv2-chantier": `${GPT}342543f3-bfbd-43e2-9c61-3bbe118008a4.jpg`,
   "couv2-toiture": `${GPT}1794997061384-iqnps0gfrb.jpg`,
   "couv2-zinguerie": `${GPT}f78535a9-ad2c-4bb7-b346-0da2f4202480.jpg`,
+  "couv2-faitage": `${GPT}1795015151581-drpophut53.jpg`,
+  // seconde série : l'après est une photo, l'avant est la même photo retouchée (même cadrage)
+  "m2-after": `${GPT}1795014743066-u1vxm5h1bpo.jpg`,
+  "m2-before": `${GPT}01e8c338-efaa-44d7-8692-c85e56e11265.jpg`,
+  "h2-after": `${GPT}c631607c-48f3-48cc-ac96-8b50643fc521.jpg`,
+  "h2-before": `${GPT}b245d992-63df-4d79-a344-6f28bdf148bc.jpg`,
+  "b4-after": `${GPT}34ff9779-b036-4d11-b3de-375359329593.jpg`,
+  "b4-before": `${GPT}1795015526836-a9zp3f6nea5.jpg`,
+  "b5-after": `${GPT}2cbbe477-31e9-4381-8767-7d14d6c8ea51.jpg`,
+  "b5-before": `${GPT}1795015678593-cakwszme0kq.jpg`,
+  "eq2": `${GPT}1795015020470-woa1pv713dh.jpg`,
 });
 
 const OUTPUTS = [
@@ -451,6 +462,7 @@ const EXTRAS = {
   "couverture-chantier.webp": ["couv2-chantier", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
   "couverture-toiture.webp": ["couv2-toiture", [1600, 1200], {}],
   "couverture-zinguerie.webp": ["couv2-zinguerie", [1200, 1200], { width: 800 }],
+  "couverture-faitage.webp": ["couv2-faitage", [1080, 1440], { crop: [0, 120, 1080, 1320] }],
 };
 
 // leur propre cache : changer de version ici refait ces visuels sans toucher aux autres
@@ -476,9 +488,58 @@ async function extras() {
   }
 }
 
+/**
+ * Deuxième série de photos, plus réalistes : elles remplacent les avant / après et la photo
+ * d'équipe de la première série. Elles ont leur propre cache et écrasent les fichiers de base.
+ */
+const REFRESH = ["maison-avant.webp", "maison-apres.webp", "pavillon-avant.webp", "pavillon-apres.webp", "immeuble-avant.webp", "immeuble-apres.webp", "bourg-avant.webp", "bourg-apres.webp", "equipe.webp"];
+const REFRESH_CACHES = CACHES.map((c) => c.replace("ravel-images-v4", "ravel-refresh-v1"));
+const allRefresh = async (dir) => (await Promise.all(REFRESH.map((f) => exists(path.join(dir, f))))).every(Boolean);
+
+async function refresh() {
+  if (!FORCE)
+    for (const c of REFRESH_CACHES)
+      if (await allRefresh(c)) {
+        await Promise.all(REFRESH.map((f) => copyFile(path.join(c, f), path.join(OUT, f))));
+        return console.log(`images : seconde série reprise du cache (${c})`);
+      }
+  const t = Date.now();
+  await mkdir(OUT, { recursive: true });
+  // Les avant / après : l'avant est recalé sur l'après (matrices mesurées par ECC sur les contours).
+  const m2 = await pair("m2", [1152, 2048], [0.99914694, 9.869e-5, 0.3377, 1.1155e-4, 0.99956053, 0.1263]);
+  // plus de ciel au-dessus du toit : sur mobile, le titre du hero s'y pose
+  const tall = async (im) => {
+    const band = 380, extra = 560; // le haut de la photo est un ciel uni, on l'étire
+    const sky = await fromRGB(crop(im, 0, 0, im.w, band)).resize(im.w, band + extra, { fit: "fill", kernel: "lanczos3" }).raw().toBuffer();
+    const rest = crop(im, 0, band, im.w, im.h);
+    return { data: Buffer.concat([sky, rest.data]), w: im.w, h: im.h + extra };
+  };
+  await webp(await tall(m2.after), "maison-apres.webp");
+  await webp(await tall(m2.before), "maison-avant.webp");
+  const h2 = await pair("h2", [2048, 1152], [0.99992949, -7.566e-5, -0.1769, -2.483e-5, 0.99946201, 0.2151], "clouds");
+  await webp(h2.after, "pavillon-apres.webp", { width: 2000, quality: 84 });
+  await webp(h2.before, "pavillon-avant.webp", { width: 2000, quality: 84 });
+  const b4 = await pair("b4", [2048, 1360], [1.00004125, 1.8243e-4, -0.2912, 6.725e-5, 1.00034738, -0.6133], "clouds");
+  await webp(b4.after, "immeuble-apres.webp", { width: 1800 });
+  await webp(b4.before, "immeuble-avant.webp", { width: 1800 });
+  const b5 = await pair("b5", [2048, 1360], [1.00065005, -4.0193e-4, -0.4756, -3.224e-5, 1.00081873, -0.821], "clouds");
+  await webp(b5.after, "bourg-apres.webp", { width: 1800 });
+  await webp(b5.before, "bourg-avant.webp", { width: 1800 });
+  const eq = await loadRGB("eq2", 1600, 1063);
+  await webp(eq, "equipe.webp", { quality: 84 });
+  for (const c of REFRESH_CACHES) {
+    try {
+      await mkdir(c, { recursive: true });
+      await Promise.all(REFRESH.map((f) => copyFile(path.join(OUT, f), path.join(c, f))));
+    } catch {}
+  }
+  console.log(`images : seconde série générée en ${((Date.now() - t) / 1000).toFixed(1)} s`);
+}
+
 async function main() {
   await base();
   await extras();
+  await refresh();
 }
 
 async function base() {

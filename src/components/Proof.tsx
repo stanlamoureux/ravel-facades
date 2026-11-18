@@ -23,7 +23,7 @@ export function Proof() {
         </div>
         <figure className="-order-1 lg:order-none">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-gris lg:aspect-[5/5.4] lg:rounded-[36px]">
-            <Image src="/images/equipe.webp" alt="Trois façadiers en tenue de travail bleu marine devant leur camionnette" fill quality={80} sizes="(min-width: 1024px) 540px, 100vw" className="object-cover object-[78%_50%]" />
+            <Image src="/images/equipe.webp" alt="L'équipe de façadiers en tenue de travail bleu marine devant un chantier" fill quality={80} sizes="(min-width: 1024px) 540px, 100vw" className="object-cover object-[60%_50%]" />
           </div>
           <figcaption className="mt-3 text-[0.875rem] text-ardoise">{site.teamCaption}</figcaption>
         </figure>
