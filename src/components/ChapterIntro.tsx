@@ -30,7 +30,7 @@ export function ChapterIntro({
   const { goToQuote } = useQuote();
   const [main, second] = photos;
   return (
-    <div className="pb-14 pt-[4.5rem] md:pb-24 md:pt-32">
+    <div className="pb-14 pt-[5.5rem] md:pb-24 md:pt-36">
       <div className={`wrap grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-center ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
         <div className="relative">
           <div className="relative aspect-[4/3.3] overflow-hidden rounded-[28px] bg-gris md:aspect-[4/3.6] md:rounded-[32px]">

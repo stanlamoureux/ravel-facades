@@ -109,6 +109,8 @@ export function Nuancier() {
   const [wall, setWall] = useState<WallColor>(wallColors[0]);
   const [accent, setAccent] = useState<AccentColor>(accentColors[0]);
   const [live, setLive] = useState(false);
+  const [other, setOther] = useState(false); // le client demande une teinte absente du nuancier
+  const [otherText, setOtherText] = useState("");
   const section = useRef<HTMLElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const engine = useRef<Engine | null>(null);
@@ -179,7 +181,7 @@ export function Nuancier() {
           <p className="t-lede mt-4 max-w-[38ch] md:mt-6">Essayez les teintes de notre nuancier sur une vraie façade. Les ombres et la lumière restent celles de la photo.</p>
         </div>
 
-        <div className="sticky top-[116px] z-10 -mx-5 aspect-[4/3] overflow-hidden bg-gris shadow-[0_10px_24px_-14px_rgb(14_26_38/0.45)] md:relative md:z-auto md:mx-0 md:aspect-[1200/1133] md:rounded-[32px] md:shadow-none lg:col-start-1 lg:row-span-2 lg:row-start-1">
+        <div className="sticky top-[120px] z-10 -mx-5 aspect-[4/3] overflow-hidden bg-gris shadow-[0_10px_24px_-14px_rgb(14_26_38/0.45)] md:relative md:z-auto md:mx-0 md:aspect-[1200/1133] md:rounded-[32px] md:shadow-none lg:col-start-1 lg:row-span-2 lg:row-start-1">
           {/* eslint-disable-next-line @next/next/no-img-element -- même fichier que celui lu par le canvas : un seul téléchargement */}
           <img src={PHOTO} alt={`Façade de maison de ville, enduit ${wall.name.toLowerCase()}, volets ${accent.name.toLowerCase()}`} width={W} height={H} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center" />
           <canvas ref={canvas} width={W} height={H} className={`absolute inset-0 h-full w-full object-cover object-[50%_62%] md:object-center ${live ? "opacity-100" : "opacity-0"}`} aria-hidden />
@@ -193,12 +195,46 @@ export function Nuancier() {
           <div className="mt-6 md:mt-8">
             <Swatches legend="Volets et porte" detail={accent.name} options={accentColors} value={accent.id} onChange={(c) => setAccent(c)} cols={8} />
           </div>
+          <div className="mt-6 rounded-[20px] bg-gris p-4 md:mt-8">
+            <button type="button" className="flex w-full items-center gap-3 text-left" aria-expanded={other} onClick={() => setOther((o) => !o)}>
+              <span
+                className="h-9 w-9 shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgb(14_26_38/0.14)]"
+                style={{ background: "conic-gradient(from 200deg, #d8c3a5, #b4583a, #6f7f5b, #4f6d8a, #8a6f9e, #e2b04a, #d8c3a5)" }}
+                aria-hidden
+              />
+              <span className="min-w-0 flex-1">
+                <span className="block text-[0.9375rem] font-[620]">Votre teinte n&apos;est pas dans la liste&nbsp;?</span>
+                <span className="block text-[0.875rem] text-ardoise">Indiquez-la, on vous apporte l&apos;échantillon.</span>
+              </span>
+              <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-[1.25rem] leading-none transition-transform duration-200 ${other ? "rotate-45" : ""}`} aria-hidden>
+                +
+              </span>
+            </button>
+            {other && (
+              <input
+                className="field mt-3"
+                value={otherText}
+                onChange={(e) => setOtherText(e.target.value)}
+                placeholder="Nom, référence ou description de la teinte"
+                aria-label="Teinte souhaitée"
+                maxLength={100}
+                autoFocus
+              />
+            )}
+          </div>
           <button
             type="button"
-            className="btn btn-ink mt-8 w-full md:mt-10 md:w-auto"
-            onClick={() => goToQuote({ works: ["Peinture"], color: `${wall.name} (${wall.ref})`, accent: accent.name, source: "nuancier" })}
+            className="btn btn-ink mt-6 w-full md:mt-8 md:w-auto"
+            onClick={() =>
+              goToQuote({
+                works: ["Peinture"],
+                color: other && otherText.trim() ? `${otherText.trim()} (hors nuancier)` : `${wall.name} (${wall.ref})`,
+                accent: accent.name,
+                source: "nuancier",
+              })
+            }
           >
-            Demander un essai de cette teinte
+            {other && otherText.trim() ? "Demander un essai de ma teinte" : "Demander un essai de cette teinte"}
           </button>
           <p className="mt-4 max-w-[46ch] text-[0.875rem] leading-[1.5] text-ardoise">Le rendu à l&apos;écran reste indicatif. Avant tout chantier, nous posons un essai de la teinte sur votre mur.</p>
         </div>

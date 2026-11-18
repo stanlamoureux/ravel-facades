@@ -81,13 +81,35 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       <header
         data-past={past}
         data-scrolled={scrolled}
-        className={`group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl ${home ? "lg:left-[248px]" : ""}`}
+        className={`group/h fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,box-shadow] duration-300 data-[past=true]:bg-white/90 data-[past=true]:text-encre data-[past=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] data-[past=true]:backdrop-blur-xl md:text-encre md:data-[scrolled=true]:bg-white/90 md:data-[scrolled=true]:shadow-[0_1px_0_rgb(14_26_38/0.08)] md:data-[scrolled=true]:backdrop-blur-xl ${home ? "lg:left-[260px]" : ""}`}
       >
         <div className="wrap flex h-16 items-center justify-between gap-4 md:h-[72px]">
-          <a href={home ? "#top" : "/"} className={home ? "lg:invisible" : ""} aria-label={home ? `${site.name}, retour en haut de page` : `${site.name}, retour à l'accueil`}>
+          <a href={home ? "#top" : "/"} className={home ? "lg:hidden" : ""} aria-label={home ? `${site.name}, retour en haut de page` : `${site.name}, retour à l'accueil`}>
             <Logo />
           </a>
 
+          {/* Sur ordinateur, le plan de la page reste dans l'en-tête */}
+          <nav className="hidden lg:block" aria-label="Plan du site">
+            <ul className="flex items-center gap-0.5 rounded-full bg-encre/[0.05] p-1">
+              {chapters.map((c) => {
+                const id = chapterAnchor(c.id);
+                const here = home && current === id;
+                return (
+                  <li key={c.id}>
+                    <a
+                      href={to(id)}
+                      aria-current={here ? "location" : undefined}
+                      className={`inline-flex h-9 items-center rounded-full px-3.5 text-[0.9375rem] font-[580] tracking-[-0.01em] transition-[background-color,color,box-shadow] duration-200 xl:px-4 ${
+                        here ? "bg-white text-encre shadow-[0_2px_10px_-3px_rgb(14_26_38/0.25)]" : "text-encre/70 hover:bg-white/60 hover:text-encre"
+                      }`}
+                    >
+                      {c.short}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
             <a href={tel} className="hidden items-center gap-2 text-[0.9375rem] font-[620] tabular-nums xl:inline-flex">

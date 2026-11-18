@@ -137,7 +137,7 @@ export const fiches: Record<ServiceId, Fiche> = {
     slug: "couverture-zinguerie",
     title: "Couverture et zinguerie",
     lede: "Tuiles cassées, mousses, gouttières qui débordent : un toit qui fuit finit toujours par abîmer la façade. On répare, on traite ou on refait, avec la même équipe que pour vos murs.",
-    photo: { src: "/images/couverture-chantier.webp", alt: "Un couvreur pose des tuiles neuves en terre cuite sur un toit en pente", position: "50% 40%" },
+    photo: { src: "/images/toiture-couvreur.webp", alt: "Un couvreur pose des tuiles neuves en terre cuite sur un toit en pente", position: "50% 40%" },
     facts: [
       ["Durée du chantier", "2 jours à 3 semaines"],
       ["Diagnostic", "Gratuit"],
@@ -260,8 +260,8 @@ export const extras: Record<ServiceId, Extra> = {
   },
   couverture: {
     photos: [
-      { src: "/images/couverture-toiture.webp", alt: "Maison à la toiture en tuiles refaite à neuf, gouttières en zinc" },
-      { src: "/images/couverture-zinguerie.webp", alt: "Gouttière et descente en zinc neuves sous des tuiles en terre cuite" },
+      { src: "/images/toiture-maison.webp", alt: "Pavillon de l'Essonne à la toiture en tuiles neuves" },
+      { src: "/images/toiture-gouttiere.webp", alt: "Gouttière et descente en zinc neuves sous des tuiles en terre cuite" },
     ],
     steps: [
       ["Inspection", "On monte sur le toit, on photographie et on vous montre ce qu'on voit."],

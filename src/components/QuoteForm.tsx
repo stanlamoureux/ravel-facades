@@ -64,7 +64,7 @@ export function QuoteSection() {
       <div className="relative h-[400px] overflow-hidden bg-[#2a6a9e] md:h-[540px]">
         <Image src="/images/ciel.webp" alt="" fill quality={80} sizes="100vw" className="object-cover object-bottom md:object-[50%_56%]" />
         <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-[#0b2740]/45 to-transparent" aria-hidden />
-        <div className="wrap relative pt-14 text-white md:pt-24">
+        <div className="wrap relative pt-24 text-white md:pt-32">
           <h2 id="devis-title" className="t-h2 max-w-[11ch]">
             Parlons de votre façade.
           </h2>

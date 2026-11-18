@@ -43,7 +43,7 @@
   }
   /* une section à l'intérieur d'un chapitre arrive sous la pastille du chapitre, pas dessous */
   [data-chapter] [id] {
-    scroll-margin-top: 60px;
+    scroll-margin-top: 64px;
   }
   body {
     background: #fff;

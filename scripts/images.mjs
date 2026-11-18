@@ -55,6 +55,14 @@ const SOURCES = Object.fromEntries(
     "peint-interieur": "2d4101f30f40",
   }).map(([name, id]) => [name, `${KIE}${id}.jpg`]),
 );
+// photos refaites avec un modèle plus réaliste (chapitres Peinture et Couverture)
+const GPT = "https://tempfile.aiquickdraw.com/models/gpt-image-2.6-sunburst/";
+Object.assign(SOURCES, {
+  "peint2-interieur": `${GPT}1794996863607-h3v24qcr6fb.jpg`,
+  "couv2-chantier": `${GPT}342543f3-bfbd-43e2-9c61-3bbe118008a4.jpg`,
+  "couv2-toiture": `${GPT}1794997061384-iqnps0gfrb.jpg`,
+  "couv2-zinguerie": `${GPT}f78535a9-ad2c-4bb7-b346-0da2f4202480.jpg`,
+});
 
 const OUTPUTS = [
   "maison-avant.webp",
@@ -439,10 +447,10 @@ async function generate() {
  * pour ne pas relancer tout le traitement des photos déjà prêtes.
  */
 const EXTRAS = {
-  "peinture-interieure.webp": ["peint-interieur", [880, 1184], { crop: [0, 40, 880, 1144] }],
-  "couverture-chantier.webp": ["couv-chantier", [880, 1184], { crop: [0, 40, 880, 1144] }],
-  "couverture-toiture.webp": ["couv-toiture", [1184, 880], {}],
-  "couverture-zinguerie.webp": ["couv-zinguerie", [1024, 1024], { width: 720 }],
+  "interieur-peintre.webp": ["peint2-interieur", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
+  "toiture-couvreur.webp": ["couv2-chantier", [1080, 1440], { crop: [0, 60, 1080, 1410] }],
+  "toiture-maison.webp": ["couv2-toiture", [1600, 1200], {}],
+  "toiture-gouttiere.webp": ["couv2-zinguerie", [1200, 1200], { width: 800 }],
 };
 
 async function extras() {
