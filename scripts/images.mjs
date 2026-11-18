@@ -73,6 +73,11 @@ Object.assign(SOURCES, {
   "b5-after": `${GPT}2cbbe477-31e9-4381-8767-7d14d6c8ea51.jpg`,
   "b5-before": `${GPT}1795015678593-cakwszme0kq.jpg`,
   "eq2": `${GPT}1795015020470-woa1pv713dh.jpg`,
+  // avants moins abîmés, plus crédibles
+  "m2-before3": `${GPT}1795019258799-7y451yflvqu.jpg`,
+  "h2-before3": `${GPT}1795019610509-blh3nv11j5d.jpg`,
+  "b4-before3": `${GPT}1795019260646-jjxa0rahkm8.jpg`,
+  "b5-before3": `${GPT}1795019321022-71frs210qt.jpg`,
 });
 
 const OUTPUTS = [
@@ -293,9 +298,14 @@ async function skyMask(after, before, mode) {
 
 /* ---------- paire avant / après ---------- */
 
-async function pair(name, size, M, sky = "blue") {
+async function pair(name, size, M, sky = "blue", mix) {
   const after = await loadRGB(`${name}-after`, ...size);
-  const before = warpAffine(await loadRGB(`${name}-before`, ...size), M);
+  const before = warpAffine(await loadRGB(mix ? mix.source : `${name}-before`, ...size), M);
+  // un avant plus usé, mêlé à l'avant léger : l'usure reste visible sans paraître exagérée
+  if (mix?.w) {
+    const heavy = warpAffine(await loadRGB(`${name}-before`, ...size), mix.M);
+    for (let i = 0; i < before.data.length; i++) before.data[i] = before.data[i] * (1 - mix.w) + heavy.data[i] * mix.w + 0.5;
+  }
   if (sky === "none") return { after, before };
   const mask = await skyMask(after, before, sky);
   const a = after.data, b = before.data;
@@ -493,7 +503,7 @@ async function extras() {
  * d'équipe de la première série. Elles ont leur propre cache et écrasent les fichiers de base.
  */
 const REFRESH = ["maison-avant.webp", "maison-apres.webp", "pavillon-avant.webp", "pavillon-apres.webp", "immeuble-avant.webp", "immeuble-apres.webp", "bourg-avant.webp", "bourg-apres.webp", "equipe.webp"];
-const REFRESH_CACHES = CACHES.map((c) => c.replace("ravel-images-v4", "ravel-refresh-v1"));
+const REFRESH_CACHES = CACHES.map((c) => c.replace("ravel-images-v4", "ravel-refresh-v2"));
 const allRefresh = async (dir) => (await Promise.all(REFRESH.map((f) => exists(path.join(dir, f))))).every(Boolean);
 
 async function refresh() {
@@ -506,7 +516,11 @@ async function refresh() {
   const t = Date.now();
   await mkdir(OUT, { recursive: true });
   // Les avant / après : l'avant est recalé sur l'après (matrices mesurées par ECC sur les contours).
-  const m2 = await pair("m2", [1152, 2048], [0.99914694, 9.869e-5, 0.3377, 1.1155e-4, 0.99956053, 0.1263]);
+  const m2 = await pair("m2", [1152, 2048], [0.99920905, 7.871e-5, 0.2858, 2.6543e-4, 0.9996019, 0.3186], "blue", {
+    source: "m2-before3",
+    M: [0.99914694, 9.869e-5, 0.3377, 1.1155e-4, 0.99956053, 0.1263],
+    w: 0.4,
+  });
   // plus de ciel au-dessus du toit : sur mobile, le titre du hero s'y pose
   const tall = async (im) => {
     const band = 380, extra = 560; // le haut de la photo est un ciel uni, on l'étire
@@ -516,13 +530,25 @@ async function refresh() {
   };
   await webp(await tall(m2.after), "maison-apres.webp");
   await webp(await tall(m2.before), "maison-avant.webp");
-  const h2 = await pair("h2", [2048, 1152], [0.99992949, -7.566e-5, -0.1769, -2.483e-5, 0.99946201, 0.2151], "clouds");
+  const h2 = await pair("h2", [2048, 1152], [0.99975967, 2.849e-5, 0.0877, 8.442e-5, 0.99980992, -0.05], "clouds", {
+    source: "h2-before3",
+    M: [0.99992949, -7.566e-5, -0.1769, -2.483e-5, 0.99946201, 0.2151],
+    w: 0.3,
+  });
   await webp(h2.after, "pavillon-apres.webp", { width: 2000, quality: 84 });
   await webp(h2.before, "pavillon-avant.webp", { width: 2000, quality: 84 });
-  const b4 = await pair("b4", [2048, 1360], [1.00004125, 1.8243e-4, -0.2912, 6.725e-5, 1.00034738, -0.6133], "clouds");
+  const b4 = await pair("b4", [2048, 1360], [0.99992585, 2.3552e-4, -0.2269, 2.381e-5, 1.00020909, -0.5105], "clouds", {
+    source: "b4-before3",
+    M: [1.00004125, 1.8243e-4, -0.2912, 6.725e-5, 1.00034738, -0.6133],
+    w: 0,
+  });
   await webp(b4.after, "immeuble-apres.webp", { width: 1800 });
   await webp(b4.before, "immeuble-avant.webp", { width: 1800 });
-  const b5 = await pair("b5", [2048, 1360], [1.00065005, -4.0193e-4, -0.4756, -3.224e-5, 1.00081873, -0.821], "clouds");
+  const b5 = await pair("b5", [2048, 1360], [1.00035477, -9.32e-5, -0.2782, -4.023e-5, 1.00037587, -0.4739], "clouds", {
+    source: "b5-before3",
+    M: [1.00065005, -4.0193e-4, -0.4756, -3.224e-5, 1.00081873, -0.821],
+    w: 0,
+  });
   await webp(b5.after, "bourg-apres.webp", { width: 1800 });
   await webp(b5.before, "bourg-avant.webp", { width: 1800 });
   const eq = await loadRGB("eq2", 1600, 1063);
