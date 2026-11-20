@@ -9,12 +9,11 @@ import { ChapterIntro } from "@/components/ChapterIntro";
 import { Compare } from "@/components/Compare";
 import { Rail } from "@/components/Rail";
 import { ficheHref } from "@/config/fiches";
-import { BeforeAfter } from "@/components/BeforeAfter";
+import { RealWork } from "@/components/RealWork";
 import { Gallery } from "@/components/Gallery";
 import { Nuancier } from "@/components/Nuancier";
 import { Simulator } from "@/components/Simulator";
 import { Journey } from "@/components/Journey";
-import { Reviews } from "@/components/Reviews";
 import { Zones } from "@/components/Zones";
 import { FAQ } from "@/components/FAQ";
 import { QuoteSection } from "@/components/QuoteForm";
@@ -77,7 +76,7 @@ export default function Home() {
               ]}
               source="chapitre-ravalement"
             />
-            <BeforeAfter />
+            <RealWork />
             <Journey />
           </Chapter>
 
@@ -122,31 +121,12 @@ export default function Home() {
                 position="50% 60%"
                 className="aspect-[4/3.4] rounded-[28px] md:aspect-[16/8] md:rounded-[32px]"
               />
-              <p className="mt-3 text-[0.875rem] text-ardoise">Maison de bourg à Étampes, nettoyage et hydrofuge en quatre jours.</p>
+              <p className="mt-3 text-[0.875rem] text-ardoise">Nettoyage et hydrofuge : faites glisser pour comparer (photo d&apos;illustration).</p>
             </div>
-          </Chapter>
-
-          <Chapter id="couverture">
-            <ChapterIntro
-              flip
-              title="Couverture"
-              lede="Un toit qui fuit finit toujours par abîmer la façade. Tuiles, mousses, gouttières : on répare, on traite ou on refait, avec la même équipe que pour vos murs."
-              photos={[
-                { src: "/images/couverture-chantier.webp", alt: "Un couvreur pose des tuiles neuves en terre cuite", position: "50% 40%" },
-                { src: "/images/couverture-toiture.webp", alt: "Maison à la toiture en tuiles refaite à neuf, gouttières en zinc", position: "50% 45%" },
-              ]}
-              items={[
-                { label: "Réfection de toiture", text: "Écran, liteaux et tuiles neuves", href: ficheHref("couverture") },
-                { label: "Réparation et démoussage", text: "Tuiles remplacées, toiture traitée", href: ficheHref("couverture") },
-                { label: "Gouttières et zinguerie", text: "Descentes, faîtage, solins", href: ficheHref("couverture") },
-              ]}
-              source="chapitre-couverture"
-            />
           </Chapter>
 
           <Chapter id="contact">
             <QuoteSection />
-            <Reviews />
             <Zones />
             <FAQ />
             <Simulator />

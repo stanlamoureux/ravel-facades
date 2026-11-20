@@ -133,26 +133,7 @@ export const fiches: Record<ServiceId, Fiche> = {
     ],
     signs: ["Des murs froids et des factures de chauffage qui grimpent", "Un ravalement à faire de toute façon", "Pas de place pour isoler par l'intérieur", "Une vente ou une location à préparer"],
   },
-  couverture: {
-    slug: "couverture-zinguerie",
-    title: "Couverture et zinguerie",
-    lede: "Tuiles cassées, mousses, gouttières qui débordent : un toit qui fuit finit toujours par abîmer la façade. On répare, on traite ou on refait, avec la même équipe que pour vos murs.",
-    photo: { src: "/images/couverture-chantier.webp", alt: "Un couvreur pose des tuiles neuves en terre cuite sur un toit en pente", position: "50% 40%" },
-    facts: [
-      ["Durée du chantier", "2 jours à 3 semaines"],
-      ["Diagnostic", "Gratuit"],
-      ["Garantie", "Décennale"],
-    ],
-    includes: [
-      "Inspection de la toiture, photos à l'appui",
-      "Remplacement des tuiles cassées ou poreuses",
-      "Démoussage et traitement hydrofuge des tuiles",
-      "Réfection complète : liteaux, écran sous toiture, tuiles neuves",
-      "Gouttières, descentes et faîtage refaits à neuf",
-      "Nettoyage du chantier et évacuation des déchets",
-    ],
-    signs: ["Une tache d'humidité au plafond", "Des tuiles glissées ou cassées après un coup de vent", "Une toiture verte de mousse", "Des gouttières qui débordent ou qui fuient"],
-  },
+
 };
 
 export const ficheHref = (id: ServiceId) => `/prestations/${fiches[id].slug}`;
@@ -169,7 +150,7 @@ export type Extra = {
 
 export const extras: Record<ServiceId, Extra> = {
   ravalement: {
-    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Pavillon à Palaiseau, ravalement complet en trois semaines" },
+    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Illustration d'un ravalement complet" },
     steps: [
       ["Diagnostic", "On sonde l'enduit, on relève chaque fissure et on mesure la façade."],
       ["Préparation", "Échafaudage, bâches, piquage des zones qui sonnent creux."],
@@ -184,7 +165,7 @@ export const extras: Record<ServiceId, Extra> = {
     ],
   },
   nettoyage: {
-    compare: { before: "bourg-avant", after: "bourg-apres", caption: "Maison de bourg à Étampes, nettoyage et hydrofuge en quatre jours", position: "50% 60%" },
+    compare: { before: "bourg-avant", after: "bourg-apres", caption: "Illustration d'un nettoyage avec hydrofuge", position: "50% 60%" },
     steps: [
       ["Essai", "On teste le produit et la pression sur une zone discrète."],
       ["Protection", "Plantations, vitres et menuiseries sont couvertes."],
@@ -199,7 +180,7 @@ export const extras: Record<ServiceId, Extra> = {
     ],
   },
   peinture: {
-    compare: { before: "maison-avant", after: "maison-apres", caption: "Maison de ville en Essonne, enduit repeint et volets refaits", position: "50% 72%" },
+    compare: { before: "maison-avant", after: "maison-apres", caption: "Illustration d'une mise en peinture", position: "50% 72%" },
     steps: [
       ["Essai de teinte", "On peint des échantillons sur votre mur pour choisir en vrai."],
       ["Préparation", "Lavage, rebouchage des fissures fines, impression."],
@@ -214,7 +195,7 @@ export const extras: Record<ServiceId, Extra> = {
     ],
   },
   hydrofuge: {
-    compare: { before: "bourg-avant", after: "bourg-apres", caption: "Nettoyage puis hydrofuge sur une maison de bourg à Étampes", position: "50% 60%" },
+    compare: { before: "bourg-avant", after: "bourg-apres", caption: "Illustration d'un nettoyage puis d'un hydrofuge", position: "50% 60%" },
     steps: [
       ["Nettoyage", "Le support doit être propre et sec avant traitement."],
       ["Protection", "Vitrages et menuiseries sont couverts."],
@@ -229,7 +210,7 @@ export const extras: Record<ServiceId, Extra> = {
     ],
   },
   fissures: {
-    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Fissures reprises et enduit refait sur un pavillon à Palaiseau" },
+    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Illustration d'une reprise de fissures et d'enduit" },
     steps: [
       ["Diagnostic", "Fissure d'enduit ou de structure : on fait la différence."],
       ["Ouverture", "La fissure est ouverte et dépoussiérée."],
@@ -244,7 +225,7 @@ export const extras: Record<ServiceId, Extra> = {
     ],
   },
   ite: {
-    compare: { before: "immeuble-avant", after: "immeuble-apres", caption: "Petit immeuble à Antony, façade entièrement reprise", position: "50% 22%" },
+    compare: { before: "immeuble-avant", after: "immeuble-apres", caption: "Illustration d'une façade entièrement reprise", position: "50% 22%" },
     steps: [
       ["Étude", "Murs, menuiseries et aides possibles : on fait le point."],
       ["Pose", "Isolant collé et chevillé, tableaux et appuis traités."],
@@ -258,22 +239,5 @@ export const extras: Record<ServiceId, Extra> = {
       ["Perd-on de la surface ?", "Non à l'intérieur. La façade s'épaissit de quelques centimètres vers l'extérieur."],
     ],
   },
-  couverture: {
-    photos: [
-      { src: "/images/couverture-toiture.webp", alt: "Maison à la toiture en tuiles refaite à neuf, gouttières en zinc" },
-      { src: "/images/couverture-zinguerie.webp", alt: "Gouttière et descente en zinc neuves sous des tuiles en terre cuite" },
-    ],
-    steps: [
-      ["Inspection", "On monte sur le toit, on photographie et on vous montre ce qu'on voit."],
-      ["Protection", "Échafaudage ou nacelle, bâches et filets autour de la maison."],
-      ["Travaux", "Tuiles, écran, faîtage ou gouttières, selon le diagnostic."],
-      ["Contrôle", "Test à l'eau des gouttières et tour du toit avec vous."],
-    ],
-    review: "Marc D.",
-    faq: [
-      ["Faut-il refaire tout le toit ?", "Rarement. Dans la plupart des cas, remplacer quelques tuiles et refaire la zinguerie suffit."],
-      ["Intervenez-vous en urgence après une tempête ?", "Oui, on bâche sous 48 h pour mettre la maison hors d'eau, puis on répare."],
-      ["Toiture et façade en même temps ?", "C'est l'idéal : un seul échafaudage, un seul chantier, et la façade neuve est protégée tout de suite."],
-    ],
-  },
+
 };

@@ -112,7 +112,7 @@ export default async function Page({ params }: Props) {
           <div className="wrap grid gap-x-16 gap-y-6 md:gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center">
             <div>
               <h2 id="resultat-title" className="t-h2 max-w-[12ch]">
-                Le résultat, sur un chantier.
+                Le résultat attendu.
               </h2>
               <p className="t-lede mt-3 max-w-[36ch] !text-white/65 md:mt-5">{cmp.caption}.</p>
             </div>
@@ -129,7 +129,7 @@ export default async function Page({ params }: Props) {
           <section className="bg-encre py-12 text-white md:py-24" aria-labelledby="resultat-title">
             <div className="wrap">
               <h2 id="resultat-title" className="t-h2 max-w-[14ch]">
-                Le résultat, sur nos chantiers.
+                Le résultat attendu.
               </h2>
               <div className="mt-6 grid gap-3 md:mt-10 md:grid-cols-[1.6fr_1fr] md:gap-5">
                 {x.photos.map((ph, i) => (

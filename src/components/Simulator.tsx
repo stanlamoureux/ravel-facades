@@ -123,7 +123,7 @@ export function Simulator() {
   };
 
   return (
-    <section id="simulateur" className="bg-gris py-14 md:py-32" aria-labelledby="sim-title">
+    <section id="simulateur" className="bg-gris py-14 md:py-[min(8rem,12svh)]" aria-labelledby="sim-title">
       <div className="wrap">
         <h2 id="sim-title" className="t-h2 max-w-[13ch]">
           Combien pour votre façade&nbsp;?

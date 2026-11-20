@@ -7,8 +7,7 @@
  *  Quand tout est réel, passe `demo` à false : ça retire les
  *  mentions "exemple" affichées sur le site.
  *
- *  Le numéro 01 99 00 12 34 est dans la plage réservée par
- *  l'ARCEP aux fictions : il ne sonne chez personne.
+ *  Le téléphone est celui de Steevy Grand (vrai numéro).
  * ============================================================
  */
 
@@ -20,8 +19,8 @@ export const site = {
   tagline: "Façades & peinture",
   url: "https://ravel-facades.vercel.app",
 
-  phone: "01 99 00 12 34",
-  phoneHref: "+33199001234",
+  phone: "06 79 77 38 71",
+  phoneHref: "+33679773871",
   email: "contact@ravel-facades.fr",
   address: {
     street: "12 rue des Artisans",
@@ -40,7 +39,7 @@ export const site = {
   rating: { value: 4.9, count: 327 },
 
   /** Légende de la photo d'équipe */
-  teamCaption: "Marc, Thomas, Julie, Karim et Hugo, cinq des douze compagnons de l'équipe.",
+  teamCaption: "Steevy Grand et son équipe sur un pignon, enduit repris à la taloche.",
 
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },
@@ -64,14 +63,8 @@ export const site = {
     { code: "75", name: "Paris", cities: ["Tous arrondissements"] },
   ],
 
-  reviews: [
-    { name: "Catherine L.", city: "Palaiseau", date: "Octobre 2026", job: "Ravalement complet", text: "Maison de 1978 avec des coulures noires partout. Trois semaines plus tard, les voisins pensaient qu'on avait fait construire. Chantier propre, bâches tous les soirs." },
-    { name: "Marc D.", city: "Versailles", date: "Septembre 2026", job: "Nettoyage + hydrofuge", text: "Devis reçu en deux jours, très détaillé, sans surprise à la fin. L'équipe a protégé les massifs et les fenêtres comme si c'était chez eux." },
-    { name: "Sophie et Karim B.", city: "Massy", date: "Août 2026", job: "Peinture façade", text: "On hésitait sur la teinte, ils sont venus avec des échantillons sur le mur. Le résultat est exactement ce qu'on voulait." },
-    { name: "Jean-Pierre M.", city: "Corbeil-Essonnes", date: "Juillet 2026", job: "Traitement fissures", text: "Fissures en escalier sur le pignon. Explications claires, réparation nette, et l'enduit est invisible. Je recommande sans hésiter." },
-    { name: "Copropriété Les Tilleuls", city: "Antony", date: "Juin 2026", job: "Ravalement immeuble", text: "Immeuble de 18 lots. Planning tenu, communication régulière avec le syndic, réception sans réserve." },
-    { name: "Hélène R.", city: "Étampes", date: "Mai 2026", job: "Démoussage", text: "Façade nord verte de mousse. Traitée en une journée, et un an après, toujours rien. Prix honnête." },
-  ],
+  /** Avis clients : à remplir avec de vrais avis (Google) avant de les afficher. */
+  reviews: [] as { name: string; city: string; date: string; job: string; text: string }[],
 } as const;
 
 export type Site = typeof site;

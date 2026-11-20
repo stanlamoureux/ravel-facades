@@ -1,30 +1,29 @@
 import Image from "next/image";
-import { site } from "@/config/site";
 
-/** Réalisations - DONNÉES TEST, à remplacer par les chantiers du client. */
+/** Réalisations : vraies photos de chantiers de Steevy Grand. */
 const works = [
-  { src: "/images/realisation-longere.webp", title: "Longère à Milly-la-Forêt", detail: "Enduit à la chaux, teinte sable", alt: "Longère à l'enduit ocre et aux volets vert sauge", wide: true },
-  { src: "/images/realisation-meuliere.webp", title: "Meulière à Savigny-sur-Orge", detail: "Nettoyage et rejointoiement", alt: "Maison en meulière aux joints refaits, encadrements en brique" },
-  { src: "/images/realisation-contemporaine.webp", title: "Maison à Massy", detail: "Peinture blanc et anthracite", alt: "Maison contemporaine cubique, enduit blanc et volume gris anthracite" },
-  { src: "/images/realisation-immeuble.webp", title: "Immeuble à Versailles", detail: "Ravalement pierre et moulures", alt: "Immeuble ancien à la façade ton pierre restaurée, balcons en fer forgé" },
-  { src: "/images/realisation-pavillon.webp", title: "Pavillon à Brétigny-sur-Orge", detail: "Peinture grège, volets blancs", alt: "Pavillon repeint en grège avec volets blancs" },
+  { src: "/images/vrai-realisation-pavillon-blanc.webp", title: "Pavillon et terrasse", detail: "Ravalement, enduit blanc", alt: "Pavillon à l'enduit blanc refait, vu depuis le jardin", wide: true },
+  { src: "/images/vrai-realisation-volets-bois.webp", title: "Maison aux volets bois", detail: "Façade blanche, volets conservés", alt: "Maison à la façade blanche et aux volets en bois" },
+  { src: "/images/vrai-chantier-peinture.webp", title: "Pignon en cours", detail: "Préparation avant peinture", alt: "Peintre sur une échelle, pignon préparé avant la mise en teinte" },
+  { src: "/images/vrai-chantier-echafaudage.webp", title: "Pignon sous échafaudage", detail: "Enduit neuf", alt: "Pignon de maison sous échafaudage, enduit neuf" },
+  { src: "/images/vrai-realisation-pavillon-blanc-2.webp", title: "Le même pavillon", detail: "Côté terrasse", alt: "Pavillon blanc au toit sombre, côté terrasse" },
 ];
 
 export function Gallery() {
   return (
-    <section id="realisations" className="pb-4 pt-14 md:pb-8 md:pt-32" aria-labelledby="realisations-title">
+    <section id="realisations" className="pb-4 pt-14 md:pb-8 md:pt-[min(8rem,12svh)]" aria-labelledby="realisations-title">
       <div className="wrap">
         <h2 id="realisations-title" className="t-h2 max-w-[14ch]">
-          Pierre, enduit, brique&nbsp;: à chaque façade sa méthode.
+          Quelques chantiers de Steevy.
         </h2>
-        <p className="t-lede mt-4 max-w-[42ch] md:mt-6">On ne traite pas une meulière comme un pavillon des années 80. Quelques chantiers livrés ces derniers mois.</p>
+        <p className="t-lede mt-4 max-w-[42ch] md:mt-6">Des photos prises sur place, pendant et après les travaux.</p>
       </div>
 
       <ul className="snap-row mt-7 gap-3 px-5 md:mx-auto md:mt-14 md:grid md:max-w-[1200px] md:grid-cols-12 md:gap-5 md:overflow-visible md:px-8">
         {works.map((w, i) => (
           <li
             key={w.src}
-            className={`relative aspect-[3/4] w-[74vw] max-w-[320px] overflow-hidden rounded-[28px] bg-gris md:aspect-auto md:h-[clamp(380px,40vw,520px)] md:w-auto md:max-w-none ${
+            className={`relative aspect-[3/4] w-[74vw] max-w-[320px] overflow-hidden rounded-[28px] bg-gris md:aspect-auto md:h-[min(clamp(340px,36vw,480px),46svh)] md:w-auto md:max-w-none ${
               w.wide ? "md:col-span-8" : i === 1 ? "md:order-first md:col-span-4" : "md:col-span-4"
             }`}
           >
@@ -38,7 +37,6 @@ export function Gallery() {
         ))}
         <li className="w-2 md:hidden" aria-hidden />
       </ul>
-      {site.demo && <p className="wrap mt-6 text-[0.8125rem] text-brume">Réalisations présentées à titre d&apos;exemple.</p>}
     </section>
   );
 }

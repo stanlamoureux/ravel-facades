@@ -1,9 +1,8 @@
-/** Les chapitres de la page d'accueil, dans l'ordre : quatre métiers, puis le contact. */
+/** Les chapitres de la page d'accueil, dans l'ordre : trois métiers, puis le contact. */
 export const chapters = [
   { id: "ravalement", title: "Ravalement de façade", short: "Ravalement", hint: "Enduit, fissures, isolation", photo: "/images/service-ravalement.webp", work: "Ravalement" },
   { id: "peinture", title: "Peinture", short: "Peinture", hint: "Intérieure et extérieure", photo: "/images/peinture-interieure.webp", work: "Peinture" },
   { id: "nettoyage", title: "Nettoyage de façade", short: "Nettoyage", hint: "Démoussage, hydrofuge", photo: "/images/service-nettoyage.webp", work: "Nettoyage" },
-  { id: "couverture", title: "Couverture", short: "Couverture", hint: "Toiture et zinguerie", photo: "/images/couverture-toiture.webp", work: "Couverture" },
   { id: "contact", title: "Contact", short: "Contact", hint: "Devis gratuit sous 24 h", photo: null, work: null },
 ] as const;
 

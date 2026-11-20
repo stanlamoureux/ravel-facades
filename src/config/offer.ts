@@ -3,7 +3,7 @@
  * Aucun prix ici : ils vivent dans pricing.ts, lu uniquement par le serveur.
  */
 
-export type ServiceId = "nettoyage" | "hydrofuge" | "peinture" | "ravalement" | "fissures" | "ite" | "couverture";
+export type ServiceId = "nettoyage" | "hydrofuge" | "peinture" | "ravalement" | "fissures" | "ite";
 
 export const services: { id: ServiceId; name: string; short: string; description: string; duration: string; estimateAs?: WorkId }[] = [
   {
@@ -53,13 +53,6 @@ export const services: { id: ServiceId; name: string; short: string; description
     description: "Isolant et enduit de finition en une seule opération : une façade neuve, et des murs qui ne laissent plus filer la chaleur. Des aides peuvent exister selon votre situation.",
     duration: "3 à 6 semaines",
     estimateAs: "ite",
-  },
-  {
-    id: "couverture",
-    name: "Couverture et zinguerie",
-    short: "Couverture",
-    description: "Réfection de toiture, remplacement de tuiles, démoussage et traitement, gouttières et zinguerie neuves. Le toit protège la façade : on s'occupe des deux.",
-    duration: "2 jours à 3 semaines",
   },
 ];
 

@@ -5,28 +5,28 @@ const steps = [
   {
     title: "Diagnostic et devis",
     text: `Visite gratuite : on relève les fissures, on sonde l'enduit, on mesure. Vous recevez un devis poste par poste sous ${site.quoteDelay}.`,
-    img: { src: "/images/etape-diagnostic.webp", alt: "Un technicien examine une fissure sur un enduit ancien, tablette à la main" },
+    img: { src: "/images/vrai-fissure-escalier.webp", alt: "Fissure en escalier relevée sur un angle de maison" },
   },
   {
     title: "Préparation",
     text: "Échafaudage, protection des sols et des menuiseries, puis nettoyage et réparation du support. C'est la moitié du travail.",
-    img: { src: "/images/etape-preparation.webp", alt: "Maison entourée d'un échafaudage et de filets de protection, sol bâché" },
+    img: { src: "/images/vrai-fissure-reprise.webp", alt: "Mur ouvert et repris au mortier autour d'une fissure" },
   },
   {
     title: "Finition",
     text: "Enduit neuf ou peinture en deux couches, dans la teinte validée avec vous sur un essai réel.",
-    img: { src: "/images/etape-finition.webp", alt: "Fenêtre aux volets verts sur un enduit refait" },
+    img: { src: "/images/vrai-enduit-gratte.webp", alt: "Enduit neuf, fini gratté, sur un pignon" },
   },
   {
     title: "Réception",
     text: "On fait le tour ensemble, chantier nettoyé. Vous ne réglez le solde qu'une fois tout validé.",
-    img: { src: "/images/etape-reception.webp", alt: "Un couple et un artisan, de dos, regardent la façade terminée" },
+    img: { src: "/images/vrai-realisation-pavillon-blanc-2.webp", alt: "Pavillon blanc terminé, côté terrasse" },
   },
 ];
 
 export function Journey() {
   return (
-    <section id="methode" className="py-14 md:py-32" aria-labelledby="methode-title">
+    <section id="methode" className="py-14 md:py-[min(8rem,12svh)]" aria-labelledby="methode-title">
       <div className="wrap">
         <h2 id="methode-title" className="t-h2 max-w-[13ch]">
           Un chantier en quatre temps.

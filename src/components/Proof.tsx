@@ -1,29 +1,51 @@
 import Image from "next/image";
 import { site } from "@/config/site";
-import { nombre } from "@/lib/format";
+import { Phone } from "./icons";
 
-/** L'entreprise en une phrase, l'équipe en photo, puis les trois labels. */
+const points = [
+  ["Sur place", "Il vient voir votre façade et établit le devis lui-même"],
+  ["Sur le chantier", "Il travaille avec son équipe, de l'échafaudage à la finition"],
+  ["À la fin", "Il fait le tour avec vous avant de partir"],
+] as const;
+
+/** L'artisan, en vrai : Steevy Grand et son équipe sur leurs chantiers. */
 export function Proof() {
-  const [done, , recommend] = site.stats;
   return (
-    <section className="py-14 md:py-32" aria-label="L'entreprise en bref">
-      <div className="wrap grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+    <section id="steevy" className="py-14 md:py-[min(8rem,12svh)]" aria-labelledby="steevy-title">
+      <div className="wrap grid gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center">
         <div>
-          <p className="max-w-[22ch] text-[clamp(1.75rem,7.2vw,3rem)] font-[620] leading-[1.1] tracking-[-0.03em] text-balance">
-            Depuis {site.foundedYear}, nous avons rénové {nombre(done.value)} façades en Île-de-France. {recommend.value}&nbsp;% de nos clients nous recommandent.
+          <h2 id="steevy-title" className="t-h2 max-w-[13ch]">
+            Steevy Grand, sur chaque chantier.
+          </h2>
+          <p className="t-lede mt-4 max-w-[40ch] md:mt-6">
+            Façadier en Essonne, Steevy suit votre projet du premier appel à la réception. Vous savez toujours à qui parler.
           </p>
-          <dl className="mt-7 border-t border-trait md:mt-14">
-            {site.certifications.map((c) => (
-              <div key={c.name} className="flex items-baseline justify-between gap-6 border-b border-trait py-4">
-                <dt className="text-[1.0625rem] font-[640] tracking-[-0.01em] md:text-[1.125rem]">{c.name}</dt>
-                <dd className="text-right text-[0.9375rem] text-ardoise md:text-base">{c.detail}</dd>
+          <dl className="mt-6 border-t border-trait md:mt-9">
+            {points.map(([k, v]) => (
+              <div key={k} className="grid gap-1 border-b border-trait py-3.5 sm:grid-cols-[9rem_1fr] sm:gap-6 md:py-4">
+                <dt className="text-[1rem] font-[640] tracking-[-0.01em]">{k}</dt>
+                <dd className="text-[0.9375rem] leading-[1.45] text-ardoise md:text-base">{v}</dd>
               </div>
             ))}
           </dl>
+          <a href={`tel:${site.phoneHref}`} className="btn btn-ink mt-7 tabular-nums md:mt-9">
+            <Phone className="h-5 w-5" />
+            Appeler Steevy, {site.phone}
+          </a>
         </div>
+
+        {/* trois photos de chantier : le pignon en entier, et deux plans à la taloche */}
         <figure className="-order-1 lg:order-none">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-gris lg:aspect-[4/3.3] lg:rounded-[36px]">
-            <Image src="/images/equipe.webp" alt="L'équipe de façadiers en tenue de travail bleu marine devant un chantier" fill quality={80} sizes="(min-width: 1024px) 540px, 100vw" className="object-cover" />
+          <div className="grid h-[min(70svh,560px)] grid-cols-[1.35fr_1fr] grid-rows-2 gap-2.5 md:gap-3">
+            <div className="relative row-span-2 overflow-hidden rounded-[24px] bg-gris md:rounded-[30px]">
+              <Image src="/images/vrai-chantier-pignon.webp" alt="Steevy Grand et son équipe sur des échelles, en train de reprendre l'enduit d'un pignon" fill quality={80} sizes="(min-width: 1024px) 420px, 58vw" className="object-cover" style={{ objectPosition: "50% 60%" }} />
+            </div>
+            <div className="relative overflow-hidden rounded-[20px] bg-gris md:rounded-[26px]">
+              <Image src="/images/vrai-chantier-taloche.webp" alt="Enduit repris à la taloche sur un pignon" fill quality={78} sizes="(min-width: 1024px) 300px, 42vw" className="object-cover" style={{ objectPosition: "45% 35%" }} />
+            </div>
+            <div className="relative overflow-hidden rounded-[20px] bg-gris md:rounded-[26px]">
+              <Image src="/images/vrai-chantier-maison-ville.webp" alt="L'équipe en façade d'une maison de ville, échelles et protections en place" fill quality={78} sizes="(min-width: 1024px) 300px, 42vw" className="object-cover" style={{ objectPosition: "50% 40%" }} />
+            </div>
           </div>
           <figcaption className="mt-3 text-[0.875rem] text-ardoise">{site.teamCaption}</figcaption>
         </figure>

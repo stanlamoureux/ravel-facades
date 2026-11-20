@@ -4,7 +4,7 @@ import { Plus } from "./icons";
 
 export function FAQ() {
   return (
-    <section id="faq" className="pb-14 md:pb-32" aria-labelledby="faq-title">
+    <section id="faq" className="pb-14 md:pb-[min(8rem,12svh)]" aria-labelledby="faq-title">
       <div className="wrap grid gap-x-16 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
         <div>
           <h2 id="faq-title" className="t-h2 max-w-[10ch]">

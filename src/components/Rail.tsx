@@ -23,8 +23,10 @@ export function Rail() {
         <Logo />
       </a>
 
-      <nav className="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto px-3 py-4" aria-label="Chapitres">
-        <p className="mb-3 px-3 text-[0.8125rem] font-[560] text-brume">Nos métiers</p>
+      <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-4" aria-label="Chapitres">
+        {/* centré quand la place le permet, sans jamais couper le haut de la liste sur un petit écran */}
+        <div className="my-auto">
+        <p className="mb-3 px-3 text-[0.8125rem] font-[560] text-brume [@media(max-height:820px)]:hidden">Nos métiers</p>
         <ol className="space-y-1">
           {chapters.map((c, i) => {
             const on = i === active;
@@ -43,7 +45,7 @@ export function Rail() {
                 >
                   <span className="relative shrink-0">
                     <span
-                      className={`grid h-12 w-12 place-items-center overflow-hidden rounded-[14px] transition-[filter,opacity] duration-300 ${
+                      className={`grid h-12 w-12 [@media(max-height:820px)]:h-10 [@media(max-height:820px)]:w-10 place-items-center overflow-hidden rounded-[14px] transition-[filter,opacity] duration-300 ${
                         contact ? "bg-tuile text-white" : "bg-gris-2"
                       } ${!on && !done && !contact ? "opacity-80 saturate-[0.6] group-hover:opacity-100 group-hover:saturate-100" : ""}`}
                     >
@@ -63,7 +65,7 @@ export function Rail() {
                     <span className={`block truncate text-[0.96875rem] font-[640] leading-[1.2] tracking-[-0.015em] transition-colors duration-300 ${on ? "text-encre" : "text-encre/70 group-hover:text-encre"}`}>
                       {c.short}
                     </span>
-                    <span className="mt-0.5 block text-[0.8125rem] leading-[1.3] text-brume">{c.hint}</span>
+                    <span className="mt-0.5 block text-[0.8125rem] leading-[1.3] text-brume [@media(max-height:820px)]:hidden">{c.hint}</span>
                     {!contact && (
                       <span className={`mt-2 block h-[3px] overflow-hidden rounded-full bg-gris-2 transition-opacity duration-300 ${on ? "opacity-100" : "opacity-0"}`} aria-hidden>
                         <span className="block h-full rounded-full bg-tuile transition-[width] duration-150 ease-linear" style={{ width: `${fill * 100}%` }} />
@@ -75,11 +77,12 @@ export function Rail() {
             );
           })}
         </ol>
+        </div>
       </nav>
 
-      <div className="m-3 shrink-0 rounded-[24px] bg-encre p-4 text-white">
+      <div className="m-3 shrink-0 rounded-[24px] bg-encre p-4 text-white [@media(max-height:820px)]:p-3">
         <p className="text-[1rem] font-[640] tracking-[-0.015em]">Un projet ?</p>
-        <p className="mt-0.5 text-[0.8125rem] leading-[1.35] text-white/60">Devis gratuit, un technicien vous rappelle sous {site.callbackDelay}.</p>
+        <p className="mt-0.5 text-[0.8125rem] leading-[1.35] text-white/60 [@media(max-height:820px)]:hidden">Devis gratuit, un technicien vous rappelle sous {site.callbackDelay}.</p>
         <button type="button" className="btn btn-cta btn-sm mt-3.5 w-full" onClick={() => goToQuote({ source: "sommaire" })}>
           Devis gratuit
         </button>

@@ -148,16 +148,16 @@ export function Hero() {
             </div>
             <ul className="mt-4 flex items-center justify-between gap-4 text-[0.8125rem] font-[540] text-white/90 md:mt-9 md:justify-start md:gap-8 md:text-[0.9375rem] md:text-ardoise">
               <li className="flex items-center gap-1.5">
-                <Star className="h-4 w-4 text-[#ffc94d] md:text-[#e8a400]" />
+                <Star className="h-4 w-4 text-[#ffc94d] md:text-tuile" />
                 <span>
-                  <span className="text-white md:text-encre">{String(site.rating.value).replace(".", ",")} sur 5</span>, {site.rating.count} avis
+                  <span className="text-white md:text-encre">Steevy Grand</span>, façadier
                 </span>
               </li>
               <li className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4" />
-                Garantie décennale
+                Visite et devis gratuits
               </li>
-              <li className="hidden items-center gap-1.5 lg:flex">RGE et Qualibat</li>
+              <li className="hidden items-center gap-1.5 lg:flex">Essonne et Île-de-France</li>
             </ul>
           </div>
         </div>

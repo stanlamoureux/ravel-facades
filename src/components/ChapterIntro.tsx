@@ -30,10 +30,10 @@ export function ChapterIntro({
   const { goToQuote } = useQuote();
   const [main, second] = photos;
   return (
-    <div className="pb-14 pt-[5.5rem] md:pb-24 md:pt-36">
+    <div className="pb-14 pt-[5.5rem] md:pb-[min(6rem,10svh)] md:pt-[min(9rem,16svh)]">
       <div className={`wrap grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-center ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
         <div className="relative">
-          <div className="relative aspect-[4/3.3] overflow-hidden rounded-[28px] bg-gris md:aspect-[4/3.6] md:rounded-[32px]">
+          <div className="relative aspect-[4/3.3] overflow-hidden rounded-[28px] bg-gris md:aspect-[4/3.6] md:rounded-[32px] lg:aspect-auto lg:h-[min(calc(100svh-250px),540px)]">
             <Image src={main.src} alt={main.alt} fill quality={85} sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" style={{ objectPosition: main.position }} />
           </div>
           {second && (
