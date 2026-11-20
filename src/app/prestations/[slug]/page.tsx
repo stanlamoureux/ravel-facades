@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!service) return {};
   const f = fiches[service.id];
   return {
-    title: `${f.title} en Essonne`,
+    title: `${f.title} en Sologne (41)`,
     description: f.lede,
     alternates: { canonical: `/prestations/${f.slug}` },
     openGraph: { title: `${f.title} - ${site.name}`, description: f.lede, images: [{ url: "/images/partage.jpg", width: 1200, height: 630 }] },

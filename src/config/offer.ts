@@ -3,7 +3,7 @@
  * Aucun prix ici : ils vivent dans pricing.ts, lu uniquement par le serveur.
  */
 
-export type ServiceId = "nettoyage" | "hydrofuge" | "peinture" | "ravalement" | "fissures" | "ite";
+export type ServiceId = "nettoyage" | "boiseries" | "dallage" | "hydrofuge" | "peinture" | "ravalement" | "fissures" | "ite";
 
 export const services: { id: ServiceId; name: string; short: string; description: string; duration: string; estimateAs?: WorkId }[] = [
   {
@@ -31,8 +31,24 @@ export const services: { id: ServiceId; name: string; short: string; description
     estimateAs: "peinture",
   },
   {
+    id: "boiseries",
+    name: "Nettoyage des boiseries et volets",
+    short: "Boiseries",
+    description: "Volets, portails, bardages et avant-toits en bois : lavage doux, éclaircissement du bois grisé, puis protection si vous le souhaitez.",
+    duration: "1 à 2 jours",
+    estimateAs: "nettoyage",
+  },
+  {
+    id: "dallage",
+    name: "Nettoyage des dalles, dallages et murets",
+    short: "Dallages",
+    description: "Terrasses, allées, margelles et murets : mousses, lichens et traces noires partent, les joints sont repris si besoin.",
+    duration: "1 à 2 jours",
+    estimateAs: "nettoyage",
+  },
+  {
     id: "hydrofuge",
-    name: "Imperméabilisation",
+    name: "Traitement hydrofuge et imperméabilisation",
     short: "Hydrofuge",
     description: "Un traitement invisible qui fait perler l'eau tout en laissant respirer le mur. Moins de salissures, moins d'humidité.",
     duration: "1 jour",
@@ -40,9 +56,9 @@ export const services: { id: ServiceId; name: string; short: string; description
   },
   {
     id: "fissures",
-    name: "Traitement des fissures",
+    name: "Réparation des fissures par agrafage",
     short: "Fissures",
-    description: "Ouverture, pontage et rebouchage des fissures avant qu'elles ne laissent entrer l'eau dans la maçonnerie.",
+    description: "Les fissures sont ouvertes, agrafées pour recoudre le mur, puis rebouchées et reprises à l'enduit. La réparation tient et ne se voit plus.",
     duration: "1 à 3 jours",
     estimateAs: "ravalement",
   },

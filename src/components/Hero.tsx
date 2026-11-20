@@ -125,7 +125,7 @@ export function Hero() {
               comme neuve.
             </h1>
             <p className="mt-3.5 max-w-[29ch] text-[1.0625rem] font-[480] leading-[1.38] text-white/95 md:mt-7 md:max-w-[34ch] md:text-[1.3125rem] md:font-normal md:leading-[1.45] md:text-ardoise">
-              Ravalement, peinture et nettoyage de façade en Essonne.<span className="hidden md:inline"> Visite et devis gratuits sous {site.quoteDelay}.</span>
+              Ravalement, peinture et nettoyage de façade en Sologne et dans le Loir-et-Cher.<span className="hidden md:inline"> Visite et devis gratuits sous {site.quoteDelay}.</span>
             </p>
           </div>
 
@@ -157,7 +157,7 @@ export function Hero() {
                 <Shield className="h-4 w-4" />
                 Visite et devis gratuits
               </li>
-              <li className="hidden items-center gap-1.5 lg:flex">Essonne et Île-de-France</li>
+              <li className="hidden items-center gap-1.5 lg:flex">Loir-et-Cher et alentours</li>
             </ul>
           </div>
         </div>

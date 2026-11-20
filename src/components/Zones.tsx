@@ -19,7 +19,7 @@ export function Zones() {
             On se déplace chez vous ?
           </h2>
           <p className="t-lede mt-4 max-w-[36ch] md:mt-6">
-            Nos équipes partent d&apos;{site.address.city} et couvrent l&apos;Essonne et les départements voisins.
+            On part de {site.address.city} et on intervient dans tout le Loir-et-Cher et les départements voisins.
           </p>
 
           <div className="mt-8 max-w-[26rem]">
@@ -34,7 +34,7 @@ export function Zones() {
                 inputMode="numeric"
                 autoComplete="postal-code"
                 maxLength={5}
-                placeholder="91000"
+                placeholder="41200"
                 value={cp}
                 onChange={(e) => setCp(e.target.value.replace(/\D/g, ""))}
                 aria-describedby="cp-result"

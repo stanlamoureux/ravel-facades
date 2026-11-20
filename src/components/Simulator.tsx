@@ -246,7 +246,7 @@ export function Simulator() {
                           <input className="field" type="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={c.phone} aria-invalid={!!errors.phone} onChange={(e) => set("phone", e.target.value)} />
                         </Field>
                         <Field label="Code postal" error={errors.postalCode}>
-                          <input className="field" inputMode="numeric" autoComplete="postal-code" maxLength={5} placeholder="91000" value={c.postalCode} aria-invalid={!!errors.postalCode} onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))} />
+                          <input className="field" inputMode="numeric" autoComplete="postal-code" maxLength={5} placeholder="41000" value={c.postalCode} aria-invalid={!!errors.postalCode} onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))} />
                         </Field>
                       </div>
                     </div>

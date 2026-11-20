@@ -23,9 +23,9 @@ export const site = {
   phoneHref: "+33679773871",
   email: "contact@ravel-facades.fr",
   address: {
-    street: "12 rue des Artisans",
-    postalCode: "91000",
-    city: "Évry-Courcouronnes",
+    street: "195 route de Touchebrois",
+    postalCode: "41230",
+    city: "Soings-en-Sologne",
   },
   hours: "Du lundi au samedi, 8 h - 19 h",
   siret: "000 000 000 00000",
@@ -54,13 +54,13 @@ export const site = {
     { name: "Décennale", detail: "Assurance 10 ans sur les travaux" },
   ],
 
+  /** Zones d'intervention depuis Soings-en-Sologne, à valider avec Steevy. */
   zones: [
-    { code: "91", name: "Essonne", cities: ["Évry", "Corbeil-Essonnes", "Massy", "Palaiseau", "Étampes", "Savigny-sur-Orge", "Brétigny-sur-Orge", "Milly-la-Forêt"] },
-    { code: "78", name: "Yvelines", cities: ["Versailles", "Rambouillet", "Saint-Germain-en-Laye", "Le Chesnay", "Poissy"] },
-    { code: "92", name: "Hauts-de-Seine", cities: ["Antony", "Sceaux", "Rueil-Malmaison", "Boulogne-Billancourt"] },
-    { code: "94", name: "Val-de-Marne", cities: ["Créteil", "Vincennes", "Saint-Maur-des-Fossés"] },
-    { code: "77", name: "Seine-et-Marne", cities: ["Fontainebleau", "Melun", "Meaux"] },
-    { code: "75", name: "Paris", cities: ["Tous arrondissements"] },
+    { code: "41", name: "Loir-et-Cher", cities: ["Soings-en-Sologne", "Romorantin-Lanthenay", "Le Controis-en-Sologne", "Blois", "Cour-Cheverny", "Selles-sur-Cher", "Saint-Aignan", "Mur-de-Sologne"] },
+    { code: "37", name: "Indre-et-Loire", cities: ["Amboise", "Bléré", "Loches", "Montlouis-sur-Loire"] },
+    { code: "36", name: "Indre", cities: ["Valençay", "Châtillon-sur-Indre"] },
+    { code: "18", name: "Cher", cities: ["Vierzon", "Mehun-sur-Yèvre"] },
+    { code: "45", name: "Loiret", cities: ["La Ferté-Saint-Aubin", "Orléans sud"] },
   ],
 
   /** Avis clients : à remplir avec de vrais avis (Google) avant de les afficher. */

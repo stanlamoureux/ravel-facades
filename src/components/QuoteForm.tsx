@@ -320,7 +320,7 @@ function QuoteForm() {
                     inputMode="numeric"
                     autoComplete="postal-code"
                     maxLength={5}
-                    placeholder="91000"
+                    placeholder="41200"
                     value={s.postalCode}
                     aria-invalid={!!errors.postalCode}
                     onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))}

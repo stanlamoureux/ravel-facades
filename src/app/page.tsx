@@ -64,14 +64,15 @@ export default function Home() {
           <Chapter id="ravalement">
             <ChapterIntro
               title="Ravalement de façade"
-              lede="On reprend l'enduit, on traite les fissures et on termine par une finition neuve. Votre façade repart pour quinze à vingt ans, isolée si vous le souhaitez."
+              lede="On reprend l'enduit, on recoud les fissures par agrafage et on termine par une finition neuve, protégée par un hydrofuge. Votre façade repart pour quinze à vingt ans."
               photos={[
                 { src: "/images/service-ravalement.webp", alt: "Un façadier étale un enduit neuf à la taloche", position: "50% 30%" },
                 { src: "/images/etape-preparation.webp", alt: "Maison sous échafaudage, protégée par des filets" },
               ]}
               items={[
                 { label: "Ravalement complet", text: "Piquage, reprise de l'enduit, finition neuve", href: ficheHref("ravalement") },
-                { label: "Traitement des fissures", text: "Ouvertes, pontées, rebouchées, invisibles", href: ficheHref("fissures") },
+                { label: "Réparation des fissures", text: "Agrafées, rebouchées, invisibles", href: ficheHref("fissures") },
+                { label: "Hydrofuge et imperméabilisation", text: "L'eau perle, le mur respire", href: ficheHref("hydrofuge") },
                 { label: "Isolation par l'extérieur", text: "Isolant et enduit neuf en une opération", href: ficheHref("ite") },
               ]}
               source="chapitre-ravalement"
@@ -103,14 +104,16 @@ export default function Home() {
           <Chapter id="nettoyage">
             <ChapterIntro
               title="Nettoyage de façade"
-              lede="Coulures noires, pollution, mousses et lichens : on lave à basse pression avec le produit adapté à votre support, puis on protège pour que ça dure."
+              lede="Façade, volets, terrasse ou muret : mousses, lichens et traces noires partent avec la méthode adaptée à chaque support, puis on protège pour que ça dure."
               photos={[
                 { src: "/images/service-nettoyage.webp", alt: "Nettoyage d'un enduit à la lance, la partie lavée est nettement plus claire" },
                 { src: "/images/prestation-hydrofuge.webp", alt: "Gouttes d'eau qui perlent sur un enduit traité" },
               ]}
               items={[
                 { label: "Nettoyage et démoussage", text: "Basse pression, sans abîmer l'enduit", href: ficheHref("nettoyage") },
-                { label: "Imperméabilisation hydrofuge", text: "L'eau perle, le mur respire", href: ficheHref("hydrofuge") },
+                { label: "Boiseries et volets", text: "Bois lavé, éclairci, protégé", href: ficheHref("boiseries") },
+                { label: "Dalles, dallages et murets", text: "Terrasses, allées, murets en pierre", href: ficheHref("dallage") },
+                { label: "Traitement hydrofuge", text: "Pour que la façade reste propre", href: ficheHref("hydrofuge") },
               ]}
               source="chapitre-nettoyage"
             />

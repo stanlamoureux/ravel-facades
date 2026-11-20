@@ -11,7 +11,7 @@ export const faq = [
   },
   {
     q: "Le ravalement est-il obligatoire ?",
-    a: "À Paris et dans les communes qui l'ont décidé, les façades doivent être remises en état au moins tous les dix ans, sur injonction de la mairie. Ailleurs, c'est surtout une question d'entretien : une façade négligée laisse entrer l'eau et coûte plus cher à reprendre.",
+    a: "Seulement dans les communes qui l'ont décidé, sur injonction de la mairie. Ailleurs, et c'est le cas de la plupart des communes de Sologne, c'est surtout une question d'entretien : une façade négligée laisse entrer l'eau et coûte plus cher à reprendre.",
   },
   {
     q: "Combien de temps durent les travaux ?",

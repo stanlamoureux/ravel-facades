@@ -8,10 +8,10 @@ import { useQuote } from "./QuoteContext";
 const cases = [
   {
     id: "orsay",
-    tab: "Maison à Orsay",
+    tab: "Façade verdie",
     work: "Ravalement complet",
     text: "Murs verdis par l'humidité, enduit fatigué : façade lavée, reprise et repeinte, soubassement gris pour protéger le bas des murs.",
-    before: { src: "/images/vrai-orsay-avant.webp", alt: "Pignon d'une maison à Orsay avant travaux, enduit verdi et taché", position: "50% 55%" },
+    before: { src: "/images/vrai-orsay-avant.webp", alt: "Pignon d'une maison avant travaux, enduit verdi et taché", position: "50% 55%" },
     after: { src: "/images/vrai-orsay-apres.webp", alt: "Le même pignon après ravalement, enduit blanc et soubassement gris", position: "50% 50%" },
     estimateAs: "ravalement",
   },

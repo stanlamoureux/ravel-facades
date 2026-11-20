@@ -18,7 +18,7 @@ export function Proof() {
             Steevy Grand, sur chaque chantier.
           </h2>
           <p className="t-lede mt-4 max-w-[40ch] md:mt-6">
-            Façadier en Essonne, Steevy suit votre projet du premier appel à la réception. Vous savez toujours à qui parler.
+            Façadier installé à Soings-en-Sologne, Steevy suit votre projet du premier appel à la réception. Vous savez toujours à qui parler.
           </p>
           <dl className="mt-6 border-t border-trait md:mt-9">
             {points.map(([k, v]) => (

@@ -11,7 +11,7 @@ export function Footer() {
         <div className="grid gap-x-10 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <Logo />
-            <p className="mt-4 max-w-[28ch] text-white/60">Ravalement, peinture et nettoyage de façade en Île-de-France, depuis {site.foundedYear}.</p>
+            <p className="mt-4 max-w-[28ch] text-white/60">Ravalement, peinture et nettoyage de façade en Sologne, depuis {site.foundedYear}.</p>
           </div>
           <div>
             <h2 className="text-[0.875rem] font-[600] text-white/50">Nous joindre</h2>

@@ -2,16 +2,16 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { site } from "@/config/site";
 
-const description = `Ravalement, peinture et nettoyage de façade en Essonne et en Île-de-France. Visite et devis gratuits sous ${site.quoteDelay}, travaux couverts par la garantie décennale.`;
+const description = `Ravalement, peinture, nettoyage de façade, boiseries et dallages en Sologne et dans le Loir-et-Cher. Visite et devis gratuits sous ${site.quoteDelay}, travaux couverts par la garantie décennale.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Ravalement, peinture et nettoyage de façade en Essonne`,
+    default: `${site.name} | Ravalement, peinture et nettoyage de façade en Sologne`,
     template: `%s | ${site.name}`,
   },
   description,
-  keywords: ["ravalement de façade", "peinture façade", "nettoyage façade", "démoussage", "hydrofuge", "façadier Essonne", "Île-de-France"],
+  keywords: ["ravalement de façade", "peinture façade", "nettoyage façade", "démoussage", "hydrofuge", "façadier Loir-et-Cher", "Île-de-France"],
   openGraph: {
     type: "website",
     locale: "fr_FR",

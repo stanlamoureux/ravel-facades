@@ -77,7 +77,7 @@ export const fiches: Record<ServiceId, Fiche> = {
   },
   hydrofuge: {
     slug: "hydrofuge-facade",
-    title: "Imperméabilisation hydrofuge",
+    title: "Traitement hydrofuge et imperméabilisation",
     lede: "Un traitement incolore qui fait perler l'eau en surface et laisse le mur respirer. La façade se salit moins vite, et l'humidité ne s'installe plus.",
     photo: { src: "/images/realisation-longere.webp", alt: "Longère à l'enduit ocre, protégée par un hydrofuge incolore", position: "50% 55%" },
     facts: [
@@ -96,9 +96,9 @@ export const fiches: Record<ServiceId, Fiche> = {
   },
   fissures: {
     slug: "traitement-fissures",
-    title: "Traitement des fissures",
-    lede: "Une fissure qui laisse entrer l'eau s'aggrave à chaque hiver. On l'ouvre, on la ponte, on la rebouche, puis on rend la réparation invisible.",
-    photo: { src: "/images/etape-diagnostic.webp", alt: "Un technicien examine une fissure sur un enduit ancien, tablette à la main" },
+    title: "Réparation des fissures par agrafage",
+    lede: "Une fissure qui laisse entrer l'eau s'aggrave à chaque hiver. On ouvre le mur, on pose des agrafes pour le recoudre, on rebouche, puis on rend la réparation invisible.",
+    photo: { src: "/images/vrai-fissure-reprise.webp", alt: "Mur ouvert et repris au mortier autour d'une fissure" },
     facts: [
       ["Durée du chantier", "1 à 3 jours"],
       ["Diagnostic", "Gratuit"],
@@ -107,11 +107,49 @@ export const fiches: Record<ServiceId, Fiche> = {
     includes: [
       "Diagnostic : fissure d'enduit ou fissure de structure",
       "Ouverture et dépoussiérage de la fissure",
-      "Pontage avec trame, ou agrafage selon le cas",
+      "Agrafage : agrafes scellées en travers de la fissure pour recoudre la maçonnerie",
       "Rebouchage au mortier adapté au support",
       "Reprise de la finition pour fondre la réparation",
     ],
     signs: ["Des fissures en escalier le long des joints", "Une fissure qui s'élargit d'une année à l'autre", "Des traces d'humidité à l'intérieur, au droit de la fissure", "Avant une peinture ou un ravalement"],
+  },
+  boiseries: {
+    slug: "nettoyage-boiseries-volets",
+    title: "Nettoyage des boiseries et volets",
+    lede: "Le bois grisé ou verdi n'est pas fichu. On le lave en douceur, on l'éclaircit, puis on le protège pour qu'il garde sa couleur.",
+    photo: { src: "/images/vrai-realisation-volets-bois.webp", alt: "Maison à la façade blanche et aux volets en bois", position: "50% 50%" },
+    facts: [
+      ["Durée du chantier", "1 à 2 jours"],
+      ["Supports", "Volets, portails, bardages"],
+      ["Finition", "Saturateur ou lasure"],
+    ],
+    includes: [
+      "Dépose des volets si besoin, ou protection sur place",
+      "Lavage doux adapté au bois, sans le pelucher",
+      "Dégriseur pour retrouver la teinte d'origine",
+      "Protection au saturateur ou à la lasure, au choix",
+      "Repose et nettoyage des abords",
+    ],
+    signs: ["Le bois est devenu gris ou noirci", "Des mousses verdissent le bas des volets", "La lasure s'écaille par endroits", "Avant de repeindre, pour partir sur un bois sain"],
+  },
+  dallage: {
+    slug: "nettoyage-dallages-murets",
+    title: "Nettoyage des dalles, dallages et murets",
+    lede: "Terrasse glissante, allée noircie, muret couvert de lichens : on nettoie le support sans l'abîmer, on reprend les joints, et on protège.",
+    photo: { src: "/images/vrai-realisation-pavillon-blanc-2.webp", alt: "Pavillon blanc et sa terrasse", position: "50% 70%" },
+    facts: [
+      ["Durée du chantier", "1 à 2 jours"],
+      ["Supports", "Pierre, béton, pavés"],
+      ["Protection", "Hydrofuge en option"],
+    ],
+    includes: [
+      "Nettoyage haute ou basse pression selon le support",
+      "Traitement anti-mousse et anti-lichen",
+      "Reprise des joints abîmés",
+      "Couvertines et chaperons de murets nettoyés",
+      "Hydrofuge en option, pour que ça reste propre plus longtemps",
+    ],
+    signs: ["La terrasse devient glissante à la pluie", "Les joints se creusent et l'herbe pousse", "Un muret noirci ou couvert de lichens", "Une maison à vendre ou à louer"],
   },
   ite: {
     slug: "isolation-exterieure",
@@ -210,11 +248,14 @@ export const extras: Record<ServiceId, Extra> = {
     ],
   },
   fissures: {
-    compare: { before: "pavillon-avant", after: "pavillon-apres", caption: "Illustration d'une reprise de fissures et d'enduit" },
+    photos: [
+      { src: "/images/vrai-fissure-avant.webp", alt: "Large fissure dans l'enduit, avant réparation" },
+      { src: "/images/vrai-fissure-apres.webp", alt: "Le même mur après agrafage et reprise de l'enduit" },
+    ],
     steps: [
       ["Diagnostic", "Fissure d'enduit ou de structure : on fait la différence."],
       ["Ouverture", "La fissure est ouverte et dépoussiérée."],
-      ["Pontage", "Trame de renfort ou agrafes, selon la largeur."],
+      ["Agrafage", "Des agrafes sont scellées en travers pour recoudre le mur."],
       ["Finition", "Rebouchage et reprise de l'enduit pour tout fondre."],
     ],
     review: "Jean-Pierre M.",
@@ -222,6 +263,42 @@ export const extras: Record<ServiceId, Extra> = {
       ["Une fissure est-elle grave ?", "La plupart sont superficielles. Si elle dépasse 2 mm ou s'élargit, on vous oriente vers un bureau d'études."],
       ["La réparation se verra-t-elle ?", "Non, on reprend la finition sur toute la zone pour qu'elle disparaisse."],
       ["Faut-il refaire toute la façade ?", "Pas forcément. Quelques fissures se traitent seules, en un à trois jours."],
+    ],
+  },
+  boiseries: {
+    photos: [
+      { src: "/images/vrai-realisation-volets-bois.webp", alt: "Volets en bois sur une façade blanche" },
+      { src: "/images/vrai-chantier-peinture.webp", alt: "Pignon préparé, un artisan sur l'échelle" },
+    ],
+    steps: [
+      ["Protection", "Vitrages, façade et sols protégés, volets déposés si besoin."],
+      ["Lavage", "Un lavage doux qui retire mousses et saletés sans abîmer les fibres."],
+      ["Éclaircissement", "Le dégriseur redonne au bois sa teinte d'origine."],
+      ["Protection", "Saturateur ou lasure, une fois le bois bien sec."],
+    ],
+    review: "",
+    faq: [
+      ["Peut-on nettoyer des volets peints ?", "Oui. Si la peinture s'écaille, on vous propose plutôt un décapage puis une remise en peinture."],
+      ["Le bois risque-t-il de s'abîmer ?", "Non, la pression et les produits sont adaptés au bois pour ne pas le pelucher."],
+      ["Combien de temps tient la protection ?", "Trois à cinq ans environ selon l'exposition. Un simple entretien suffit ensuite."],
+    ],
+  },
+  dallage: {
+    photos: [
+      { src: "/images/vrai-realisation-pavillon-blanc-2.webp", alt: "Pavillon blanc côté terrasse" },
+      { src: "/images/vrai-realisation-pavillon-blanc.webp", alt: "Pavillon et terrasse vus depuis le jardin" },
+    ],
+    steps: [
+      ["Diagnostic", "Pierre, béton ou pavés : on choisit la méthode qui ne marque pas."],
+      ["Nettoyage", "Mousses, lichens et traces noires retirés."],
+      ["Joints", "Les joints creusés sont repris."],
+      ["Protection", "Hydrofuge en option pour ralentir le retour des mousses."],
+    ],
+    review: "",
+    faq: [
+      ["Le nettoyeur haute pression abîme-t-il la pierre ?", "Il peut, sur une pierre tendre. C'est pour ça qu'on adapte la pression et la buse à chaque support."],
+      ["Combien de temps reste-t-il propre ?", "Un à trois ans sans protection, nettement plus avec un hydrofuge."],
+      ["Faites-vous les murets en pierre ?", "Oui, murets, couvertines et chaperons, avec les joints si besoin."],
     ],
   },
   ite: {
