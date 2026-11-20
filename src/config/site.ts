@@ -7,7 +7,7 @@
  *  Quand tout est réel, passe `demo` à false : ça retire les
  *  mentions "exemple" affichées sur le site.
  *
- *  Le téléphone est celui de Steevy Grand (vrai numéro).
+ *  Le téléphone est celui de Steevy GRAND (vrai numéro).
  * ============================================================
  */
 
@@ -39,7 +39,7 @@ export const site = {
   rating: { value: 4.9, count: 327 },
 
   /** Légende de la photo d'équipe */
-  teamCaption: "Steevy Grand et son équipe sur un pignon, enduit repris à la taloche.",
+  teamCaption: "Steevy GRAND et son équipe sur un pignon, enduit repris à la taloche.",
 
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },

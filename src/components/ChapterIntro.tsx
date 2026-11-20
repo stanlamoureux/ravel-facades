@@ -7,7 +7,7 @@ import { useQuote } from "./QuoteContext";
 import { Arrow, Chevron } from "./icons";
 
 type Photo = { src: string; alt: string; position?: string };
-type Item = { label: string; text: string; href: string };
+type Item = { label: string; text: string; href: string; photo: string };
 
 /** Ouverture d'un chapitre : le métier en une phrase, deux photos, les prestations qui en font partie. */
 export function ChapterIntro({
@@ -46,13 +46,17 @@ export function ChapterIntro({
         <div className={second ? "pt-4 lg:pt-0" : ""}>
           <h2 className="t-display text-[clamp(2.25rem,9vw,4rem)]">{title}</h2>
           <p className="t-lede mt-4 max-w-[42ch] md:mt-6">{typo(lede)}</p>
-          <ul className="mt-6 border-t border-trait md:mt-8">
+          {/* les expertises du métier : une carte photo chacune, qui mène à sa fiche */}
+          <ul className={`mt-6 grid gap-2.5 md:mt-8 ${items.length > 3 ? "sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2" : ""}`}>
             {items.map((it) => (
-              <li key={it.label} className="border-b border-trait">
-                <Link href={it.href} className="group flex items-center justify-between gap-4 py-3.5 md:py-4">
-                  <span>
-                    <span className="block text-[1.0625rem] font-[620] tracking-[-0.015em] md:text-[1.125rem]">{it.label}</span>
-                    <span className="mt-0.5 block text-[0.9375rem] leading-[1.4] text-ardoise">{typo(it.text)}</span>
+              <li key={it.label}>
+                <Link href={it.href} className="group flex h-full items-center gap-3.5 rounded-[20px] bg-gris p-2 pr-3.5 transition-colors duration-200 hover:bg-[#e9e9ed] md:gap-4">
+                  <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[14px] bg-trait md:h-[72px] md:w-[72px] lg:h-14 lg:w-14 2xl:h-[72px] 2xl:w-[72px]">
+                    <Image src={it.photo} alt="" fill quality={70} sizes="72px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[1rem] font-[640] leading-[1.25] tracking-[-0.015em] md:text-[1.0625rem]">{it.label}</span>
+                    <span className="mt-0.5 block text-[0.875rem] leading-[1.35] text-ardoise md:text-[0.9375rem]">{typo(it.text)}</span>
                   </span>
                   <Chevron className="h-5 w-5 shrink-0 text-brume transition-transform duration-300 group-hover:translate-x-1 group-hover:text-encre" />
                 </Link>

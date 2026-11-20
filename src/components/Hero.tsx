@@ -150,7 +150,7 @@ export function Hero() {
               <li className="flex items-center gap-1.5">
                 <Star className="h-4 w-4 text-[#ffc94d] md:text-tuile" />
                 <span>
-                  <span className="text-white md:text-encre">Steevy Grand</span>, façadier
+                  <span className="text-white md:text-encre">Steevy GRAND</span>, façadier
                 </span>
               </li>
               <li className="flex items-center gap-1.5">

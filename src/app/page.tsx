@@ -6,7 +6,6 @@ import { Hero } from "@/components/Hero";
 import { Proof } from "@/components/Proof";
 import { Chapter } from "@/components/Chapter";
 import { ChapterIntro } from "@/components/ChapterIntro";
-import { Compare } from "@/components/Compare";
 import { Rail } from "@/components/Rail";
 import { ficheHref } from "@/config/fiches";
 import { RealWork } from "@/components/RealWork";
@@ -70,10 +69,10 @@ export default function Home() {
                 { src: "/images/etape-preparation.webp", alt: "Maison sous échafaudage, protégée par des filets" },
               ]}
               items={[
-                { label: "Ravalement complet", text: "Piquage, reprise de l'enduit, finition neuve", href: ficheHref("ravalement") },
-                { label: "Réparation des fissures", text: "Agrafées, rebouchées, invisibles", href: ficheHref("fissures") },
-                { label: "Hydrofuge et imperméabilisation", text: "L'eau perle, le mur respire", href: ficheHref("hydrofuge") },
-                { label: "Isolation par l'extérieur", text: "Isolant et enduit neuf en une opération", href: ficheHref("ite") },
+                { label: "Ravalement complet", text: "Piquage, reprise de l'enduit, finition neuve", href: ficheHref("ravalement"), photo: "/images/vrai-chantier-taloche.webp" },
+                { label: "Réparation des fissures", text: "Agrafées, rebouchées, invisibles", href: ficheHref("fissures"), photo: "/images/vrai-fissure-apres.webp" },
+                { label: "Hydrofuge et imperméabilisation", text: "L'eau perle, le mur respire", href: ficheHref("hydrofuge"), photo: "/images/prestation-hydrofuge.webp" },
+                { label: "Isolation par l'extérieur", text: "Isolant et enduit neuf en une opération", href: ficheHref("ite"), photo: "/images/prestation-ite.webp" },
               ]}
               source="chapitre-ravalement"
             />
@@ -91,9 +90,9 @@ export default function Home() {
                 { src: "/images/service-peinture.webp", alt: "Un peintre repeint une façade ocre au rouleau", position: "50% 35%" },
               ]}
               items={[
-                { label: "Peinture de façade", text: "Minérale ou pliolite, plus de 80 teintes", href: ficheHref("peinture") },
-                { label: "Peinture intérieure", text: "Pièces de vie, plafonds, cages d'escalier", href: ficheHref("peinture") },
-                { label: "Volets et boiseries", text: "Décapés, poncés, repeints", href: ficheHref("peinture") },
+                { label: "Peinture de façade", text: "Minérale ou pliolite, plus de 80 teintes", href: ficheHref("peinture"), photo: "/images/service-peinture.webp" },
+                { label: "Peinture intérieure", text: "Pièces de vie, plafonds, cages d'escalier", href: ficheHref("peinture"), photo: "/images/peinture-interieure.webp" },
+                { label: "Volets et boiseries", text: "Décapés, poncés, repeints", href: ficheHref("peinture"), photo: "/images/vrai-realisation-volets-bois.webp" },
               ]}
               source="chapitre-peinture"
             />
@@ -110,22 +109,13 @@ export default function Home() {
                 { src: "/images/prestation-hydrofuge.webp", alt: "Gouttes d'eau qui perlent sur un enduit traité" },
               ]}
               items={[
-                { label: "Nettoyage et démoussage", text: "Basse pression, sans abîmer l'enduit", href: ficheHref("nettoyage") },
-                { label: "Boiseries et volets", text: "Bois lavé, éclairci, protégé", href: ficheHref("boiseries") },
-                { label: "Dalles, dallages et murets", text: "Terrasses, allées, murets en pierre", href: ficheHref("dallage") },
-                { label: "Traitement hydrofuge", text: "Pour que la façade reste propre", href: ficheHref("hydrofuge") },
+                { label: "Nettoyage et démoussage", text: "Basse pression, sans abîmer l'enduit", href: ficheHref("nettoyage"), photo: "/images/service-nettoyage.webp" },
+                { label: "Boiseries et volets", text: "Bois lavé, éclairci, protégé", href: ficheHref("boiseries"), photo: "/images/vrai-realisation-volets-bois.webp" },
+                { label: "Dalles, dallages et murets", text: "Terrasses, allées, murets en pierre", href: ficheHref("dallage"), photo: "/images/vrai-realisation-pavillon-blanc-2.webp" },
+                { label: "Traitement hydrofuge", text: "Pour que la façade reste propre", href: ficheHref("hydrofuge"), photo: "/images/prestation-hydrofuge.webp" },
               ]}
               source="chapitre-nettoyage"
             />
-            <div className="wrap pb-14 md:pb-24">
-              <Compare
-                before={{ src: "/images/bourg-avant.webp", alt: "Maison de bourg avant nettoyage, enduit couvert de mousse" }}
-                after={{ src: "/images/bourg-apres.webp", alt: "La même maison après nettoyage, enduit beige clair" }}
-                position="50% 60%"
-                className="aspect-[4/3.4] rounded-[28px] md:aspect-[16/8] md:rounded-[32px]"
-              />
-              <p className="mt-3 text-[0.875rem] text-ardoise">Nettoyage et hydrofuge : faites glisser pour comparer (photo d&apos;illustration).</p>
-            </div>
           </Chapter>
 
           <Chapter id="contact">

@@ -126,7 +126,7 @@ export function Simulator() {
     <section id="simulateur" className="bg-gris py-14 md:py-[min(8rem,12svh)]" aria-labelledby="sim-title">
       <div className="wrap">
         <h2 id="sim-title" className="t-h2 max-w-[13ch]">
-          Combien pour votre façade&nbsp;?
+          Chiffrer mes travaux
         </h2>
         <p className="t-lede mt-4 max-w-[42ch] md:mt-6">Cinq réponses, et le calcul est fait. Votre estimation chiffrée arrive par email dans la minute.</p>
 
@@ -213,7 +213,7 @@ export function Simulator() {
                         Masquée
                       </span>
                     </p>
-                    <p className="mt-3 select-none whitespace-nowrap text-[clamp(1.9rem,8.6vw,2.6rem)] font-[650] leading-none tracking-[-0.035em] tabular-nums blur-[9px]" aria-hidden>
+                    <p className="mt-3 select-none whitespace-nowrap text-[clamp(1.9rem,8.6vw,2.6rem)] font-[650] leading-none tracking-[-0.035em] tabular-nums blur-[7px] opacity-90 [text-shadow:0_0_14px_rgb(255_255_255/0.35)]" aria-hidden>
                       <AnimatedNumber value={ghost.low} /> à <AnimatedNumber value={ghost.high} />
                       &nbsp;€
                     </p>
