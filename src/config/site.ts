@@ -7,7 +7,7 @@
  *  Quand tout est réel, passe `demo` à false : ça retire les
  *  mentions "exemple" affichées sur le site.
  *
- *  Le téléphone est celui de Steevy GARAND (vrai numéro).
+ *  Vrai numéro du client. Le client ne veut pas que son nom apparaisse sur le site, sauf dans les mentions légales (obligatoire).
  * ============================================================
  */
 
@@ -50,7 +50,7 @@ export const site = {
   rating: { value: 4.9, count: 327 },
 
   /** Légende de la photo d'équipe */
-  teamCaption: "Steevy GARAND et son équipe sur un pignon, enduit repris à la taloche.",
+  teamCaption: "L'équipe sur un pignon, enduit repris à la taloche.",
 
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },
@@ -65,7 +65,7 @@ export const site = {
     { name: "Décennale", detail: "Assurance 10 ans sur les travaux" },
   ],
 
-  /** Zones d'intervention depuis Soings-en-Sologne, à valider avec Steevy. */
+  /** Zones d'intervention depuis Soings-en-Sologne, à valider avec le client. */
   zones: [
     { code: "41", name: "Loir-et-Cher", cities: ["Soings-en-Sologne", "Romorantin-Lanthenay", "Le Controis-en-Sologne", "Blois", "Cour-Cheverny", "Selles-sur-Cher", "Saint-Aignan", "Mur-de-Sologne"] },
     { code: "37", name: "Indre-et-Loire", cities: ["Amboise", "Bléré", "Loches", "Montlouis-sur-Loire"] },

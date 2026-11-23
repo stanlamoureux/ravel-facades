@@ -38,7 +38,7 @@ export default function Page() {
       <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
       <h2>Propriété intellectuelle</h2>
       <p>
-        Les textes, photos et éléments graphiques de ce site appartiennent à Steevy GARAND, sauf mention contraire. Toute reproduction sans autorisation est interdite.
+        Les textes, photos et éléments graphiques de ce site appartiennent à l'éditeur du site, sauf mention contraire. Toute reproduction sans autorisation est interdite.
       </p>
       <h2>Données personnelles</h2>
       <p>

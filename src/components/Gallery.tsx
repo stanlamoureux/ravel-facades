@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-/** Réalisations : vraies photos de chantiers de Steevy GARAND. */
+/** Réalisations : vraies photos de chantiers. */
 const works = [
   { src: "/images/vrai-realisation-pavillon-blanc.webp", title: "Pavillon et terrasse", detail: "Ravalement, enduit blanc", alt: "Pavillon à l'enduit blanc refait, vu depuis le jardin", wide: true },
   { src: "/images/vrai-realisation-volets-bois.webp", title: "Maison aux volets bois", detail: "Façade blanche, volets conservés", alt: "Maison à la façade blanche et aux volets en bois" },
@@ -14,7 +14,7 @@ export function Gallery() {
     <section id="realisations" className="pb-4 pt-14 md:pb-8 md:pt-[min(8rem,12svh)]" aria-labelledby="realisations-title">
       <div className="wrap">
         <h2 id="realisations-title" className="t-h2 max-w-[14ch]">
-          Quelques chantiers de Steevy.
+          Quelques-uns de nos chantiers.
         </h2>
         <p className="t-lede mt-4 max-w-[42ch] md:mt-6">Des photos prises sur place, pendant et après les travaux.</p>
       </div>

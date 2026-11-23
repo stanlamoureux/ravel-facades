@@ -25,7 +25,7 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
-    name: site.legalName,
+    name: site.name,
     url: site.url,
     telephone: site.phoneHref,
     email: site.email,

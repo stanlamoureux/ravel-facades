@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useQuote } from "./QuoteContext";
 
-/** Avant / après de vrais chantiers de Steevy GARAND. Les photos ne sont pas cadrées pareil : on les montre côte à côte. */
+/** Avant / après de vrais chantiers. Les photos ne sont pas cadrées pareil : on les montre côte à côte. */
 const cases = [
   {
     id: "orsay",
@@ -57,7 +57,7 @@ export function RealWork() {
             <h2 id="ba-title" className="t-h2 max-w-[16ch]">
               Avant, après. Nos vrais chantiers.
             </h2>
-            <p className="t-lede mt-3 max-w-[44ch] !text-white/65 md:mt-4">Photos prises par Steevy sur ses chantiers, sans retouche.</p>
+            <p className="t-lede mt-3 max-w-[44ch] !text-white/65 md:mt-4">Photos prises sur nos chantiers, sans retouche.</p>
           </div>
           <div className="-mx-5 overflow-x-auto px-5 md:mx-0 md:px-0" role="tablist" aria-label="Chantiers">
             <div className="flex w-max gap-1 rounded-full bg-white/10 p-1">

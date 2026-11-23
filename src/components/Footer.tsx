@@ -44,8 +44,6 @@ export function Footer() {
           <div>
             <h2 className="text-[0.875rem] font-[600] text-white/50">Adresse</h2>
             <address className="mt-3 not-italic leading-[1.6] text-white/75">
-              {site.legalName}
-              <br />
               {site.address.street}
               <br />
               {site.address.postalCode} {site.address.city}
@@ -55,7 +53,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.875rem] text-white/50 md:flex-row md:items-center md:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.legalName}. SIRET {site.siret}.
+            © {new Date().getFullYear()} {site.name}. SIRET {site.siret}.
           </p>
           <p className="flex gap-6">
             <a href="/mentions-legales" className="hover:text-white">

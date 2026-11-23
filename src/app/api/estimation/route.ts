@@ -94,7 +94,7 @@ export async function POST(req: Request) {
         <h2 style="margin:28px 0 6px;font-size:18px;letter-spacing:-0.01em">Et maintenant ?</h2>
         <p style="margin:0 0 20px;color:#56616f;font-size:16px">Un technicien vous rappelle sous ${esc(site.callbackDelay)} pour convenir d'une visite gratuite. C'est elle qui permet de fixer le prix ferme, poste par poste.</p>
         ${button(`tel:${site.phoneHref}`, `Nous appeler : ${site.phone}`)}`,
-        `Estimation indicative, hors réparations de structure, à confirmer après visite. ${esc(site.legalName)}, ${esc(site.address.postalCode)} ${esc(site.address.city)}.${site.demo ? " Ceci est un site de démonstration : l'entreprise et les prix sont fictifs." : ""}`,
+        `Estimation indicative, hors réparations de structure, à confirmer après visite. ${esc(site.name)}, ${esc(site.address.postalCode)} ${esc(site.address.city)}.`,
       ),
       text: [
         `Bonjour ${first},`,

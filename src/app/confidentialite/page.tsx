@@ -12,7 +12,7 @@ export default function Page() {
         projet. Ces informations servent uniquement à vous recontacter et à établir votre devis.
       </p>
       <h2>Qui y a accès</h2>
-      <p>Seule l&apos;équipe de {site.legalName}. Vos données ne sont ni vendues, ni louées, ni utilisées pour de la publicité.</p>
+      <p>Seule l&apos;équipe de {site.name}. Vos données ne sont ni vendues, ni louées, ni utilisées pour de la publicité.</p>
       <h2>Combien de temps</h2>
       <p>Trois ans après notre dernier échange si aucun chantier n&apos;est engagé, puis elles sont supprimées.</p>
       <h2>Vos droits</h2>
