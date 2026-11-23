@@ -77,10 +77,10 @@ export function RealWork() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-2.5 md:mt-10 md:gap-4" role="tabpanel">
+        <div className="mt-6 grid grid-cols-2 gap-2.5 md:mt-10 md:flex md:justify-center md:gap-4" role="tabpanel">
           {(["before", "after"] as const).map((k) => (
-            <figure key={`${c.id}-${k}`} className="relative h-[min(56svh,560px)] overflow-hidden rounded-[22px] bg-encre-2 md:rounded-[30px]">
-              <Image src={c[k].src} alt={c[k].alt} fill quality={80} sizes="(min-width: 1200px) 570px, 50vw" className="object-cover" style={{ objectPosition: c[k].position }} />
+            <figure key={`${c.id}-${k}`} className="relative aspect-[3/4] overflow-hidden rounded-[18px] bg-encre-2 md:h-[min(68svh,620px)] md:rounded-[30px]">
+              <Image src={c[k].src} alt={c[k].alt} fill quality={80} sizes="(min-width: 768px) 470px, 50vw" className="object-cover" style={{ objectPosition: c[k].position }} />
               <figcaption className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[0.8125rem] font-[640] md:left-5 md:top-5 md:px-3.5 md:text-[0.875rem] ${k === "after" ? "bg-white text-encre" : "glass text-white"}`}>
                 {k === "before" ? "Avant" : "Après"}
               </figcaption>

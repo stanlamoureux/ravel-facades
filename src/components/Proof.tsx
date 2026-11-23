@@ -36,15 +36,15 @@ export function Proof() {
 
         {/* trois photos de chantier : le pignon en entier, et deux plans à la taloche */}
         <figure className="-order-1 lg:order-none">
-          <div className="grid h-[min(70svh,560px)] grid-cols-[1.35fr_1fr] grid-rows-2 gap-2.5 md:gap-3">
-            <div className="relative row-span-2 overflow-hidden rounded-[24px] bg-gris md:rounded-[30px]">
-              <Image src="/images/vrai-chantier-pignon.webp" alt="Steevy GARAND et son équipe sur des échelles, en train de reprendre l'enduit d'un pignon" fill quality={80} sizes="(min-width: 1024px) 420px, 58vw" className="object-cover" style={{ objectPosition: "50% 60%" }} />
+          <div className="grid grid-cols-2 gap-2.5 md:gap-3 lg:h-[min(70svh,560px)] lg:grid-cols-[1.35fr_1fr] lg:grid-rows-2">
+            <div className="relative col-span-2 aspect-[4/5] overflow-hidden rounded-[24px] bg-gris sm:aspect-[4/3] md:rounded-[30px] lg:col-span-1 lg:row-span-2 lg:aspect-auto">
+              <Image src="/images/vrai-chantier-pignon.webp" alt="Steevy GARAND et son équipe sur des échelles, en train de reprendre l'enduit d'un pignon" fill quality={80} sizes="(min-width: 1024px) 420px, 100vw" className="object-cover" style={{ objectPosition: "50% 60%" }} />
             </div>
-            <div className="relative overflow-hidden rounded-[20px] bg-gris md:rounded-[26px]">
-              <Image src="/images/vrai-chantier-taloche.webp" alt="Enduit repris à la taloche sur un pignon" fill quality={78} sizes="(min-width: 1024px) 300px, 42vw" className="object-cover" style={{ objectPosition: "45% 35%" }} />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-gris md:rounded-[26px] lg:aspect-auto">
+              <Image src="/images/vrai-chantier-taloche.webp" alt="Enduit repris à la taloche sur un pignon" fill quality={78} sizes="(min-width: 1024px) 300px, 50vw" className="object-cover" style={{ objectPosition: "45% 35%" }} />
             </div>
-            <div className="relative overflow-hidden rounded-[20px] bg-gris md:rounded-[26px]">
-              <Image src="/images/vrai-chantier-maison-ville.webp" alt="L'équipe en façade d'une maison de ville, échelles et protections en place" fill quality={78} sizes="(min-width: 1024px) 300px, 42vw" className="object-cover" style={{ objectPosition: "50% 40%" }} />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-gris md:rounded-[26px] lg:aspect-auto">
+              <Image src="/images/vrai-chantier-maison-ville.webp" alt="L'équipe en façade d'une maison de ville, échelles et protections en place" fill quality={78} sizes="(min-width: 1024px) 300px, 50vw" className="object-cover" style={{ objectPosition: "50% 40%" }} />
             </div>
           </div>
           <figcaption className="mt-3 text-[0.875rem] text-ardoise">{site.teamCaption}</figcaption>
