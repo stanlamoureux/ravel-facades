@@ -34,7 +34,7 @@ export const site = {
   phoneHref: "+33679773871",
   email: "contact@ravel-facades.fr",
   address: {
-    street: "195 route de Touchebrois",
+    street: "195 route de Touchebrault",
     postalCode: "41230",
     city: "Soings-en-Sologne",
   },
@@ -50,7 +50,7 @@ export const site = {
   rating: { value: 4.9, count: 327 },
 
   /** Légende de la photo d'équipe */
-  teamCaption: "L'équipe sur un pignon, enduit repris à la taloche.",
+  teamCaption: "L'équipe à l'œuvre : enduit repris à la taloche, puis façade d'une maison de ville.",
 
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },
