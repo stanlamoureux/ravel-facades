@@ -5,27 +5,45 @@ import { LegalLayout } from "@/components/LegalLayout";
 export const metadata: Metadata = { title: "Mentions légales" };
 
 export default function Page() {
+  const l = site.legal;
   return (
     <LegalLayout title="Mentions légales">
-      <p>À compléter avec les informations réelles de l&apos;entreprise avant la mise en ligne.</p>
       <h2>Éditeur du site</h2>
       <p>
-        {site.legalName}, société par actions simplifiée.
+        Steevy GARAND, entrepreneur individuel (EI)
         <br />
-        Siège : {site.address.street}, {site.address.postalCode} {site.address.city}
+        Adresse : {site.address.street}, {site.address.postalCode} {site.address.city}
         <br />
-        SIRET : {site.siret}
+        SIREN : {l.siren}, SIRET : {site.siret}
         <br />
-        Téléphone : {site.phone}, email : {site.email}
+        Immatriculation : {l.rcs}, depuis le {l.registeredOn}
         <br />
-        Directeur de la publication : [nom du dirigeant]
+        TVA intracommunautaire : {l.tva}
+        <br />
+        Code APE : {l.naf}
+        <br />
+        Téléphone : <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
+        <br />
+        Directeur de la publication : Steevy GARAND
       </p>
-      <h2>Assurance professionnelle</h2>
-      <p>Assurance décennale : [assureur], contrat n° [numéro], couverture géographique : France métropolitaine.</p>
+      {l.insurance && (
+        <>
+          <h2>Assurance professionnelle</h2>
+          <p>
+            Assurance décennale : {l.insurance.insurer}, contrat n° {l.insurance.contract}, couverture géographique : France métropolitaine.
+          </p>
+        </>
+      )}
       <h2>Hébergement</h2>
       <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
       <h2>Propriété intellectuelle</h2>
-      <p>Les textes, illustrations et éléments graphiques de ce site sont la propriété de {site.legalName}. Toute reproduction sans autorisation est interdite.</p>
+      <p>
+        Les textes, photos et éléments graphiques de ce site appartiennent à Steevy GARAND, sauf mention contraire. Toute reproduction sans autorisation est interdite.
+      </p>
+      <h2>Données personnelles</h2>
+      <p>
+        Les informations envoyées par les formulaires servent uniquement à répondre à votre demande. Le détail est dans la <a href="/confidentialite">politique de confidentialité</a>.
+      </p>
     </LegalLayout>
   );
 }

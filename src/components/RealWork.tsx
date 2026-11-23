@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useQuote } from "./QuoteContext";
 
-/** Avant / après de vrais chantiers de Steevy GRAND. Les photos ne sont pas cadrées pareil : on les montre côte à côte. */
+/** Avant / après de vrais chantiers de Steevy GARAND. Les photos ne sont pas cadrées pareil : on les montre côte à côte. */
 const cases = [
   {
     id: "orsay",

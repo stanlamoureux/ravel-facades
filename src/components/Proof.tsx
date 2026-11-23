@@ -8,14 +8,14 @@ const points = [
   ["À la fin", "Il fait le tour avec vous avant de partir"],
 ] as const;
 
-/** L'artisan, en vrai : Steevy GRAND et son équipe sur leurs chantiers. */
+/** L'artisan, en vrai : Steevy GARAND et son équipe sur leurs chantiers. */
 export function Proof() {
   return (
     <section id="steevy" className="py-14 md:py-[min(8rem,12svh)]" aria-labelledby="steevy-title">
       <div className="wrap grid gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center">
         <div>
           <h2 id="steevy-title" className="t-h2 max-w-[13ch]">
-            Steevy GRAND, sur chaque chantier.
+            Steevy GARAND, sur chaque chantier.
           </h2>
           <p className="t-lede mt-4 max-w-[40ch] md:mt-6">
             Façadier installé à Soings-en-Sologne, Steevy suit votre projet du premier appel à la réception. Vous savez toujours à qui parler.
@@ -30,7 +30,7 @@ export function Proof() {
           </dl>
           <a href={`tel:${site.phoneHref}`} className="btn btn-ink mt-7 tabular-nums md:mt-9">
             <Phone className="h-5 w-5" />
-            Appeler Steevy GRAND
+            Appeler Steevy GARAND
           </a>
         </div>
 
@@ -38,7 +38,7 @@ export function Proof() {
         <figure className="-order-1 lg:order-none">
           <div className="grid h-[min(70svh,560px)] grid-cols-[1.35fr_1fr] grid-rows-2 gap-2.5 md:gap-3">
             <div className="relative row-span-2 overflow-hidden rounded-[24px] bg-gris md:rounded-[30px]">
-              <Image src="/images/vrai-chantier-pignon.webp" alt="Steevy GRAND et son équipe sur des échelles, en train de reprendre l'enduit d'un pignon" fill quality={80} sizes="(min-width: 1024px) 420px, 58vw" className="object-cover" style={{ objectPosition: "50% 60%" }} />
+              <Image src="/images/vrai-chantier-pignon.webp" alt="Steevy GARAND et son équipe sur des échelles, en train de reprendre l'enduit d'un pignon" fill quality={80} sizes="(min-width: 1024px) 420px, 58vw" className="object-cover" style={{ objectPosition: "50% 60%" }} />
             </div>
             <div className="relative overflow-hidden rounded-[20px] bg-gris md:rounded-[26px]">
               <Image src="/images/vrai-chantier-taloche.webp" alt="Enduit repris à la taloche sur un pignon" fill quality={78} sizes="(min-width: 1024px) 300px, 42vw" className="object-cover" style={{ objectPosition: "45% 35%" }} />

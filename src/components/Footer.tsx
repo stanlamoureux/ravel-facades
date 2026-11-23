@@ -66,7 +66,6 @@ export function Footer() {
             </a>
           </p>
         </div>
-        {site.demo && <p className="mt-4 text-[0.8125rem] text-white/35">Site de démonstration : entreprise, chiffres, avis et photos sont fictifs.</p>}
       </div>
     </footer>
   );

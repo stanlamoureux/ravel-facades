@@ -7,7 +7,7 @@
  *  Quand tout est réel, passe `demo` à false : ça retire les
  *  mentions "exemple" affichées sur le site.
  *
- *  Le téléphone est celui de Steevy GRAND (vrai numéro).
+ *  Le téléphone est celui de Steevy GARAND (vrai numéro).
  * ============================================================
  */
 
@@ -15,7 +15,18 @@ export const site = {
   demo: true,
 
   name: "Ravel",
-  legalName: "Ravel Façades SAS",
+  /** Identité légale (registre national des entreprises) */
+  legalName: "Steevy GARAND (EI)",
+  legal: {
+    form: "Entrepreneur individuel (EI)",
+    siren: "948 180 856",
+    tva: "FR23948180856",
+    rcs: "RCS Évry",
+    naf: "81.21Z",
+    registeredOn: "17 janvier 2023",
+    /** Assurance décennale : à compléter (assureur, n° de contrat) pour l'afficher */
+    insurance: null as null | { insurer: string; contract: string },
+  },
   tagline: "Façades & peinture",
   url: "https://ravel-facades.vercel.app",
 
@@ -28,7 +39,7 @@ export const site = {
     city: "Soings-en-Sologne",
   },
   hours: "Du lundi au samedi, 8 h - 19 h",
-  siret: "000 000 000 00000",
+  siret: "948 180 856 00015",
   foundedYear: 2011,
 
   /** Délai de rappel affiché partout (promesse commerciale) */
@@ -39,7 +50,7 @@ export const site = {
   rating: { value: 4.9, count: 327 },
 
   /** Légende de la photo d'équipe */
-  teamCaption: "Steevy GRAND et son équipe sur un pignon, enduit repris à la taloche.",
+  teamCaption: "Steevy GARAND et son équipe sur un pignon, enduit repris à la taloche.",
 
   stats: [
     { value: 1240, suffix: "", label: "façades rénovées depuis 2011" },

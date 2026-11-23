@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-/** Réalisations : vraies photos de chantiers de Steevy GRAND. */
+/** Réalisations : vraies photos de chantiers de Steevy GARAND. */
 const works = [
   { src: "/images/vrai-realisation-pavillon-blanc.webp", title: "Pavillon et terrasse", detail: "Ravalement, enduit blanc", alt: "Pavillon à l'enduit blanc refait, vu depuis le jardin", wide: true },
   { src: "/images/vrai-realisation-volets-bois.webp", title: "Maison aux volets bois", detail: "Façade blanche, volets conservés", alt: "Maison à la façade blanche et aux volets en bois" },
