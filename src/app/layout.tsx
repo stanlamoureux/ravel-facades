@@ -7,7 +7,7 @@ const description = `Ravalement, peinture, nettoyage de façade, boiseries et da
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Ravalement, peinture et nettoyage de façade en Sologne`,
+    default: `${site.name} | Façadier en Sologne : ravalement, peinture, nettoyage de façade`,
     template: `%s | ${site.name}`,
   },
   description,

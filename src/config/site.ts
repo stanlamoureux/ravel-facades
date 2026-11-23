@@ -14,7 +14,7 @@
 export const site = {
   demo: true,
 
-  name: "Ravel",
+  name: "Ravalement 41",
   /** Identité légale (registre national des entreprises) */
   legalName: "Steevy GARAND (EI)",
   legal: {
@@ -32,8 +32,8 @@ export const site = {
 
   phone: "06 79 77 38 71",
   phoneHref: "+33679773871",
-  /** Vraie adresse email du client : vide tant qu'on ne l'a pas, et rien ne s'affiche. */
-  email: "",
+  /** Adresse email du client, affichée dans le pied de page et la politique de confidentialité. */
+  email: "ravalement41sg@gmail.com",
   address: {
     street: "195 route de Touchebrault",
     postalCode: "41230",

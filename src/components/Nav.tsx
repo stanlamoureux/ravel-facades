@@ -17,7 +17,7 @@ const sections = [
 /** Le carré coupé en deux : moitié avant, moitié après. */
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 text-[1.3rem] font-[680] tracking-[-0.035em] ${className}`}>
+    <span className={`inline-flex items-center gap-2 whitespace-nowrap text-[1.125rem] font-[680] tracking-[-0.035em] min-[380px]:text-[1.25rem] md:text-[1.3rem] ${className}`}>
       <svg viewBox="0 0 24 24" className="h-[1.15em] w-[1.15em]" aria-hidden>
         <rect x="2" y="2" width="20" height="20" rx="6.5" fill="currentColor" opacity="0.3" />
         <path d="M12.75 2H15.5A6.5 6.5 0 0 1 22 8.5v7a6.5 6.5 0 0 1-6.5 6.5h-2.75z" fill="currentColor" />
