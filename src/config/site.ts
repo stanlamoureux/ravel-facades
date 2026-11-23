@@ -28,7 +28,7 @@ export const site = {
     insurance: null as null | { insurer: string; contract: string },
   },
   tagline: "Façades & peinture",
-  url: "https://ravel-facades.vercel.app",
+  url: "https://ravalement41.fr",
 
   phone: "06 79 77 38 71",
   phoneHref: "+33679773871",
