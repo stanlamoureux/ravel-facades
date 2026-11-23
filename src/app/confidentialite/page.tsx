@@ -17,10 +17,23 @@ export default function Page() {
       <p>Trois ans après notre dernier échange si aucun chantier n&apos;est engagé, puis elles sont supprimées.</p>
       <h2>Vos droits</h2>
       <p>
-        Vous pouvez consulter, corriger ou supprimer vos données à tout moment en écrivant à{" "}
-        <a className="link" href={`mailto:${site.email}`}>
-          {site.email}
-        </a>
+        Vous pouvez consulter, corriger ou supprimer vos données à tout moment{" "}
+        {site.email ? (
+          <>
+            en écrivant à{" "}
+            <a className="link" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+          </>
+        ) : (
+          <>
+            en appelant le{" "}
+            <a className="link" href={`tel:${site.phoneHref}`}>
+              {site.phone}
+            </a>{" "}
+            ou par courrier au {site.address.street}, {site.address.postalCode} {site.address.city}
+          </>
+        )}
         . En cas de désaccord, vous pouvez saisir la CNIL.
       </p>
       <h2>Prestataires techniques</h2>

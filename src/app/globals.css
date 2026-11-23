@@ -4,7 +4,7 @@
 /*
   Palette tirée des photos : le bleu nuit du zénith pour le texte, le bleu du ciel
   pour les liens, le vert des volets pour ce qui est validé, et le rouge des tuiles
-  pour les deux actions qui comptent : demander un devis, être rappelé. Tout le reste
+  pour demander un devis ou être rappelé, et un vert franc pour appeler. Tout le reste
   est neutre, pour laisser la couleur aux façades.
 */
 @theme {
@@ -21,6 +21,9 @@
   --color-tuile: #c8451c;
   --color-tuile-2: #ad3a15;
   --color-alerte: #b3261e;
+  /* le vert du téléphone : réservé à une seule action, appeler */
+  --color-appel: #1d7a52;
+  --color-appel-2: #17643f;
 
   --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -188,6 +191,40 @@
   }
   .btn-cta:hover {
     background: var(--color-tuile-2);
+  }
+  .btn-call {
+    background: var(--color-appel);
+    color: #fff;
+    box-shadow: 0 10px 24px -12px rgb(29 122 82 / 0.85);
+  }
+  .btn-call:hover {
+    background: var(--color-appel-2);
+  }
+  /* le combiné tressaille une fois toutes les 8 secondes : assez pour attirer l'œil, pas plus */
+  .sonne {
+    transform-origin: 50% 55%;
+    animation: sonne 8s ease-in-out 3s infinite;
+  }
+  @keyframes sonne {
+    0%, 88%, 100% { transform: rotate(0); }
+    90% { transform: rotate(-16deg); }
+    92% { transform: rotate(13deg); }
+    94% { transform: rotate(-10deg); }
+    96% { transform: rotate(7deg); }
+    98% { transform: rotate(-3deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sonne { animation: none; }
+  }
+  /* un contenu qui en remplace un autre (question suivante, réponse choisie) arrive en fondu */
+  .apparait {
+    animation: apparait 0.32s var(--ease-doux) both;
+  }
+  @keyframes apparait {
+    from { opacity: 0; transform: translateY(6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .apparait { animation: none; }
   }
   .btn-white {
     background: #fff;

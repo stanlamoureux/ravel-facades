@@ -113,15 +113,18 @@ export function Nav({ solid = false }: { solid?: boolean }) {
 
           <div className="flex items-center gap-2 md:gap-3">
             <a href={tel} className="hidden items-center gap-2 text-[0.9375rem] font-[620] tabular-nums xl:inline-flex">
-              <Phone className="h-[1.1rem] w-[1.1rem]" />
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-appel text-white">
+                <Phone className="h-4 w-4" />
+              </span>
               {site.phone}
             </a>
             <a
               href={tel}
               aria-label={`Appeler le ${site.phone}`}
-              className="grid h-11 w-11 place-items-center rounded-full bg-white text-encre shadow-[0_4px_16px_rgb(8_20_34/0.22)] transition-[background-color,box-shadow] duration-300 group-data-[past=true]/h:bg-gris group-data-[past=true]/h:shadow-none md:bg-gris md:shadow-none xl:hidden"
+              className="inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-full bg-appel px-3 text-[0.9375rem] font-[640] text-white shadow-[0_6px_18px_-6px_rgb(29_122_82/0.9)] transition-colors duration-200 hover:bg-appel-2 md:pl-3.5 md:pr-4 xl:hidden"
             >
-              <Phone className="h-5 w-5" />
+              <Phone className="h-[1.15rem] w-[1.15rem]" />
+              <span className="hidden md:inline">Appeler</span>
             </a>
             <button type="button" className="btn btn-cta btn-sm hidden md:inline-flex" onClick={() => goToQuote({ source: "menu" })}>
               Devis gratuit
@@ -183,7 +186,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
               </ul>
             </motion.nav>
             <div className="wrap grid shrink-0 grid-cols-2 gap-2.5 border-t border-trait pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
-              <a href={tel} className="btn btn-ink !px-3">
+              <a href={tel} className="btn btn-call !px-3">
                 <Phone className="h-5 w-5" />
                 Appeler
               </a>
@@ -242,9 +245,12 @@ export function MobileBar({ primary }: { primary?: { label: string; href: string
       aria-hidden={!show}
     >
       <div className="grid grid-cols-2 gap-2.5">
-        <a href={`tel:${site.phoneHref}`} className="btn btn-ink !px-3" tabIndex={show ? 0 : -1}>
-          <Phone className="h-5 w-5" />
-          Appeler
+        <a href={`tel:${site.phoneHref}`} className="btn btn-call !gap-2.5 !px-3" tabIndex={show ? 0 : -1} aria-label={`Appeler le ${site.phone}`}>
+          <Phone className="sonne h-[1.35rem] w-[1.35rem] shrink-0" />
+          <span className="flex flex-col items-start leading-none">
+            <span className="text-[0.9375rem] font-[650]">Appeler</span>
+            <span className="mt-[3px] text-[0.75rem] font-[540] tabular-nums text-white/85">{site.phone}</span>
+          </span>
         </a>
         {primary ? (
           <a href={primary.href} className="btn btn-cta !px-3" tabIndex={show ? 0 : -1}>

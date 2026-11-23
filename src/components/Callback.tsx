@@ -69,7 +69,7 @@ export function Callback({ service, source }: { service: string; source: string 
         </span>
         <h3 className="mt-5 text-[1.75rem] font-[650] leading-[1.1] tracking-[-0.03em]">C&apos;est noté, {name.trim().split(" ")[0]}.</h3>
         <p className="mt-3 leading-[1.5] text-ardoise">
-          Un technicien vous appelle au <span className="font-[600] tabular-nums text-encre">{phone}</span>
+          On vous appelle au <span className="font-[600] tabular-nums text-encre">{phone}</span>
           {slot === SLOTS[0] ? "" : `, ${slot.toLowerCase()}`}, sous {site.callbackDelay}. L&apos;appel viendra du {site.phone}.
         </p>
       </div>

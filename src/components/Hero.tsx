@@ -125,13 +125,14 @@ export function Hero() {
               comme neuve.
             </h1>
             <p className="mt-3.5 max-w-[29ch] text-[1.0625rem] font-[480] leading-[1.38] text-white/95 md:mt-7 md:max-w-[34ch] md:text-[1.3125rem] md:font-normal md:leading-[1.45] md:text-ardoise">
-              Ravalement, peinture et nettoyage de façade en Sologne et dans le Loir-et-Cher.<span className="hidden md:inline"> Visite et devis gratuits sous {site.quoteDelay}.</span>
+              Ravalement, peinture et nettoyage de façade <span className="md:hidden">dans le Loir-et-Cher.</span>
+              <span className="hidden md:inline">en Sologne et dans le Loir-et-Cher. Visite et devis gratuits sous {site.quoteDelay}.</span>
             </p>
           </div>
 
           <div className="pointer-events-auto md:mt-10">
             <div className="grid grid-cols-2 gap-2.5 md:flex md:flex-wrap md:gap-3">
-              <a href={`tel:${site.phoneHref}`} className="btn btn-white !px-3 md:hidden">
+              <a href={`tel:${site.phoneHref}`} className="btn btn-call !px-3 md:hidden">
                 <Phone className="h-5 w-5" />
                 Appeler
               </a>
@@ -141,23 +142,24 @@ export function Hero() {
               <button type="button" className="btn btn-cta hidden md:inline-flex md:h-14 md:px-7 md:text-[1.0625rem]" onClick={() => goToQuote({ source: "hero" })}>
                 Demander mon devis gratuit
               </button>
-              <a href={`tel:${site.phoneHref}`} className="btn btn-soft hidden tabular-nums md:inline-flex md:h-14 md:px-6 md:text-[1.0625rem]">
-                <Phone className="h-5 w-5" />
+              <a href={`tel:${site.phoneHref}`} className="btn btn-soft hidden tabular-nums md:inline-flex md:h-14 md:pl-2.5 md:pr-6 md:text-[1.0625rem]">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-appel text-white">
+                  <Phone className="h-[1.1rem] w-[1.1rem]" />
+                </span>
                 {site.phone}
               </a>
             </div>
-            <ul className="mt-4 flex items-center justify-between gap-4 text-[0.8125rem] font-[540] text-white/90 md:mt-9 md:justify-start md:gap-8 md:text-[0.9375rem] md:text-ardoise">
-              <li className="flex items-center gap-1.5">
+            <ul className="mt-4 flex items-center justify-between gap-3 text-[0.75rem] font-[540] min-[380px]:text-[0.8125rem] text-white/90 md:mt-9 md:justify-start md:gap-8 md:text-[0.9375rem] md:text-ardoise">
+              <li className="flex items-center gap-1.5 whitespace-nowrap">
                 <Star className="h-4 w-4 text-[#ffc94d] md:text-tuile" />
                 <span>
                   <span className="text-white md:text-encre">Votre façadier</span> dans le 41
                 </span>
               </li>
-              <li className="flex items-center gap-1.5">
+              <li className="flex items-center gap-1.5 whitespace-nowrap">
                 <Shield className="h-4 w-4" />
                 Visite et devis gratuits
               </li>
-              <li className="hidden items-center gap-1.5 lg:flex">Loir-et-Cher et alentours</li>
             </ul>
           </div>
         </div>

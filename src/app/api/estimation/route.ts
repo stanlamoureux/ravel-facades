@@ -92,7 +92,7 @@ export async function POST(req: Request) {
         <p style="margin:6px 0 24px;color:#56616f;font-size:14px">TTC, échafaudage et protections compris.</p>
         ${table(recap)}
         <h2 style="margin:28px 0 6px;font-size:18px;letter-spacing:-0.01em">Et maintenant ?</h2>
-        <p style="margin:0 0 20px;color:#56616f;font-size:16px">Un technicien vous rappelle sous ${esc(site.callbackDelay)} pour convenir d'une visite gratuite. C'est elle qui permet de fixer le prix ferme, poste par poste.</p>
+        <p style="margin:0 0 20px;color:#56616f;font-size:16px">On vous rappelle sous ${esc(site.callbackDelay)} pour convenir d'une visite gratuite. C'est elle qui permet de fixer le prix ferme, poste par poste.</p>
         ${button(`tel:${site.phoneHref}`, `Nous appeler : ${site.phone}`)}`,
         `Estimation indicative, hors réparations de structure, à confirmer après visite. ${esc(site.name)}, ${esc(site.address.postalCode)} ${esc(site.address.city)}.`,
       ),
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
         "",
         ...recap.map(([k, v]) => `${k} : ${v}`),
         "",
-        `Un technicien vous rappelle sous ${site.callbackDelay} pour convenir d'une visite gratuite. Vous pouvez aussi nous appeler au ${site.phone}.`,
+        `On vous rappelle sous ${site.callbackDelay} pour convenir d'une visite gratuite. Vous pouvez aussi nous appeler au ${site.phone}.`,
         "",
         "Estimation indicative, hors réparations de structure, à confirmer après visite.",
       ].join("\n"),

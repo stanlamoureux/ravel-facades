@@ -78,7 +78,7 @@ export default async function Page({ params }: Props) {
             </div>
           </div>
 
-          <div className="wrap pt-6 md:order-1 md:w-auto md:max-w-none md:px-0 md:pt-0">
+          <div className="wrap pb-10 pt-6 md:order-1 md:w-auto md:max-w-none md:px-0 md:pb-0 md:pt-0">
             <Link href={back} className="-ml-1 hidden h-11 items-center gap-1 text-[0.9375rem] font-[540] text-ardoise transition-colors hover:text-encre md:inline-flex">
               <Chevron className="h-[1.1rem] w-[1.1rem] rotate-180" />
               Toutes les prestations
@@ -89,7 +89,7 @@ export default async function Page({ params }: Props) {
               <a href="#rappel" className="btn btn-cta !px-3 md:h-14 md:!px-7 md:text-[1.0625rem]">
                 Être rappelé
               </a>
-              <a href={tel} className="btn btn-ink !px-3 tabular-nums md:h-14 md:!px-6 md:text-[1.0625rem]">
+              <a href={tel} className="btn btn-call !px-3 tabular-nums md:h-14 md:!px-6 md:text-[1.0625rem]">
                 <Phone className="h-5 w-5" />
                 <span className="md:hidden">Appeler</span>
                 <span className="hidden md:inline">{site.phone}</span>
@@ -129,15 +129,30 @@ export default async function Page({ params }: Props) {
           <section className="bg-encre py-12 text-white md:py-24" aria-labelledby="resultat-title">
             <div className="wrap">
               <h2 id="resultat-title" className="t-h2 max-w-[14ch]">
-                Le résultat attendu.
+                {x.photos[0].label ? "Avant, après." : "Le résultat attendu."}
               </h2>
-              <div className="mt-6 grid gap-3 md:mt-10 md:grid-cols-[1.6fr_1fr] md:gap-5">
-                {x.photos.map((ph, i) => (
-                  <div key={ph.src} className={`relative overflow-hidden rounded-[24px] bg-encre-2 md:rounded-[28px] ${i === 0 ? "aspect-[4/3]" : "aspect-[4/3] md:aspect-auto"}`}>
-                    <Image src={ph.src} alt={ph.alt} fill quality={85} sizes={i === 0 ? "(min-width: 768px) 700px, 100vw" : "(min-width: 768px) 440px, 100vw"} className="object-cover" />
-                  </div>
-                ))}
-              </div>
+              {x.photos[0].label ? (
+                // un vrai avant / après : deux photos de téléphone côte à côte, à leur format
+                <div className="mt-6 grid grid-cols-2 gap-2.5 md:mt-10 md:flex md:items-center md:gap-5">
+                  {x.photos.map((ph, i) => (
+                    <figure key={ph.src} className="relative aspect-[3/4] overflow-hidden rounded-[18px] bg-encre-2 md:h-[min(64svh,560px)] md:rounded-[28px]">
+                      <Image src={ph.src} alt={ph.alt} fill quality={85} sizes="(min-width: 768px) 420px, 50vw" className="object-cover" />
+                      <figcaption className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[0.8125rem] font-[640] md:left-5 md:top-5 ${i ? "bg-white text-encre" : "glass text-white"}`}>{ph.label}</figcaption>
+                    </figure>
+                  ))}
+                  <p className="col-span-2 mt-2 max-w-[44ch] text-[0.9375rem] leading-[1.5] text-white/70 md:ml-8 md:mt-0 md:max-w-[22ch] md:text-[1.3125rem] md:leading-[1.4] lg:ml-12">
+                    <span className="font-[640] text-white">Un vrai chantier.</span> Le même mur, photographié avant puis après les travaux.
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-6 grid gap-3 md:mt-10 md:grid-cols-[1.6fr_1fr] md:gap-5">
+                  {x.photos.map((ph, i) => (
+                    <div key={ph.src} className={`relative overflow-hidden rounded-[24px] bg-encre-2 md:rounded-[28px] ${i === 0 ? "aspect-[4/3]" : "aspect-[4/3] md:aspect-auto"}`}>
+                      <Image src={ph.src} alt={ph.alt} fill quality={85} sizes={i === 0 ? "(min-width: 768px) 700px, 100vw" : "(min-width: 768px) 440px, 100vw"} className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -214,7 +229,7 @@ export default async function Page({ params }: Props) {
                 Parlons de votre projet.
               </h2>
               <p className="t-lede mt-3 max-w-[36ch] !text-white/70 md:mt-6">
-                Laissez votre numéro&nbsp;: un technicien vous rappelle sous {site.callbackDelay} pour comprendre votre façade et convenir d&apos;une visite gratuite.
+                Laissez votre numéro&nbsp;: on vous rappelle sous {site.callbackDelay} pour comprendre votre façade et convenir d&apos;une visite gratuite.
               </p>
               <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-white/80 md:mt-9 md:block md:space-y-3 md:text-base">
                 <li className="flex items-center gap-2.5">
@@ -223,7 +238,7 @@ export default async function Page({ params }: Props) {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <Shield className="h-5 w-5 shrink-0 text-white/55" />
-                  Un technicien, pas un centre d&apos;appels
+                  L&apos;artisan en direct, pas un centre d&apos;appels
                 </li>
                 <li className="flex items-center gap-2.5">
                   <Check className="h-5 w-5 shrink-0 text-white/55" />
@@ -231,7 +246,7 @@ export default async function Page({ params }: Props) {
                 </li>
               </ul>
               <a href={tel} className="mt-10 hidden items-center gap-4 lg:flex">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-white text-encre">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-appel text-white">
                   <Phone className="h-[1.35rem] w-[1.35rem]" />
                 </span>
                 <span>
@@ -286,7 +301,7 @@ export default async function Page({ params }: Props) {
               Les autres prestations
             </h2>
           </div>
-          <ul className="snap-row mt-5 gap-3 px-5 md:mx-auto md:mt-8 md:grid md:max-w-[1200px] md:grid-cols-3 md:gap-4 lg:grid-cols-6 md:overflow-visible md:px-8">
+          <ul className="snap-row mt-5 gap-3 px-5 md:mx-auto md:mt-8 md:grid md:max-w-[1200px] md:grid-cols-4 md:gap-4 lg:grid-cols-7 md:overflow-visible md:px-8">
             {others.map((s) => {
               const o = fiches[s.id];
               return (
@@ -294,7 +309,7 @@ export default async function Page({ params }: Props) {
                   <Link href={ficheHref(s.id)} className="group relative block aspect-[3/4] overflow-hidden rounded-[20px] bg-gris text-white">
                     <Image src={o.photo.src} alt="" fill quality={75} sizes="(min-width: 768px) 220px, 44vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" style={{ objectPosition: o.photo.position }} />
                     <span className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#07131d]/85 to-transparent" aria-hidden />
-                    <span className="absolute inset-x-0 bottom-0 p-3.5 text-[0.9375rem] font-[620] leading-[1.2] tracking-[-0.01em]">{s.name}</span>
+                    <span className="absolute inset-x-0 bottom-0 p-3.5 text-[0.9375rem] font-[620] leading-[1.2] tracking-[-0.01em]">{s.short}</span>
                   </Link>
                 </li>
               );

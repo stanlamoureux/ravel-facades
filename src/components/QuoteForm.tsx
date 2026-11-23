@@ -79,7 +79,7 @@ export function QuoteSection() {
         <div className="lg:col-start-1 lg:row-start-1 lg:pt-[190px]">
           <ul className="space-y-6">
             {[
-              { icon: Clock, t: `Rappel sous ${site.callbackDelay}`, d: "Du lundi au samedi, par un technicien, pas par un centre d'appels." },
+              { icon: Clock, t: `Rappel sous ${site.callbackDelay}`, d: "Du lundi au samedi, par l'artisan lui-même, pas par un centre d'appels." },
               { icon: Check, t: "Visite et devis gratuits", d: `Un devis poste par poste, sous ${site.quoteDelay} après la visite.` },
               { icon: Shield, t: "Sans engagement", d: "Vous décidez à votre rythme. Aucune relance insistante." },
             ].map(({ icon: Icon, t, d }) => (
@@ -95,7 +95,7 @@ export function QuoteSection() {
             ))}
           </ul>
           <a href={`tel:${site.phoneHref}`} className="mt-10 flex items-center gap-4 rounded-[24px] bg-gris p-5 transition-colors hover:bg-gris-2 md:p-6">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-encre text-white">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-appel text-white">
               <Phone className="h-[1.35rem] w-[1.35rem]" />
             </span>
             <span>
@@ -223,7 +223,7 @@ function QuoteForm() {
         </span>
         <h3 className="mt-6 text-[2rem] font-[650] leading-[1.05] tracking-[-0.03em]">Demande envoyée.</h3>
         <p className="t-lede mt-3 max-w-[38ch]">
-          Merci {s.name.split(" ")[0]}. Un technicien vous rappelle sous {site.callbackDelay} au {s.phone} pour fixer la visite.
+          Merci {s.name.split(" ")[0]}. On vous rappelle sous {site.callbackDelay} au {s.phone} pour fixer la visite.
         </p>
         <p className="mt-8 text-ardoise">
           Une question d&apos;ici là ?{" "}

@@ -32,7 +32,8 @@ export const site = {
 
   phone: "06 79 77 38 71",
   phoneHref: "+33679773871",
-  email: "contact@ravel-facades.fr",
+  /** Vraie adresse email du client : vide tant qu'on ne l'a pas, et rien ne s'affiche. */
+  email: "",
   address: {
     street: "195 route de Touchebrault",
     postalCode: "41230",
@@ -40,7 +41,7 @@ export const site = {
   },
   hours: "Du lundi au samedi, 8 h - 19 h",
   siret: "948 180 856 00015",
-  foundedYear: 2011,
+  foundedYear: 2023,
 
   /** Délai de rappel affiché partout (promesse commerciale) */
   callbackDelay: "24 h",

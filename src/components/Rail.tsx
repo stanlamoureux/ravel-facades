@@ -82,7 +82,7 @@ export function Rail() {
 
       <div className="m-3 shrink-0 rounded-[24px] bg-encre p-4 text-white [@media(max-height:820px)]:p-3">
         <p className="text-[1rem] font-[640] tracking-[-0.015em]">Un projet ?</p>
-        <p className="mt-0.5 text-[0.8125rem] leading-[1.35] text-white/60 [@media(max-height:820px)]:hidden">Devis gratuit, un technicien vous rappelle sous {site.callbackDelay}.</p>
+        <p className="mt-0.5 text-[0.8125rem] leading-[1.35] text-white/60 [@media(max-height:820px)]:hidden">Devis gratuit, on vous rappelle sous {site.callbackDelay}.</p>
         <button type="button" className="btn btn-cta btn-sm mt-3.5 w-full" onClick={() => goToQuote({ source: "sommaire" })}>
           Devis gratuit
         </button>

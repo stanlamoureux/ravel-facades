@@ -11,7 +11,7 @@ export function Footer() {
         <div className="grid gap-x-10 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <Logo />
-            <p className="mt-4 max-w-[28ch] text-white/60">Ravalement, peinture et nettoyage de façade en Sologne, depuis {site.foundedYear}.</p>
+            <p className="mt-4 max-w-[28ch] text-white/60">Ravalement, peinture et nettoyage de façade en Sologne et dans le Loir-et-Cher.</p>
           </div>
           <div>
             <h2 className="text-[0.875rem] font-[600] text-white/50">Nous joindre</h2>
@@ -21,11 +21,13 @@ export function Footer() {
                   {site.phone}
                 </a>
               </li>
-              <li>
-                <a href={`mailto:${site.email}`} className="text-white/75 hover:text-white">
-                  {site.email}
-                </a>
-              </li>
+              {site.email && (
+                <li>
+                  <a href={`mailto:${site.email}`} className="text-white/75 hover:text-white">
+                    {site.email}
+                  </a>
+                </li>
+              )}
               <li className="text-white/60">{site.hours}</li>
             </ul>
           </div>

@@ -180,7 +180,7 @@ export const ficheHref = (id: ServiceId) => `/prestations/${fiches[id].slug}`;
 export type Extra = {
   compare?: { before: string; after: string; caption: string; position?: string };
   /** À défaut d'avant / après : deux photos de chantier. */
-  photos?: { src: string; alt: string }[];
+  photos?: { src: string; alt: string; label?: string }[];
   steps: [string, string][];
   review: string; // nom de l'avis à citer, pris dans site.reviews
   faq: [string, string][];
@@ -249,8 +249,8 @@ export const extras: Record<ServiceId, Extra> = {
   },
   fissures: {
     photos: [
-      { src: "/images/vrai-fissure-avant.webp", alt: "Large fissure dans l'enduit, avant réparation" },
-      { src: "/images/vrai-fissure-apres.webp", alt: "Le même mur après agrafage et reprise de l'enduit" },
+      { src: "/images/vrai-fissure-avant.webp", alt: "Large fissure dans l'enduit, avant réparation", label: "Avant" },
+      { src: "/images/vrai-fissure-apres.webp", alt: "Le même mur après agrafage et reprise de l'enduit", label: "Après" },
     ],
     steps: [
       ["Diagnostic", "Fissure d'enduit ou de structure : on fait la différence."],

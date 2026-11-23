@@ -28,7 +28,7 @@ export default function Home() {
     name: site.name,
     url: site.url,
     telephone: site.phoneHref,
-    email: site.email,
+    ...(site.email ? { email: site.email } : {}),
     foundingDate: String(site.foundedYear),
     address: {
       "@type": "PostalAddress",
